@@ -1,0 +1,7 @@
+---
+
+- include: add_centos_repos.yml
+  when: ansible_os_family == 'ClearOS'
+
+- include: packages.yml
+  when: ansible_os_family == 'ClearOS'

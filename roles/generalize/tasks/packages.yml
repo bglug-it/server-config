@@ -1,0 +1,11 @@
+---
+
+- name: Installo pacchetti di gestione
+  yum: name={{ item }} state=present
+  when: ansible_os_family == 'ClearOS'
+  with_items:
+    - vim-enhanced
+    - git
+    - screen
+    - sshpass
+    - ansible
