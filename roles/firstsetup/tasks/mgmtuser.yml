@@ -7,3 +7,7 @@
 - name: Concessione permessi sudo
   lineinfile: dest=/etc/sudoers line="amgmt ALL=(ALL:ALL) NOPASSWD:ALL" validate="visudo -cf %s" state=present
   remote_user: root
+
+- name: Installazione chiave privata PC locale
+  authorized_key: user=amgmt key="{{ lookup('file', admin_sshkey) }}" state=present
+  remote_user: root
