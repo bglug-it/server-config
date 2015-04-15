@@ -5,8 +5,8 @@
   sudo: yes
   when: ansible_os_family == 'ClearOS'
   with_items:
+    - git-svn
     - vim-enhanced
-    - git
     - screen
     - sshpass
     - ansible

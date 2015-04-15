@@ -1,0 +1,6 @@
+---
+
+- name: Gestione creazione chiave ssh
+  shell: ssh-keygen -t rsa -b 1024 -f id_rsa -N ''
+  sudo: yes
+  sudo_user: root
