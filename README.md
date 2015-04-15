@@ -4,4 +4,6 @@ Qui sono presenti i files di configurazione per il server ClearOS.
 Per configurarlo:
 
     $ vim hosts
-    $ ansible-playbook server.yml --ask-pass
+    $ ansible-playbook firstsetup.yml -u root --ask-pass \
+	-e "admin_sshkey=/path/to/id_rsa.pub"
+    $ ansible-playbook server.yml 

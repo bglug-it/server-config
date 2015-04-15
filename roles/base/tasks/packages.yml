@@ -3,7 +3,6 @@
 - name: Installo pacchetti di gestione
   yum: name={{ item }} state=present
   sudo: yes
-  remote_user: amgmt
   when: ansible_os_family == 'ClearOS'
   with_items:
     - vim-enhanced
@@ -11,3 +10,4 @@
     - screen
     - sshpass
     - ansible
+  tags: pkg

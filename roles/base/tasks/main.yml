@@ -5,3 +5,5 @@
 
 - include: packages.yml
   when: ansible_os_family == 'ClearOS'
+
+- include: ansible.yml

@@ -3,58 +3,58 @@
 - name: Verifica configurazione CentOS 6
   file: name=/etc/yum.repos.d/CentOS-Base.repo state=file
   sudo: yes
-  remote_user: amgmt
   ignore_errors: yes
   register: check_repos
+  tags: repo
 
 - name: Scarico configurazione per CentOS 6
   get_url:
     url: http://mirror.centos.org/centos/6/os/x86_64/Packages/centos-release-6-6.el6.centos.12.2.x86_64.rpm
     dest: /tmp/centos-release-6-6.el6.centos.12.2.x86_64.rpm
   sudo: yes
-  remote_user: amgmt
   when: check_repos|failed
+  tags: repo
 
 - name: Scompatto configurazione CentOS 6
   shell: mkdir -p /tmp/centos-release && pushd /tmp/centos-release && rpm2cpio ../centos-release-6-6.el6.centos.12.2.x86_64.rpm | cpio -idmv && popd
   sudo: yes
-  remote_user: amgmt
   when: check_repos|failed
+  tags: repo
 
 - name: Copio i repository
   shell: cp -f /tmp/centos-release/etc/yum.repos.d/* /etc/yum.repos.d/
   sudo: yes
-  remote_user: amgmt
   when: check_repos|failed
   register: centos_repo_installed
+  tags: repo
 
 - name: Copio le chiavi di firma GPG
   shell: cp -f /tmp/centos-release/etc/pki/rpm-gpg/* /etc/pki/rpm-gpg/
   sudo: yes
-  remote_user: amgmt
   when: check_repos|failed
+  tags: repo
 
   # Senza di questa, non è possibile installare EPEL dopo
 - name: Prima attivazione repo
   shell: yum clean all && yum repolist
   sudo: yes
-  remote_user: amgmt
   when: centos_repo_installed|changed
+  tags: repo
 
 - name: Attivo EPEL
   yum: name=epel-release state=present
   sudo: yes
-  remote_user: amgmt
   register: epel_installed
+  tags: repo
 
 - name: Seconda attivazione repo
   shell: yum clean all && yum repolist
   sudo: yes
-  remote_user: amgmt
   when: epel_installed|changed
+  tags: repo
 
 - name: Pulizia
   shell: rm -rf /tmp/centos-release && rm -f /tmp/centos-release-6-6.el6.centos.12.2.x86_64.rpm /tmp/epel-release-6-8.noarch.rpm
   sudo: yes
-  remote_user: amgmt
   when: check_repos|failed
+  tags: repo

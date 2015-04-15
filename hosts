@@ -1,4 +1,4 @@
 [server]
-pdc ansible_ssh_host=10.0.0.1
+pdc ansible_ssh_host=10.0.0.1 ansible_ssh_user=amgmt
 
 [clients]
