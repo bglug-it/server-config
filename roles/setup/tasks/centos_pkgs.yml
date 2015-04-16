@@ -13,6 +13,7 @@
   sudo: yes
   with_items: centos_repo_files
   when: check_pkg|failed
+  ignore_errors: yes
   register: check_repos
   tags: repo
 
