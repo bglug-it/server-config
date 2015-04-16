@@ -3,34 +3,6 @@
 - name: Aggiunta pacchetti specifici ClearOS
   yum: name={{ item }} state=present 
   sudo: yes
-  with_items:
-    - app-content-filter
-    - app-web-proxy
-    - app-proxy-report
-    - app-openldap-directory
-    - app-ntp
-    - app-configuration-backup
-    - app-firewall
-    - app-network
-    - app-users
-    - app-groups
-    - app-administrators
-    - app-password-policies
-    - app-accounts
-    - app-account-import
-    - app-services
-    - app-software-repository
-    - app-software-updates
-    - app-ssh-server
-    - app-dhcp
-    - app-flexshare
-    - app-process-viewer
-    - app-log-viewer
-    - app-print-server
-    - app-samba
-    - app-user-profile
-    - app-date
-    - app-marketplace
-    - app-registration
-    - app-dashboard
-    - app-base
+  with_items: clearos_pkgs
+  async: 3600 
+  poll: 30

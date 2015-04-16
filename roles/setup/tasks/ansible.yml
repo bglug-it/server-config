@@ -1,9 +1,12 @@
 ---
 
+- name: Verifica installazione git 
+  yum: name=git-svn state=present
+
 - name: Download della gestione client con ansible
   git: repo=http://github.com/syntaxerrormmm/ps-clientmgmt.git
        dest=/root/clientmgmt
-  remote_user: amgmt
+  sudo_user: root
   sudo: yes
   tags:
     - git

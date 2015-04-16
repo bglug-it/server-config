@@ -1,9 +1,18 @@
 ---
 
-- name: Verifica configurazione CentOS 6
-  file: name=/etc/yum.repos.d/CentOS-Base.repo state=file
+- name: Verifica installazione pacchetti aggiuntivi
+  shell: rpm -q {{ item }}
   sudo: yes
-  ignore_errors: yes
+  with_items: addins_pkg 
+  register: check_pkg
+  changed_when: check_pkg.rc != 0
+  tags: pkg
+
+- name: Verifica configurazione CentOS 6
+  file: name=/etc/yum.repos.d/{{ item }} state=file
+  sudo: yes
+  with_items: centos_repo_files
+  when: check_pkg|changed
   register: check_repos
   tags: repo
 
@@ -40,12 +49,16 @@
 - name: Prima attivazione repo
   shell: yum clean all && yum repolist
   sudo: yes
+  register: first_repo_activate
   when: centos_repo_installed|changed
+  async: 600
+  poll: 10
   tags: repo
 
 - name: Attivo EPEL
   yum: name=epel-release state=present
   sudo: yes
+  when: first_repo_activate|changed
   register: epel_installed
   tags: repo
 
@@ -53,6 +66,8 @@
   shell: yum clean all && yum repolist
   sudo: yes
   when: epel_installed|changed
+  async: 600
+  poll: 10
   tags: repo
 
 - name: Pulizia
@@ -60,3 +75,12 @@
   sudo: yes
   when: check_repos|failed
   tags: repo
+
+- name: Installo pacchetti di gestione
+  yum: name={{ item }} state=present
+  sudo: yes
+  when: ansible_os_family == 'ClearOS'
+  with_items: addin_pkgs
+  async: 3600
+  poll: 30
+  tags: pkg

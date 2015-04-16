@@ -1,7 +1,12 @@
 ---
 
 - include: clearos_pkgs.yml
-- include: centos_addrepos.yml
-- include: packages.yml
-- include: centos_delrepos.yml
+  tags: clearos
+
+- include: centos_pkgs.yml
+  tags: centos
+
 - include: ansible.yml
+  tags:
+    - git
+    - ansible
