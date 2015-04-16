@@ -11,4 +11,3 @@
   sudo: yes
   sudo_user: root
   when: check_key|failed
-  changed_when: '"non-existant" in sshkeycheck.stdout'
