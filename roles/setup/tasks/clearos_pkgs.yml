@@ -10,7 +10,6 @@
     - app-openldap-directory
     - app-ntp
     - app-configuration-backup
-    - app-backuppc
     - app-firewall
     - app-network
     - app-users
@@ -29,7 +28,6 @@
     - app-log-viewer
     - app-print-server
     - app-samba
-    - app-samba-core
     - app-user-profile
     - app-date
     - app-marketplace
