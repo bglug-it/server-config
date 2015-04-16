@@ -1,18 +1,18 @@
 ---
 
 - name: Verifica installazione pacchetti aggiuntivi
-  shell: rpm -q {{ item }}
+  yum: name={{ item }} state=present
   sudo: yes
-  with_items: addins_pkg 
+  with_items: addins_pkgs
   register: check_pkg
-  changed_when: check_pkg.rc != 0
+  ignore_errors: yes
   tags: pkg
 
 - name: Verifica configurazione CentOS 6
-  file: name=/etc/yum.repos.d/{{ item }} state=file
+  shell: test -f /etc/yum.repos.d/{{ item }}
   sudo: yes
   with_items: centos_repo_files
-  when: check_pkg|changed
+  when: check_pkg|failed
   register: check_repos
   tags: repo
 
@@ -51,8 +51,8 @@
   sudo: yes
   register: first_repo_activate
   when: centos_repo_installed|changed
-  async: 600
-  poll: 10
+  async: 1800
+  poll: 60
   tags: repo
 
 - name: Attivo EPEL

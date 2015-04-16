@@ -1,8 +1,8 @@
 ---
 
 - name: Aggiunta pacchetti specifici ClearOS
-  yum: name={{ item }} state=present 
+  yum: name="{{ item }}" state=present 
+  async: 1800
+  poll: 60
   sudo: yes
   with_items: clearos_pkgs
-  async: 3600 
-  poll: 30
