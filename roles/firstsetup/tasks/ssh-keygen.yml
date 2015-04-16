@@ -1,6 +1,14 @@
 ---
 
+- name: Verifica chiave ssh
+  shell: test -f /root/.ssh/id_rsa
+  changed_when: false
+  ignore_errors: true
+  register: check_key
+
 - name: Gestione creazione chiave ssh
   shell: ssh-keygen -t rsa -b 1024 -f id_rsa -N ''
   sudo: yes
   sudo_user: root
+  when: check_key|failed
+  changed_when: '"non-existant" in sshkeycheck.stdout'

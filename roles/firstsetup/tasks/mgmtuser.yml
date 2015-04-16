@@ -2,12 +2,22 @@
 
 - name: Creazione account di gestione Ansible
   user: name=amgmt comment="Ansible Management User" group=wheel state=present password=$6$rounds=100000$XvHuMoXtpCksx379$nhlfUn38.oBB7JrDrtwfUisw8T0Bg5InzFq1fw31mcEmGZ2AYFkFK2zC2g04lSfw.kpdSgqH3Dl5q9r1fY6.k.
-  remote_user: root
 
-- name: Concessione permessi sudo
-  lineinfile: dest=/etc/sudoers line="amgmt ALL=(ALL:ALL) NOPASSWD:ALL" validate="visudo -cf %s" state=present
-  remote_user: root
+- name: Creo copia di backup di sudoers
+  shell: test -f {{ item }} || cp -fv /etc/sudoers {{ item }}
+  with_items:
+    - /etc/sudoers.bak
+    - /etc/sudoers.tmp
+  register: copylog
+  changed_when: "'/etc/sudoers' in copylog.stdout"
+
+- name: Concessione diritti all'utente di gestione Ansible
+  lineinfile: dest=/etc/sudoers.tmp regexp="^amgmt.*NOPASSWD" line="amgmt ALL=(ALL:ALL) NOPASSWD:ALL" state=present
+  register: sudotmp
+
+- name: Applicazione diritti utente Ansible
+  shell: visudo -q -c -f /etc/sudoers.tmp && cp -f /etc/sudoers.tmp /etc/sudoers && rm /etc/sudoers.tmp
+  when: sudotmp|changed
 
 - name: Installazione chiave privata PC locale
   authorized_key: user=amgmt key="{{ lookup('file', admin_sshkey) }}" state=present
-  remote_user: root
