@@ -3,7 +3,7 @@
 - name: Aggiunta pacchetti specifici ClearOS
   yum: name={{ item }} state=present 
   sudo: yes
-  with_item:
+  with_items:
     - app-content-filter
     - app-web-proxy
     - app-filter-proxy-report
