@@ -16,7 +16,7 @@
   register: sudotmp
 
 - name: Applicazione diritti utente Ansible
-  shell: visudo -q -c -f /etc/sudoers.tmp && cp -f /etc/sudoers.tmp /etc/sudoers && rm /etc/sudoers.tmp
+  shell: visudo -q -c -f /etc/sudoers.tmp && cp -f /etc/sudoers.tmp /etc/sudoers
   when: sudotmp|changed
 
 - name: Installazione chiave privata PC locale
