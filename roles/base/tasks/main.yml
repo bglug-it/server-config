@@ -1,6 +1,0 @@
----
-
-- include: add_centos_repos.yml
-- include: packages.yml
-- include: clearos_pkg.yml
-- include: ansible.yml

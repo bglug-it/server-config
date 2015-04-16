@@ -1,0 +1,12 @@
+centos_repo_files:
+  - CentOS-Base.repo
+  - CentOS-Debuginfo.repo
+  - CentOS-fasttrack.repo
+  - CentOS-Media.repo
+  - CentOS-Vault.repo
+
+centos_gpg_files:
+  - RPM-GPG-KEY-CentOS-6
+  - RPM-GPG-KEY-CentOS-Security-6
+  - RPM-GPG-KEY-CentOS-Debug-6
+  - RPM-GPG-KEY-CentOS-Testing-6

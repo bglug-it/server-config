@@ -6,7 +6,7 @@
   with_items:
     - app-content-filter
     - app-web-proxy
-    - app-filter-proxy-report
+    - app-proxy-report
     - app-openldap-directory
     - app-ntp
     - app-configuration-backup

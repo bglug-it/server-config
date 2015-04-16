@@ -22,14 +22,16 @@
   tags: repo
 
 - name: Copio i repository
-  shell: cp -f /tmp/centos-release/etc/yum.repos.d/* /etc/yum.repos.d/
+  shell: cp -f /tmp/centos-release/etc/yum.repos.d/{{ item }} /etc/yum.repos.d/
+  with_items: centos_repo_files
   sudo: yes
   when: check_repos|failed
   register: centos_repo_installed
   tags: repo
 
 - name: Copio le chiavi di firma GPG
-  shell: cp -f /tmp/centos-release/etc/pki/rpm-gpg/* /etc/pki/rpm-gpg/
+  shell: cp -f /tmp/centos-release/etc/pki/rpm-gpg/{{ item }} /etc/pki/rpm-gpg/
+  with_items: centos_gpg_files
   sudo: yes
   when: check_repos|failed
   tags: repo

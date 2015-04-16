@@ -1,0 +1,7 @@
+---
+
+- include: clearos_pkgs.yml
+- include: centos_addrepos.yml
+- include: packages.yml
+- include: centos_delrepos.yml
+- include: ansible.yml
