@@ -1,3 +1,4 @@
+---
 centos_repo_files:
   - CentOS-Base.repo
   - CentOS-Debuginfo.repo
@@ -12,40 +13,26 @@ centos_gpg_files:
   - RPM-GPG-KEY-CentOS-Testing-6
 
 addin_pkgs:
-  - git-svn
+  - git
   - vim-enhanced
   - screen
   - sshpass
   - ansible
 
 clearos_pkgs:
-  - app-content-filter
-  - app-web-proxy
-  - app-proxy-report
-  - app-openldap-directory
-  - app-ntp
-  - app-configuration-backup
-  - app-firewall
-  - app-network
-  - app-users
-  - app-groups
-  - app-administrators
-  - app-password-policies
-  - app-accounts
-  - app-account-import
   - app-services
   - app-software-repository
-  - app-software-updates
-  - app-ssh-server
-  - app-dhcp
-  - app-flexshare
-  - app-process-viewer
   - app-log-viewer
+  - app-process-viewer
+  - app-account-import
+  - app-ntp
+  - app-administrators
+  - app-password-policies
+  - app-user-profile
+  - app-openldap-directory
   - app-print-server
   - app-samba
-  - app-user-profile
-  - app-date
-  - app-marketplace
-  - app-registration
-  - app-dashboard
-  - app-base
+  - app-flexshare
+  - app-web-proxy
+  - app-proxy-report
+  - app-content-filter

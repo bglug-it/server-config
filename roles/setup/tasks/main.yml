@@ -1,9 +1,13 @@
 ---
 
 - include: clearos_pkgs.yml
+  async: 180
+  poll: 30
   tags: clearos
 
 - include: centos_pkgs.yml
+  async: 180
+  poll: 30
   tags: centos
 
 - include: ansible.yml
