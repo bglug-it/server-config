@@ -16,5 +16,8 @@ l'uso con [`vagrant`](https://www.vagrantup.com/).
 È pertanto possibile creare una macchina virtuale automatica eseguendo i
 seguenti comandi:
 
-    $ vagrant box add clearos6 ./clearos6-1.0.0.box
+    $ vagrant box add clearos6 syntaxerrormmm/clearos6
     $ vagrant init clearos6
+
+[Contattatemi](mailto:syntaxerrormmm-AT-gmail.com) per avere accesso alla
+macchina.
