@@ -23,13 +23,14 @@
 - name: Abilito il repo EPEL
   shell: yum-config-manager --enable epel
   sudo: yes
-  changed_when: rpm_epel_enabled.rc == 0
-  register: rpm_epel_enabled
+  when: epel_installed|success or rpm_epel_installed|success
+  changed_when: epel_enabled.rc == 0
+  register: epel_enabled
 
 - name: Pulizia e ricaricam. repo
   shell: yum clean all && yum repolist
   sudo: yes
-  when: epel_installed|changed or rpm_epel_installed|changed
+  when: epel_enabled|success
   tags: repo
 
 - name: Installo pacchetti addizionali

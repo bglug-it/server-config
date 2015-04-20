@@ -7,6 +7,7 @@ addin_pkgs:
   - ansible
 
 neth_pkgs:
+  - nethserver-tftp
   - nethserver-ibays
   - nethserver-samba
   - nethserver-samba-audit
