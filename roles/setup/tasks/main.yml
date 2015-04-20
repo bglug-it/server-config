@@ -1,16 +1,15 @@
 ---
 
-- include: clearos_pkgs.yml
-  async: 180
-  poll: 30
-  tags: clearos
-
 - include: centos_pkgs.yml
-  async: 180
-  poll: 30
+  when: ansible_distribution == "CentOS" and ansible_os_family == "RedHat"
   tags: centos
 
 - include: ansible.yml
+  when: ansible_distribution == "CentOS"
   tags:
     - git
     - ansible
+
+- include: neth_pkgs.yml
+  when: ansible_distribution == "CentOS" and ansible_os_family == "RedHat"
+  tags: neth

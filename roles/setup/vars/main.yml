@@ -1,17 +1,4 @@
 ---
-centos_repo_files:
-  - CentOS-Base.repo
-  - CentOS-Debuginfo.repo
-  - CentOS-fasttrack.repo
-  - CentOS-Media.repo
-  - CentOS-Vault.repo
-
-centos_gpg_files:
-  - RPM-GPG-KEY-CentOS-6
-  - RPM-GPG-KEY-CentOS-Security-6
-  - RPM-GPG-KEY-CentOS-Debug-6
-  - RPM-GPG-KEY-CentOS-Testing-6
-
 addin_pkgs:
   - git
   - vim-enhanced
@@ -19,20 +6,16 @@ addin_pkgs:
   - sshpass
   - ansible
 
-clearos_pkgs:
-  - app-services
-  - app-software-repository
-  - app-log-viewer
-  - app-process-viewer
-  - app-account-import
-  - app-ntp
-  - app-administrators
-  - app-password-policies
-  - app-user-profile
-  - app-openldap-directory
-  - app-print-server
-  - app-samba
-  - app-flexshare
-  - app-web-proxy
-  - app-proxy-report
-  - app-content-filter
+neth_pkgs:
+  - nethserver-ibays
+  - nethserver-samba
+  - nethserver-samba-audit
+  - nethserver-cups
+  - nethserver-avahi
+  - nethserver-dnsmasq
+  - nethserver-collectd
+  - nethserver-collectd-web
+  - nethserver-squid
+  - nethserver-squidclamav
+  - nethserver-squidguard
+  - nethserver-firewall-base

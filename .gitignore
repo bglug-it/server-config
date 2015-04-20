@@ -1,3 +1,4 @@
 *.swp
 *.box
 Vagrantfile
+.vagrant/*

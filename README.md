@@ -1,6 +1,6 @@
-# Repository di Ansible per configurazione del server di dominio con ClearOS #
+# Repository di Ansible per configurazione del server di dominio con NethServer #
 
-Qui sono presenti i files di configurazione per il server ClearOS.
+Qui sono presenti i files di configurazione per il server [NethServer](http://www.nethserver.org/).
 Per configurarlo:
 
     $ vim hosts
@@ -16,8 +16,7 @@ l'uso con [`vagrant`](https://www.vagrantup.com/).
 È pertanto possibile creare una macchina virtuale automatica eseguendo i
 seguenti comandi:
 
-    $ vagrant box add clearos6 syntaxerrormmm/clearos6
-    $ vagrant init clearos6
+    $ vagrant init syntaxerrormmm/nethserver
 
 [Contattatemi](mailto:syntaxerrormmm-AT-gmail.com) per avere accesso alla
 macchina.

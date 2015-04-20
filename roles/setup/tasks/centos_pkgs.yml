@@ -1,81 +1,39 @@
 ---
 
-- name: Verifica installazione pacchetti aggiuntivi
-  yum: name={{ item }} state=present
-  sudo: yes
-  with_items: addins_pkgs
-  register: check_pkg
+- name: Verifica abilitazione repo Extra
+  shell: yum repolist
+  register: check_epel
+  failed_when: "'Extra Packages for Enterprise Linux 6' not in check_epel.stdout"
   ignore_errors: yes
-  tags: pkg
 
-- name: Verifica configurazione CentOS 6
-  shell: test -f /etc/yum.repos.d/{{ item }}
-  sudo: yes
-  with_items: centos_repo_files
-  when: check_pkg|failed
-  ignore_errors: yes
-  register: check_repos
-  tags: repo
-
-- name: Scarico configurazione per CentOS 6
-  get_url:
-    url: http://mirror.centos.org/centos/6/os/x86_64/Packages/centos-release-6-6.el6.centos.12.2.x86_64.rpm
-    dest: /tmp/centos-release-6-6.el6.centos.12.2.x86_64.rpm
-  sudo: yes
-  when: check_repos|failed
-  tags: repo
-
-- name: Scompatto configurazione CentOS 6
-  shell: mkdir -p /tmp/centos-release && pushd /tmp/centos-release && rpm2cpio ../centos-release-6-6.el6.centos.12.2.x86_64.rpm | cpio -idmv && popd
-  sudo: yes
-  when: check_repos|failed
-  tags: repo
-
-- name: Copio i repository
-  shell: cp -f /tmp/centos-release/etc/yum.repos.d/{{ item }} /etc/yum.repos.d/
-  with_items: centos_repo_files
-  sudo: yes
-  when: check_repos|failed
-  register: centos_repo_installed
-  tags: repo
-
-- name: Copio le chiavi di firma GPG
-  shell: cp -f /tmp/centos-release/etc/pki/rpm-gpg/{{ item }} /etc/pki/rpm-gpg/
-  with_items: centos_gpg_files
-  sudo: yes
-  when: check_repos|failed
-  tags: repo
-
-  # Senza di questa, non è possibile installare EPEL dopo
-- name: Prima attivazione repo
-  shell: yum clean all && yum repolist
-  sudo: yes
-  register: first_repo_activate
-  when: centos_repo_installed|changed
-  tags: repo
-
-- name: Attivo EPEL
+- name: Installo epel-release
   yum: name=epel-release state=present
   sudo: yes
-  when: first_repo_activate|changed
+  when: check_epel|success
   register: epel_installed
-  tags: repo
 
-- name: Seconda attivazione repo
+- name: Installo epel-release da URL
+  yum:
+    name: "http://dl.fedoraproject.org/pub/epel/6/{{ ansible_architecture }}/epel-release-6-8.noarch.rpm"
+    state: present
+  sudo: yes
+  when: check_epel|failed
+  register: rpm_epel_installed
+
+- name: Abilito il repo EPEL
+  shell: yum-config-manager --enable epel
+  sudo: yes
+  changed_when: rpm_epel_enabled.rc == 0
+  register: rpm_epel_enabled
+
+- name: Pulizia e ricaricam. repo
   shell: yum clean all && yum repolist
   sudo: yes
-  when: epel_installed|changed
+  when: epel_installed|changed or rpm_epel_installed|changed
   tags: repo
 
-- name: Pulizia
-  shell: rm -rf /tmp/centos-release && rm -f /tmp/centos-release-6-6.el6.centos.12.2.x86_64.rpm /tmp/epel-release-6-8.noarch.rpm
-  sudo: yes
-  when: check_repos|failed
-  tags: repo
-
-- name: Installo pacchetti di gestione
+- name: Installo pacchetti addizionali
   yum: name={{ item }} state=present
   sudo: yes
-  when: ansible_os_family == 'ClearOS'
   with_items: addin_pkgs
   tags: pkg

@@ -1,5 +1,7 @@
 ---
 
+- include: selinux-binding.yml
+
 - include: mgmtuser.yml
 
 - include: ssh-keygen.yml
