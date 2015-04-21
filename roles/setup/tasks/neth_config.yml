@@ -9,3 +9,20 @@
   shell: /sbin/e-smith/db configuration setprop ntpd NTPServer ntp1.inrim.it status enabled && /sbin/e-smith/signal-event nethserver-ntp-save
   sudo: yes
   tags: ntp
+
+- name: Lancio aggiornamenti del clamav
+  shell: /sbin/e-smith/signal-event nethserver-squidclamav-updateupdate
+  sudo: yes
+
+- name: Verifico la presenza del gruppo
+  shell: /sbin/e-smith/db accounts show domusers
+  sudo: yes
+  tags: groups
+  changed_when: "'domusers=group' not in check_domusers.stdout"
+  register: check_domusers
+
+- name: Aggiungo gruppo "Domain users"
+  shell: /sbin/e-smith/db accounts set domusers group && /sbin/e-smith/db accounts setprop domusers Description 'Domain Users' Gid 502 Members admin Removable no && /sbin/e-smith/signal-event group-create
+  sudo: yes
+  tags: groups
+  when: check_domusers|changed
