@@ -1,0 +1,13 @@
+---
+- name: Verifica di NethServer
+  shell: /sbin/e-smith/config getprop sysconfig ProductName
+  register: sysconfig_productname
+
+- name: Configuro la scheda secondaria
+  shell: /sbin/e-smith/db networks setprop eth1 bootproto none device eth1 ipaddr 10.0.0.1 netmask 255.255.255.0 onboot yes role green
+  when: "'NethServer' in sysconfig_productname.stdout"
+  register: eth1_enabled
+
+- name: Attivo la configurazione
+  shell: signal-event interface-update
+  when: eth1_enabled|success

@@ -1,5 +1,9 @@
 ---
 
+# solo se è virtualbox, procedo a configurare la seconda scheda di rete
+- include: configure-networks.yml
+  when: ansible_bios_version == "VirtualBox"
+
 - include: selinux-binding.yml
 
 - include: mgmtuser.yml
