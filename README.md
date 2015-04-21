@@ -5,7 +5,7 @@ Per configurarlo:
 
     $ vim hosts
     $ ansible-playbook init.yml -u root --ask-pass \
-	-e "admin_sshkey=/path/to/id_rsa.pub"
+         -e "admin_sshkey=/path/to/id_rsa.pub"
     $ ansible-playbook setup.yml 
 
 # Gestione con vagrant #
@@ -14,7 +14,6 @@ Per utilizzare [`vagrant`](http://www.vagrantup.com) e il `Vagrantfile` nel
 repo, è necessario avere `vagrant` installato sulla propria macchina e
 lanciare i seguenti comandi:
 
-    $ vagrant box add nethserver syntaxerrormmm/nethserver
     $ cd /path/to/ps-srvmgt
     $ vagrant up
 
