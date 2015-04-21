@@ -1,8 +1,12 @@
 ---
+- name: Verifica di NethServer
+  shell: /sbin/e-smith/config getprop sysconfig ProductName
+  register: sysconfig_productname
+  changed_when: "'NethServer' in sysconfig_productname.stdout"
+  ignore_errors: yes
 
-# solo se è virtualbox, procedo a configurare la seconda scheda di rete
 - include: configure-networks.yml
-  when: ansible_bios_version == "VirtualBox"
+  when: sysconfig_productname|changed
 
 - include: selinux-binding.yml
 
