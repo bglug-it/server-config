@@ -10,13 +10,13 @@ Per configurarlo:
 
 # Gestione con vagrant #
 
-Nel repo è stata caricata una macchina virtuale già pronta con Virtualbox per
-l'uso con [`vagrant`](https://www.vagrantup.com/).
+Per utilizzare [`vagrant`](http://www.vagrantup.com) e il `Vagrantfile` nel
+repo, è necessario avere `vagrant` installato sulla propria macchina e
+lanciare i seguenti comandi:
 
-È pertanto possibile creare una macchina virtuale automatica eseguendo i
-seguenti comandi:
-
-    $ vagrant init syntaxerrormmm/nethserver
+    $ vagrant box add nethserver syntaxerrormmm/nethserver
+    $ cd /path/to/ps-srvmgt
+    $ vagrant up
 
 [Contattatemi](mailto:syntaxerrormmm-AT-gmail.com) per avere accesso alla
 macchina.
