@@ -1,5 +1,4 @@
 ---
-
 - name: Creazione account di gestione Ansible
   user: name=amgmt comment="Ansible Management User" group=wheel state=present password=$6$rounds=100000$XvHuMoXtpCksx379$nhlfUn38.oBB7JrDrtwfUisw8T0Bg5InzFq1fw31mcEmGZ2AYFkFK2zC2g04lSfw.kpdSgqH3Dl5q9r1fY6.k.
 

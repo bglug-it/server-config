@@ -9,6 +9,7 @@
   when: sysconfig_productname|changed
 
 - include: selinux-binding.yml
+  when: ansible_os_family == "RedHat"
 
 - include: mgmtuser.yml
 

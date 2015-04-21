@@ -1,0 +1,7 @@
+---
+- name: ntp save
+  shell: /sbin/e-smith/signal-event nethserver-ntp-save
+  sudo: yes
+
+- name: group create
+  shell: /sbin/e-smith/signal-event group-create
