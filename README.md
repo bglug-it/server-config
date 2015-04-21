@@ -16,6 +16,3 @@ lanciare i seguenti comandi:
 
     $ cd /path/to/ps-srvmgt
     $ vagrant up
-
-[Contattatemi](mailto:syntaxerrormmm-AT-gmail.com) per avere accesso alla
-macchina.
