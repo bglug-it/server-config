@@ -17,17 +17,17 @@
   sudo: yes
   tags: clamav
 
-- name: Verifico la presenza del gruppo
-  shell: /sbin/e-smith/db accounts show domusers
-  sudo: yes
-  tags: groups
-  register: check_domusers
-  ignore_errors: yes
-
-- name: Aggiungo gruppo "Domain users"
-  shell: /sbin/e-smith/db accounts set domusers group && /sbin/e-smith/db accounts setprop domusers Description 'Domain Users' Gid 502 Members admin Removable no
-  sudo: yes
-  tags: groups
-  notify:
-    - group create
-  when: check_domusers|failed
+  # - name: Verifico la presenza del gruppo
+  #   shell: /sbin/e-smith/db accounts show domusers
+  #   sudo: yes
+  #   tags: groups
+  #   register: check_domusers
+  #   ignore_errors: yes
+  # 
+  # - name: Aggiungo gruppo "Domain users"
+  #   shell: /sbin/e-smith/db accounts set domusers group && /sbin/e-smith/db accounts setprop domusers Description 'Domain Users' Gid 502 Members admin Removable no
+  #   sudo: yes
+  #   tags: groups
+  #   notify:
+  #     - group create
+  #   when: check_domusers|failed
