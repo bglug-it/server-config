@@ -20,3 +20,5 @@ neth_pkgs:
   - nethserver-squidclamav
   - nethserver-squidguard
   - nethserver-firewall-base
+  - nethserver-backup-config
+  - nethserver-backup-data
