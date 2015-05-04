@@ -16,7 +16,3 @@
 - include: neth_pkgs.yml
   when: ansible_distribution == "CentOS" and ansible_os_family == "RedHat"
   tags: neth
-
-- include: neth_config.yml
-  when: ansible_distribution == "CentOS" and ansible_os_family == "RedHat"
-  tags: neth

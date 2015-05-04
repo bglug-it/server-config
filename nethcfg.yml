@@ -1,7 +1,6 @@
 ---
-
 - hosts: server
   vars_files:
     - domain.yml
   roles:
-    - setup
+    - nethcfg
