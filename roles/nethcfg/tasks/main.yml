@@ -6,11 +6,11 @@
   sudo: yes
 
 - name: Configurazione scheda di rete esterna
-  shell: /sbin/e-smith/db configuration setprop eth0 role red bootproto dhcp 
+  shell: /sbin/e-smith/db networks setprop eth0 role red bootproto dhcp 
   sudo: yes
 
 - name: Configurazione scheda di rete interna
-  shell: /sbin/e-smith/db configuration setprop eth1 role green ipaddr {{ serverip }} netmask {{ servernetmask }}
+  shell: /sbin/e-smith/db networks setprop eth1 role green ipaddr {{ serverip }} netmask {{ servernetmask }}
   sudo: yes
 
 - name: Configurazione rete trusted
@@ -38,7 +38,7 @@
   sudo: yes
 
 - name: Configurazione servizio DHCP
-  shell: /sbin/e-smith/db dhcp setprop eth1 DhcpRangeStart {{ dhcprange_start }} DhcpRangeEnd {{ dhcprange_end }} status enabled
+  shell: /sbin/e-smith/db dhcp set eth1 range DhcpRangeStart {{ dhcprange_start }} DhcpRangeEnd {{ dhcprange_end }} status enabled
   sudo: yes
 
 - name: Attivazione configurazione DHCP
@@ -72,7 +72,7 @@
   sudo: yes
 
 - name: Creazione gruppo Domain Users
-  shell: /sbin/e-smith/db accounts set domusers group Gid 502 Description "Domain Users" Members admin Removable no
+  shell: /sbin/e-smith/db accounts set domusers group Gid 5000 Description "Domain Users" Members admin Removable no
   sudo: yes
 
 - name: Configurazione nuovo gruppo Domain Users
@@ -80,7 +80,7 @@
   sudo: yes
 
 - name: Configurazione share Condiviso
-  shell: /sbin/e-smith/db accounts set shared ibay AclRead domadmins,domusers AclWrite domadmins,domusers Description "Cartella condivisa" GroupAccess rw HttpStatus disabled OtherAccess r OwningGroup locals SmbAuditStatus enabled SmbGuestAccessType none SmbRecycleBinStatus enabled SmbRecycleBinVersionsStatus disabled SmbStatus enabled
+  shell: /sbin/e-smith/db accounts set shared ibay AclRead domadmins,domusers AclWrite domadmins,domusers Description "Cartella condivisa" GroupAccess rw HttpStatus disabled OtherAccess r OwningGroup locals SmbAuditStatus enabled SmbGuestAccessType none SmbRecycleBinStatus enabled SmbRecycleBinVersionsStatus enabled SmbStatus enabled
   sudo: yes
 
 - name: Attivazione share condiviso

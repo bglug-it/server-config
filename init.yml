@@ -1,6 +1,6 @@
 ---
 
-- hosts: server
+- hosts: localnet
   vars:
     - ansible_ssh_user: root
   roles:

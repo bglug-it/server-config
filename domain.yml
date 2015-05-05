@@ -12,7 +12,7 @@ dhcprange_start: 192.168.0.10
 dhcprange_end: 192.168.0.50
 extdnsserver1: 208.67.222.222
 extdnsserver2: 208.67.220.220
-org_company: Istituto Comprensivo Mastri Caravaggini
+org_company: Istituto Comprensivo 'Mastri Caravaggini'
 org_countrycode: IT
 org_department: "Laboratorio 1"
 org_city: Caravaggio
