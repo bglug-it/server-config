@@ -17,6 +17,10 @@
   shell: /sbin/e-smith/db networks set {{ servernet }} network Description "Local LAN" Mask {{ servernetmask }}
   sudo: yes
 
+- name: Attivo configurazioni di rete
+  shell: /sbin/e-smith/signal-event interface-update
+  sudo: yes
+
 - name: Configurazione nome server
   shell: /sbin/e-smith/db configuration set SystemName {{ servershort }}
   sudo: yes
@@ -25,8 +29,8 @@
   shell: /sbin/e-smith/db configuration set DomainName {{ domainlong }}
   sudo: yes
 
-- name: Attivo configurazioni di rete
-  shell: /sbin/e-smith/signal-event interface-update
+- name: Attivazione cambiamenti hostname
+  shell: /sbin/e-smith/signal-event hostname-modify
   sudo: yes
 
 - name: Configurazione forza password
@@ -64,19 +68,19 @@
   sudo: yes
 
 - name: Configurazione SMB
-  shell: /sbin/e-smith/db configuration setprop smb RoamingProfiles yes ServerRole PDC Workgroup {{ domainshort }} status enabled
+  shell: /sbin/e-smith/db configuration setprop smb RoamingProfiles yes ServerRole PDC Workgroup "{{ domainshort }}" status enabled
   sudo: yes
 
 - name: Attivo configurazione SMB
-  shell: /sbin/e-smith/signal-event nethserver-samba-update
+  shell: /sbin/e-smith/signal-event nethserver-samba-save
   sudo: yes
 
 - name: Creazione gruppo Domain Users
-  shell: /sbin/e-smith/db accounts set domusers group Gid 5000 Description "Domain Users" Members admin Removable no
+  shell: /sbin/e-smith/db accounts set domusers group Description "Domain Users" Members admin Removable no
   sudo: yes
 
 - name: Configurazione nuovo gruppo Domain Users
-  shell: /sbin/e-smith/signal-event group-create
+  shell: /sbin/e-smith/signal-event group-create domusers
   sudo: yes
 
 - name: Configurazione share Condiviso
