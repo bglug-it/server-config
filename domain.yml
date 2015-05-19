@@ -1,9 +1,9 @@
 ---
 # Configurazione dominio LAB1
 servershort: pdc
-serverfqdn: pdc.boia.de
-domainlong: boia.de
-domainshort: BOIA
+serverfqdn: pdc.mastri.local
+domainlong: mastri.local
+domainshort: MASTRI
 serverip: 192.168.0.1
 servernetmask: 255.255.255.0
 servernet: 192.168.0.0
