@@ -84,7 +84,7 @@
   sudo: yes
 
 - name: Configurazione share Condiviso
-  shell: /sbin/e-smith/db accounts set shared ibay AclRead domadmins,domusers AclWrite domadmins,domusers Description "Cartella condivisa" GroupAccess rw HttpStatus disabled OtherAccess r OwningGroup locals SmbAuditStatus enabled SmbGuestAccessType none SmbRecycleBinStatus enabled SmbRecycleBinVersionsStatus enabled SmbStatus enabled
+  shell: /sbin/e-smith/db accounts set shared ibay AclRead domadmins AclWrite domadmins Description "Cartella condivisa" GroupAccess rw HttpStatus disabled OtherAccess r OwningGroup domusers SmbAuditStatus enabled SmbGuestAccessType none SmbRecycleBinStatus enabled SmbRecycleBinVersionsStatus enabled SmbStatus enabled
   sudo: yes
 
 - name: Attivazione share condiviso
