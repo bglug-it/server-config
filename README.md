@@ -23,8 +23,8 @@ lanciare i seguenti comandi:
 
 ### To Do List ###
 
-* Implementare PXE + Kickstart + preseed
-* Implementare backup
+* Implementare PXE + Kickstart (manca test)
 * Implementare configurazioni per repo Ubuntu
 * Implementare configurazioni generiche dominio server
 * Implementare aggiornamento automatico del sistema via `ansible`
+* Implementare backup

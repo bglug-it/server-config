@@ -1,0 +1,141 @@
+---
+# Configurazione dell'ambiente di boot via rete per i client
+
+- name: Verifica configurazione tftp
+  shell: /sbin/e-smith/db configuration getprop dnsmasq dhcp-boot
+  register: chk_tftp_enabled
+  ignore_errors: yes
+  sudo: yes
+
+- name: Configuro tftp
+  shell: /sbin/e-smith/db configuration setprop dnsmasq tftp-status enabled dhcp-boot pxelinux.0
+  when: chk_tftp_enabled|failed
+  sudo: yes
+
+- name: Attivo tftp
+  shell: /sbin/e-smith/signal-event nethserver-dnsmasq-save
+  when: chk_tftp_enabled|failed
+  sudo: yes
+
+- name: Verifica configurazione ibay kickstart
+  shell: /sbin/e-smith/db accounts get ks
+  register: chk_ks_created
+  ignore_errors: yes
+  sudo: yes
+
+- name: Configurazione web kickstart
+  shell: /sbin/e-smith/db accounts set ks ibay Description "Kickstart share" GroupAccess rw HttpAccess private HttpAliasType default HttpAllowOverrideStatus disabled HttpForceSslStatus disabled HttpPasswordStatus disabled HttpStatus enabled HttpVirtualHost __ANY__ OtherAccess r OwningGroup locals SmbAuditStatus disabled SmbStatus disabled
+  when: chk_ks_created|failed
+  sudo: yes
+
+- name: Attivazione web kickstart
+  shell: /sbin/e-smith/signal-event ibay-create ks
+  when: chk_ks_created|failed
+  sudo: yes
+
+- name: Verifica configurazione ibay ubuntu
+  shell: /sbin/e-smith/db accounts get ubuntu
+  register: chk_ubuntu_created
+  ignore_errors: yes
+  sudo: yes
+
+- name: Configurazione web ubuntu
+  shell: /sbin/e-smith/db accounts set ubuntu ibay Description "Ubuntu Installation media" GroupAccess rw HttpAccess private HttpAliasType default HttpAllowOverrideStatus disabled HttpForceSslStatus disabled HttpPasswordStatus disabled HttpStatus enabled HttpVirtualHost __ANY__ OtherAccess r OwningGroup locals SmbAuditStatus disabled SmbStatus disabled
+  when: chk_ubuntu_created|failed
+  sudo: yes
+
+- name: Attivazione web ubuntu
+  shell: /sbin/e-smith/signal-event ibay-create ubuntu
+  when: chk_ubuntu_created|failed
+  sudo: yes
+
+- name: Creo directory necessarie
+  file: path={{ item }} state=directory
+  with_items:
+    - /var/lib/tftproot/pxelinux.cfg
+    - /var/lib/tftproot/ubuntu/14.04/i386
+    - /var/lib/tftproot/ubuntu/14.04/amd64
+    - /var/lib/tftproot/utils/memtest86
+  sudo: yes
+
+- name: pxelinux.0
+  get_url:
+    url: http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-i386/current/images/netboot/pxelinux.0
+    dest: /var/lib/tftproot/pxelinux.0
+  sudo: yes
+
+- name: pxelinux.cfg/default
+  template: src=pxelinux.cfg/default dest=/var/lib/tftproot/pxelinux.cfg/default
+  sudo: yes
+
+- name: bglug.png
+  copy: src=bglug.png dest=/var/lib/tftproot/utils/bglug.png
+  sudo: yes
+
+- name: vesamenu.c32
+  get_url:
+    url: http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-i386/current/images/netboot/ubuntu-installer/i386/boot-screens/vesamenu.c32
+    dest: /var/lib/tftproot/utils/vesamenu.c32
+  sudo: yes
+
+- name: linux i386 
+  get_url:
+    url: http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-i386/current/images/netboot/ubuntu-installer/i386/linux
+    dest: /var/lib/tftproot/ubuntu/14.04/i386/linux
+  sudo: yes
+
+- name: initrd.gz i386
+  get_url:
+    url: http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-i386/current/images/netboot/ubuntu-installer/i386/initrd.gz
+    dest: /var/lib/tftproot/ubuntu/14.04/i386/initrd.gz
+  sudo: yes
+
+- name: linux amd64
+  get_url:
+    url: http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/linux
+    dest: /var/lib/tftproot/ubuntu/14.04/amd64/linux
+  sudo: yes
+
+- name: initrd.gz amd64
+  get_url:
+    url: http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/initrd.gz
+    dest: /var/lib/tftproot/ubuntu/14.04/amd64/initrd.gz
+  sudo: yes
+
+- name: memdisk
+  get_url:
+    url: http://syntaxerrormmm.zapto.org/pxe-bootimg/memdisk
+    dest: /var/lib/tftproot/utils/memdisk
+  sudo: yes
+
+- name: aida
+  get_url:
+    url: http://syntaxerrormmm.zapto.org/pxe-bootimg/aida.img
+    dest: /var/lib/tftproot/utils/aida.img
+  sudo: yes
+
+- name: memtest86
+  get_url:
+    url: http://syntaxerrormmm.zapto.org/pxe-bootimg/memtest86/vmlinuz
+    dest: /var/lib/tftproot/utils/memtest86/vmlinuz
+  sudo: yes
+
+- name: hdt
+  get_url:
+    url: http://syntaxerrormmm.zapto.org/pxe-bootimg/hdt.img
+    dest: /var/lib/tftproot/utils/hdt.img
+  sudo: yes
+
+- name: ranish
+  get_url:
+    url: http://syntaxerrormmm.zapto.org/pxe-bootimg/ranish.img
+    dest: /var/lib/tftproot/utils/ranish.img
+  sudo: yes
+
+- name: Copia configurazione kickstart - Edubuntu
+  template: src=ks/edubuntu-trusty.cfg dest=/var/lib/nethserver/ibay/ks/edubuntu-trusty.cfg
+  sudo: yes
+
+- name: Copia configurazione kickstart - Ubuntu
+  template: src=ks/ubuntu-trusty.cfg dest=/var/lib/nethserver/ibay/ks/ubuntu-trusty.cfg
+  sudo: yes
