@@ -1,0 +1,10 @@
+---
+# Configurazione del server come repo
+
+- name: Installazione apt-mirror
+  yum: pkg=apt-mirror state=present
+  sudo: yes
+
+- name: Installazione configurazione apt-mirror
+  copy: src=apt-mirror.list dest=/etc/apt-mirror.list
+  sudo: yes
