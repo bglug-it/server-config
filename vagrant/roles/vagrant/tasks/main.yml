@@ -1,0 +1,14 @@
+---
+# Provisioning per vagrant.
+- name: Verifico versione server - NethServer
+  shell: /sbin/e-smith/db configuration getprop sysconfig ProductName
+  register: chk_nethserver
+  ignore_errors: yes
+  sudo: yes
+
+- name: Configuro la scheda secondaria
+  shell: /sbin/e-smith/db networks setprop eth1 bootproto none device eth1 ipaddr 10.0.0.1 netmask 255.255.255.0 onboot yes role green
+  when: "'NethServer' in chk_nethserver.stdout"
+  sudo: yes
+  notify:
+    - interface update

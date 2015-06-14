@@ -126,4 +126,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # chef-validator, unless you changed the configuration.
   #
   #   chef.validation_client_name = "ORGNAME-validator"
+  config.vm.provision "ansible" do |ansible|
+    ansible.inventory_path = "vagrant/hosts"
+    ansible.playbook = "vagrant/vagrant.yml"
+  end
 end

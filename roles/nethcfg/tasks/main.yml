@@ -1,6 +1,9 @@
 ---
 # Configurazione principale di NethServer.
 
+# Installo pacchetti addizionali
+- include: neth_pkgs.yml
+
 - name: Configurazione organizzazione
   shell: /sbin/e-smith/db configuration setprop OrganizationContact City "{{ org_city }}" Company "{{ org_company }}" CountryCode {{ org_countrycode }} Department "{{ org_department }}" PhoneNumber "{{ org_phone }}" Street "{{ org_street }}"
   sudo: yes

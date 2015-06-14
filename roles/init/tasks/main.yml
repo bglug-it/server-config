@@ -1,13 +1,5 @@
 ---
-- name: Verifica di NethServer
-  shell: /sbin/e-smith/config getprop sysconfig ProductName
-  register: sysconfig_productname
-  changed_when: "'NethServer' in sysconfig_productname.stdout"
-  ignore_errors: yes
-
-- include: configure-networks.yml
-  when: sysconfig_productname|changed
-
+# Task basilari per la prima configurazione
 - include: selinux-binding.yml
   when: ansible_os_family == "RedHat"
 

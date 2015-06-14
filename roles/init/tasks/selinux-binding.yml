@@ -1,4 +1,4 @@
 ---
-
+# Preconfigurazione selinux per host
 - name: Binding Python per selinux
   yum: name=libselinux-python state=present

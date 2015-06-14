@@ -1,0 +1,6 @@
+---
+# Vagrant provisioning playbook
+- hosts: vagrant
+  roles:
+    - vagrant 
+  sudo: yes
