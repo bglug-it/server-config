@@ -7,13 +7,15 @@ MENU BACKGROUND /utils/bglug.png
 
 LABEL edu64
 	MENU LABEL Installa Edubuntu a ^64 bit
-	KERNEL /ubuntu/14.04/amd64/linux
-	APPEND vga=normal initrd=/ubuntu/14.04/amd64/initrd.gz ks=http://{{ serverfqdn }}/ks/eduubuntu-trusty.cfg -- quiet
+	LINUX	/ubuntu/14.04/amd64/linux
+	INITRD	/ubuntu/14.04/amd64/initrd.gz
+	APPEND	vga=normal ks=http://{{ serverfqdn }}/ks/edubuntu-trusty.cfg -- quiet
 	
 LABEL edu32
 	MENU LABEL Installa Edubuntu a ^32 bit
-	KERNEL /ubuntu/14.04/amd64/linux
-	APPEND vga=normal initrd=/ubuntu/14.04/amd64/initrd.gz ks=http://{{ serverfqdn }}/ks/edubuntu-trusty.cfg -- quiet
+	LINUX	/ubuntu/14.04/i386/linux
+	INITRD	/ubuntu/14.04/i386/initrd.gz
+	APPEND 	vga=normal ks=http://{{ serverfqdn }}/ks/edubuntu-trusty.cfg -- quiet
 	
 MENU SEPARATOR
 
