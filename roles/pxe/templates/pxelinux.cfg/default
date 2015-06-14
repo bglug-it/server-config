@@ -28,12 +28,6 @@ MENU SEPARATOR
 MENU BEGIN
 MENU TITLE Utilities
 
-LABEL aida
-	MENU LABEL ^AIDA - Old Hardware Diagnostic Tool
-	KERNEL /utils/memdisk
-	INITRD /utils/aida.img
-	APPEND floppy
-
 LABEL hdt
 	MENU LABEL ^HDT - Hardware Diagnostic Tool
 	KERNEL /utils/memdisk
@@ -43,12 +37,6 @@ LABEL hdt
 LABEL memtest
 	MENU LABEL ^memtest86 - Test della RAM
 	KERNEL /utils/memtest86/vmlinuz
-
-LABEL ranish
-	MENU LABEL ^Ranish - Partition Management Tool
-	KERNEL /utils/memdisk
-	INITRD /utils/ranish.img
-	APPEND floppy
 
 MENU SEPARATOR
 

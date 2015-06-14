@@ -104,12 +104,6 @@
     dest: /var/lib/tftpboot/utils/memdisk
   sudo: yes
 
-- name: aida
-  get_url:
-    url: http://syntaxerrormmm.zapto.org/pxe-bootimg/aida.img
-    dest: /var/lib/tftpboot/utils/aida.img
-  sudo: yes
-
 - name: memtest86
   get_url:
     url: http://syntaxerrormmm.zapto.org/pxe-bootimg/memtest86/vmlinuz
@@ -120,12 +114,6 @@
   get_url:
     url: http://syntaxerrormmm.zapto.org/pxe-bootimg/hdt.img
     dest: /var/lib/tftpboot/utils/hdt.img
-  sudo: yes
-
-- name: ranish
-  get_url:
-    url: http://syntaxerrormmm.zapto.org/pxe-bootimg/ranish.img
-    dest: /var/lib/tftpboot/utils/ranish.img
   sudo: yes
 
 - name: Copia configurazione kickstart - Edubuntu
