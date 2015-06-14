@@ -1,19 +1,19 @@
-UI utils/vesamenu.c32
+UI /utils/vesamenu.c32
 DEFAULT edu64
 TIMEOUT 30
 
 MENU TITLE BgLUG PXE Boot
-MENU BACKGROUND utils/bglug.png
+MENU BACKGROUND /utils/bglug.png
 
 LABEL edu64
 	MENU LABEL Installa Edubuntu a ^64 bit
-	KERNEL ubuntu/14.04/amd64/linux
-	APPEND vga=normal initrd=ubuntu/14.04/amd64/initrd.gz ks=http://{{ serverfqdn }}/ks/ubuntu-trusty.cfg -- quiet
+	KERNEL /ubuntu/14.04/amd64/linux
+	APPEND vga=normal initrd=/ubuntu/14.04/amd64/initrd.gz ks=http://{{ serverfqdn }}/ks/eduubuntu-trusty.cfg -- quiet
 	
 LABEL edu32
 	MENU LABEL Installa Edubuntu a ^32 bit
-	KERNEL ubuntu/14.04/amd64/linux
-	APPEND vga=normal initrd=ubuntu/14.04/amd64/initrd.gz ks=http://{{ serverfqdn }}/ks/ubuntu-trusty.cfg -- quiet
+	KERNEL /ubuntu/14.04/amd64/linux
+	APPEND vga=normal initrd=/ubuntu/14.04/amd64/initrd.gz ks=http://{{ serverfqdn }}/ks/edubuntu-trusty.cfg -- quiet
 	
 MENU SEPARATOR
 
@@ -28,24 +28,25 @@ MENU TITLE Utilities
 
 LABEL aida
 	MENU LABEL ^AIDA - Old Hardware Diagnostic Tool
-	KERNEL utils/memdisk
-	INITRD utils/aida.img
+	KERNEL /utils/memdisk
+	INITRD /utils/aida.img
 	APPEND floppy
 
 LABEL hdt
 	MENU LABEL ^HDT - Hardware Diagnostic Tool
-	KERNEL utils/memdisk
-	INITRD utils/hdt.img
+	KERNEL /utils/memdisk
+	INITRD /utils/hdt.img
 	APPEND floppy
 
 LABEL memtest
 	MENU LABEL ^memtest86 - Test della RAM
-	KERNEL utils/memtest86/vmlinuz
+	KERNEL /utils/memtest86/vmlinuz
 
 LABEL ranish
 	MENU LABEL ^Ranish - Partition Management Tool
-	KERNEL utils/memdisk
-	APPEND initrd=/utils/ranish.img floppy
+	KERNEL /utils/memdisk
+	INITRD /utils/ranish.img
+	APPEND floppy
 
 MENU SEPARATOR
 

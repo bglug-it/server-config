@@ -7,7 +7,7 @@
   sudo: yes
 
 - name: Configuro la scheda secondaria
-  shell: /sbin/e-smith/db networks setprop eth1 bootproto none device eth1 ipaddr 10.0.0.1 netmask 255.255.255.0 onboot yes role green
+  shell: /sbin/e-smith/db networks setprop eth1 bootproto none device eth1 ipaddr 192.168.0.1 netmask 255.255.255.0 onboot yes role green
   when: "'NethServer' in chk_nethserver.stdout"
   sudo: yes
   notify:
