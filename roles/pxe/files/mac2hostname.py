@@ -6,6 +6,7 @@ from contextlib import contextmanager, closing
 from sqlite3 import connect
 from bottle import route, run, request
 from json import dumps
+import re
 import os
 
 __author__ = "Enrico Bacis"
@@ -53,12 +54,22 @@ def gethostname(mac, base=None):
         (hostname,) = cursor.execute('SELECT hostname FROM client WHERE mac = "%s"' % mac)
     return hostname
 
+def getmac(ip):
+    check_output(['ping', '-c1', '-t2', ip])
+    arp = check_output(['arp', '-n', ip])
+    return re.search(r'(([\da-fA-F]{1,2}\:){5}[\da-fA-F]{1,2})', arp).group(1)
+
 @route('/mac2hostname')
 def mac2hostname():
-    mac = request.query.mac
+    mac, base = request.query.mac, request.query.base
     if not mac:
         return 'Usage: GET /mac2hostname?mac=XX_XX_XX_XX_XX_XX[&base=YYY]'
     return gethostname(mac, base)
+
+@route('/whatsmyhostname')
+def whatsmyhostname():
+    ip = request.query.ip or request['REMOTE_ADDR']
+    return gethostname(getmac(ip), request.query.base)
 
 if __name__ == '__main__':
     init_tables()
