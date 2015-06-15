@@ -2,3 +2,4 @@
 # Configurazione PXE server con repo locale
 - include: apt-mirror.yml
 - include: tftp-ks.yml
+- include: mac2hostname.yml
