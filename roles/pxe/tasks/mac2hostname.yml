@@ -1,0 +1,24 @@
+---
+# Installa e configura il servizio per rinominare il client
+# Grazie per il servizio a Enrico Bacis
+
+- name: Installazione dipendenze Python
+  yum: pkg=python-bottle state=present
+  sudo: yes
+
+- name: Creazione directory necessarie
+  file: path={{ item }} state=directory
+  with_items:
+    - /var/lib/mac2hostname
+    - /var/run/mac2hostname
+    - /var/log/mac2hostname
+    - /usr/share/mac2hostname
+  sudo: yes
+
+- name: Copia dello script
+  copy: src=mac2hostname.py dest=/usr/share/mac2hostname/mac2hostname.py mode=0755
+  sudo: yes
+
+- name: Finalizzazione della copia
+  file: src=/usr/share/mac2hostname/mac2hostname.py dest=/usr/bin/mac2hostname state=link
+  sudo: yes
