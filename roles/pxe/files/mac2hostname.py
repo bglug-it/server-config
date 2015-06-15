@@ -3,6 +3,7 @@
 """API to map MAC addresses to hostnames"""
 
 from contextlib import contextmanager, closing
+from subprocess import check_output
 from sqlite3 import connect
 from bottle import route, run, request
 from json import dumps
@@ -36,13 +37,6 @@ def init_tables():
                        'hostname TEXT NOT NULL UNIQUE, mac TEXT UNIQUE)')
         cursor.execute('CREATE INDEX IF NOT EXISTS idxmac ON client(mac)')
 
-@route('/hosts')
-def hosts():
-    with getcursor() as cursor:
-        return dumps([dict((meta[0], data)
-                      for meta, data in zip(cursor.description, row))
-                      for row in cursor.execute('SELECT hostname, mac FROM client ORDER BY id')], indent=4)
-
 def normalizemac(mac):
     return ':'.join(x.zfill(2) for x in mac.split(':')).upper()
 
@@ -58,6 +52,13 @@ def getmac(ip):
     check_output(['ping', '-c1', '-t2', ip])
     arp = check_output(['arp', '-n', ip])
     return re.search(r'(([\da-fA-F]{1,2}\:){5}[\da-fA-F]{1,2})', arp).group(1)
+
+@route('/hosts')
+def hosts():
+    with getcursor() as cursor:
+        return dumps([dict((meta[0], data)
+                      for meta, data in zip(cursor.description, row))
+                      for row in cursor.execute('SELECT hostname, mac FROM client ORDER BY id')], indent=4)
 
 @route('/mac2hostname')
 def mac2hostname():
