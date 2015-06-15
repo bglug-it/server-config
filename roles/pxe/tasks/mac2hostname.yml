@@ -3,16 +3,7 @@
 # Grazie per il servizio a Enrico Bacis
 
 - name: Installazione dipendenze Python
-  yum: pkg={{ item }} state=present
-  with_items:
-    - python-bottle
-    - python-devel
-    - python-pip
-    - python-virtualenv
-  sudo: yes
-
-- name: Configuro con pip il pacchetto subprocess
-  shell: pip install subprocess
+  yum: pkg=python-bottle state=present
   sudo: yes
 
 - name: Creazione directory necessarie
