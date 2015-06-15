@@ -3,7 +3,16 @@
 # Grazie per il servizio a Enrico Bacis
 
 - name: Installazione dipendenze Python
-  yum: pkg=python-bottle state=present
+  yum: pkg={{ item }} state=present
+  with_items:
+    - python-bottle
+    - python-devel
+    - python-pip
+    - python-virtualenv
+  sudo: yes
+
+- name: Configuro con pip il pacchetto subprocess
+  shell: pip install subprocess
   sudo: yes
 
 - name: Creazione directory necessarie
@@ -22,3 +31,21 @@
 - name: Finalizzazione della copia
   file: src=/usr/share/mac2hostname/mac2hostname.py dest=/usr/bin/mac2hostname state=link
   sudo: yes
+
+- name: Aggiunto oggetto servizio mac2hostname
+  shell: /sbin/e-smith/db fwservices set mac2hostname fwservice Description "mac2hostname service" Ports 3000 Protocol tcp
+  sudo: yes
+
+- name: Attivo modifiche a livello di servizio
+  shell: /sbin/e-smith/signal-event firewall-objects-modify
+  sudo: yes
+
+- name: Aggiungo regola firewall mac2hostname
+  shell: /sbin/e-smith/db fwrules set 1 rule Action accept Description "mac2hostname allow local traffic" Dst any Log none Position 64 service "fwservice;mac2hostname" Src "role;green" status enabled
+  sudo: yes
+
+- name: Attivo modifiche firewall
+  shell: /sbin/e-smith/signal-event firewall-adjust
+  sudo: yes
+  
+
