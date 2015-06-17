@@ -6,7 +6,7 @@
 
 - name: Download della gestione client con ansible
   git:
-  repo: "https://github.com/bglug-it/ps-clientmgmt.git"
+    repo: "https://github.com/bglug-it/ps-clientmgmt.git"
     dest: /home/amgmt/clientmgmt
   tags:
     - git
