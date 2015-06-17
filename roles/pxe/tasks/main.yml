@@ -19,9 +19,9 @@
   sudo: yes
 
 - name: Verifica configurazione ibay kickstart
-  shell: /sbin/e-smith/db accounts get ks
+  shell: /sbin/e-smith/db accounts show ks
   register: chk_ks_created
-  ignore_errors: yes
+  changed_when: chk_ks_created.rc != 0
   sudo: yes
 
 - name: Configurazione web kickstart
