@@ -22,6 +22,7 @@
   shell: /sbin/e-smith/db accounts show ks
   register: chk_ks_created
   changed_when: chk_ks_created.rc != 0
+  ignore_errors: yes
   sudo: yes
 
 - name: Configurazione web kickstart
