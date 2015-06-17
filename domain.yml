@@ -4,12 +4,12 @@ servershort: pdc
 serverfqdn: pdc.mastri.local
 domainlong: mastri.local
 domainshort: MASTRI
-serverip: 192.168.0.1
+serverip: 192.168.1.1
 servernetmask: 255.255.255.0
-servernet: 192.168.0.0
-servergw: 192.168.0.1
-dhcprange_start: 192.168.0.10
-dhcprange_end: 192.168.0.50
+servernet: 192.168.1.0
+servergw: 192.168.1.1
+dhcprange_start: 192.168.1.10
+dhcprange_end: 192.168.1.50
 extdnsserver1: 208.67.222.222
 extdnsserver2: 208.67.220.220
 org_company: Istituto Comprensivo 'Mastri Caravaggini'
