@@ -37,17 +37,17 @@ deb-src http://it.archive.ubuntu.com/ubuntu trusty-updates main restricted unive
 deb-src http://it.archive.ubuntu.com/ubuntu trusty-proposed main restricted universe multiverse
 deb-src http://it.archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse
 
-deb-i386 http://archive.ubuntu.com/ubuntu trusty main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
-deb-i386 http://archive.ubuntu.com/ubuntu trusty-security/debian-installer main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
-deb-i386 http://archive.ubuntu.com/ubuntu trusty-updates/debian-installer main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
-deb-i386 http://archive.ubuntu.com/ubuntu trusty-proposed/debian-installer main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
-deb-i386 http://archive.ubuntu.com/ubuntu trusty-backports/debian-installer main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-i386 http://it.archive.ubuntu.com/ubuntu trusty main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-i386 http://it.archive.ubuntu.com/ubuntu trusty-security main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-i386 http://it.archive.ubuntu.com/ubuntu trusty-updates main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-i386 http://it.archive.ubuntu.com/ubuntu trusty-proposed main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-i386 http://it.archive.ubuntu.com/ubuntu trusty-backports main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
 
-deb-amd64 http://archive.ubuntu.com/ubuntu trusty main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
-deb-amd64 http://archive.ubuntu.com/ubuntu trusty-security/debian-installer main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
-deb-amd64 http://archive.ubuntu.com/ubuntu trusty-updates/debian-installer main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
-deb-amd64 http://archive.ubuntu.com/ubuntu trusty-proposed/debian-installer main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
-deb-i386 http://archive.ubuntu.com/ubuntu trusty-backports/debian-installer main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-amd64 http://it.archive.ubuntu.com/ubuntu trusty main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-amd64 http://it.archive.ubuntu.com/ubuntu trusty-security main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-amd64 http://it.archive.ubuntu.com/ubuntu trusty-updates main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-amd64 http://it.archive.ubuntu.com/ubuntu trusty-proposed main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-i386 http://it.archive.ubuntu.com/ubuntu trusty-backports main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
 
 deb-i386 http://extras.ubuntu.com/ubuntu trusty main
 deb-amd64 http://extras.ubuntu.com/ubuntu trusty main
