@@ -1,5 +1,125 @@
 ---
-# Configurazione PXE server con repo locale
-- include: apt-mirror.yml
-- include: tftp-ks.yml
-- include: mac2hostname.yml
+# Configurazione dell'ambiente di boot via rete per i client
+
+- name: Verifica configurazione tftp
+  shell: /sbin/e-smith/db configuration getprop dnsmasq dhcp-boot
+  register: chk_tftp_enabled
+  changed_when: "'pxelinux.0' not in chk_tftp_enabled.stdout"
+  ignore_errors: yes
+  sudo: yes
+
+- name: Configuro tftp
+  shell: /sbin/e-smith/db configuration setprop dnsmasq tftp-status enabled dhcp-boot pxelinux.0
+  when: chk_tftp_enabled|changed
+  sudo: yes
+
+- name: Attivo tftp
+  shell: /sbin/e-smith/signal-event nethserver-dnsmasq-save
+  when: chk_tftp_enabled|changed
+  sudo: yes
+
+- name: Verifica configurazione ibay kickstart
+  shell: /sbin/e-smith/db accounts get ks
+  register: chk_ks_created
+  ignore_errors: yes
+  sudo: yes
+
+- name: Configurazione web kickstart
+  shell: /sbin/e-smith/db accounts set ks ibay Description "Kickstart share" GroupAccess rw HttpAccess private HttpAliasType default HttpAllowOverrideStatus disabled HttpForceSslStatus disabled HttpPasswordStatus disabled HttpStatus enabled HttpVirtualHost __ANY__ OtherAccess r OwningGroup locals SmbAuditStatus disabled SmbStatus disabled
+  when: chk_ks_created|failed
+  sudo: yes
+
+- name: Attivazione web kickstart
+  shell: /sbin/e-smith/signal-event ibay-create ks
+  when: chk_ks_created|failed
+  sudo: yes
+
+- name: Verifica presenza directory mirror
+  file: path=/var/spool/apt-mirror/mirror state=directory
+  register: chk_mirror_dir
+  ignore_errors: yes
+  sudo: yes
+
+- name: Collegamento directory mirror
+  file: path=/var/lib/nethserver/ibay/ks/mirror src=/var/spool/apt-mirror/mirror state=link
+  sudo: yes
+  when: chk_mirror_dir|success
+
+- name: Creo directory necessarie
+  file: path={{ item }} state=directory
+  with_items:
+    - /var/lib/tftpboot/pxelinux.cfg
+    - /var/lib/tftpboot/ubuntu/14.04/i386
+    - /var/lib/tftpboot/ubuntu/14.04/amd64
+    - /var/lib/tftpboot/utils/memtest86
+  sudo: yes
+
+- name: pxelinux.0
+  get_url:
+    url: http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-i386/current/images/netboot/pxelinux.0
+    dest: /var/lib/tftpboot/pxelinux.0
+  sudo: yes
+
+- name: pxelinux.cfg/default
+  template: src=pxelinux.cfg/default dest=/var/lib/tftpboot/pxelinux.cfg/default
+  sudo: yes
+
+- name: bglug.png
+  copy: src=bglug.png dest=/var/lib/tftpboot/utils/bglug.png
+  sudo: yes
+
+- name: vesamenu.c32
+  get_url:
+    url: http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-i386/current/images/netboot/ubuntu-installer/i386/boot-screens/vesamenu.c32
+    dest: /var/lib/tftpboot/utils/vesamenu.c32
+  sudo: yes
+
+- name: linux i386 
+  get_url:
+    url: http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-i386/current/images/netboot/ubuntu-installer/i386/linux
+    dest: /var/lib/tftpboot/ubuntu/14.04/i386/linux
+  sudo: yes
+
+- name: initrd.gz i386
+  get_url:
+    url: http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-i386/current/images/netboot/ubuntu-installer/i386/initrd.gz
+    dest: /var/lib/tftpboot/ubuntu/14.04/i386/initrd.gz
+  sudo: yes
+
+- name: linux amd64
+  get_url:
+    url: http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/linux
+    dest: /var/lib/tftpboot/ubuntu/14.04/amd64/linux
+  sudo: yes
+
+- name: initrd.gz amd64
+  get_url:
+    url: http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/initrd.gz
+    dest: /var/lib/tftpboot/ubuntu/14.04/amd64/initrd.gz
+  sudo: yes
+
+- name: memdisk
+  get_url:
+    url: http://syntaxerrormmm.zapto.org/pxe-bootimg/memdisk
+    dest: /var/lib/tftpboot/utils/memdisk
+  sudo: yes
+
+- name: memtest86
+  get_url:
+    url: http://syntaxerrormmm.zapto.org/pxe-bootimg/memtest86/vmlinuz
+    dest: /var/lib/tftpboot/utils/memtest86/vmlinuz
+  sudo: yes
+
+- name: hdt
+  get_url:
+    url: http://syntaxerrormmm.zapto.org/pxe-bootimg/hdt.img
+    dest: /var/lib/tftpboot/utils/hdt.img
+  sudo: yes
+
+- name: Copia configurazione kickstart - Edubuntu
+  template: src=ks/edubuntu-trusty.cfg dest=/var/lib/nethserver/ibay/ks/edubuntu-trusty.cfg
+  sudo: yes
+
+- name: Copia configurazione kickstart - Ubuntu
+  template: src=ks/ubuntu-trusty.cfg dest=/var/lib/nethserver/ibay/ks/ubuntu-trusty.cfg
+  sudo: yes
