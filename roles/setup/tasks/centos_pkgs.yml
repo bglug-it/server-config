@@ -30,7 +30,7 @@
 - name: Pulizia e ricaricam. repo
   shell: yum clean all && yum repolist
   sudo: yes
-  when: check_epel|failed and epel_enabled|changed
+  when: epel_enabled|changed
   tags: repo
 
 - name: Aggiorno il sistema

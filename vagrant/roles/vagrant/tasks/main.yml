@@ -12,3 +12,32 @@
   sudo: yes
   notify:
     - interface update
+
+- name: Aggiungo utente per compilazione pacchetti RPM
+  user:
+    name: makepkg
+    password: $6$rounds=100000$neTGJ5N7Nu5ogCTX$VmVgS9HRZcdczjiNNdQcZzFVQI/3AFwu6MNFOKxGhBRY4VcBOo6GTxhXr0K/jYVFTygjHWsr.teM6RmBzSnz.0
+    shell: /bin/bash
+    state: present
+  sudo: yes
+
+- name: Preparazione pacchetti per compilazione RPM
+  yum: pkg="{{ item }}" state=present
+  with_items:
+    - '@Development tools'
+    - rpmdevtools
+    - yum-utils
+    - rpmlint
+  sudo: yes
+
+- name: Copia della chiave pubblica
+  authorized_key: 
+    user: makepkg
+    key: "{{ lookup('file', '/Users/syntaxerrormmm/.ssh/id_rsa.pub') }}"
+    state: present
+  sudo: yes
+
+- name: Creazione directory per il build di RPM
+  shell: rpmdev-setuptree
+  sudo: yes
+  sudo_user: makepkg
