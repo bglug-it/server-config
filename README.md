@@ -8,9 +8,14 @@ Qui sono presenti i files di configurazione per il server [NethServer](http://ww
 Per configurarlo:
 
     $ vim hosts
+    $ vim domain.yml
     $ ansible-playbook init.yml --ask-pass \
          -e "admin_sshkey=/path/to/id_rsa.pub"
     $ ansible-playbook setup.yml 
+
+Oppure, più semplicemente:
+
+    $ bash run.sh
 
 ### Gestione con [`vagrant`](http://www.vagrantup.com) ###
 
@@ -21,13 +26,11 @@ lanciare i seguenti comandi:
     $ cd /path/to/ps-srvmgt
     $ vagrant up
 
-Aggiornamento 14/06/2015: vengono provisionate via Vagrant e Ansible alcune
+Aggiornamento 14/06/2015: vengono provisionate via Ansible alcune
 configurazioni dal Vagrantfile.
 
 ### To Do List ###
 
-* Implementare PXE + Kickstart (manca test)
 * Implementare configurazioni per repo Ubuntu (test)
-* Implementare configurazioni generiche dominio server
 * Implementare aggiornamento automatico del sistema via `ansible`
 * Implementare backup
