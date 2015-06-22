@@ -25,6 +25,7 @@
   yum: pkg="{{ item }}" state=present
   with_items:
     - '@Development tools'
+    - libselinux-python
     - rpmdevtools
     - yum-utils
     - rpmlint

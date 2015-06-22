@@ -25,11 +25,11 @@
   sudo: yes
 
 - name: Configurazione nome server
-  shell: /sbin/e-smith/db configuration set SystemName {{ servershort }}
+  shell: /sbin/e-smith/db configuration set SystemName {{ domainsrvshort }}
   sudo: yes
 
 - name: Configurazione nome dominio
-  shell: /sbin/e-smith/db configuration set DomainName {{ domainlong }}
+  shell: /sbin/e-smith/db configuration set DomainName {{ domainfull }}
   sudo: yes
 
 - name: Attivazione cambiamenti hostname

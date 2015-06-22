@@ -4,3 +4,5 @@
   when: ansible_os_family == "RedHat"
 
 - include: mgmtuser.yml
+
+- include: domainspec.yml
