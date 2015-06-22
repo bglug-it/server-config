@@ -9,7 +9,6 @@
 
 - include: ansible.yml
   when: ansible_distribution == "CentOS"
-  sudo: yes
   tags:
     - git
     - ansible
