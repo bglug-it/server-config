@@ -19,35 +19,35 @@ set _tilde	0
 # 14.04 LTS - Trusty Tahr
 #
 
-deb-i386 http://it.archive.ubuntu.com/ubuntu trusty main restricted universe multiverse
-deb-i386 http://it.archive.ubuntu.com/ubuntu trusty-security main restricted universe multiverse
-deb-i386 http://it.archive.ubuntu.com/ubuntu trusty-updates main restricted universe multiverse
-deb-i386 http://it.archive.ubuntu.com/ubuntu trusty-proposed main restricted universe multiverse
-deb-i386 http://it.archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse
+deb-i386 http://archive.ubuntu.com/ubuntu trusty main restricted universe multiverse
+deb-i386 http://archive.ubuntu.com/ubuntu trusty-security main restricted universe multiverse
+deb-i386 http://archive.ubuntu.com/ubuntu trusty-updates main restricted universe multiverse
+deb-i386 http://archive.ubuntu.com/ubuntu trusty-proposed main restricted universe multiverse
+deb-i386 http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse
 
-deb-amd64 http://it.archive.ubuntu.com/ubuntu trusty main restricted universe multiverse
-deb-amd64 http://it.archive.ubuntu.com/ubuntu trusty-security main restricted universe multiverse
-deb-amd64 http://it.archive.ubuntu.com/ubuntu trusty-updates main restricted universe multiverse
-deb-amd64 http://it.archive.ubuntu.com/ubuntu trusty-proposed main restricted universe multiverse
-deb-amd64 http://it.archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse
+deb-amd64 http://archive.ubuntu.com/ubuntu trusty main restricted universe multiverse
+deb-amd64 http://archive.ubuntu.com/ubuntu trusty-security main restricted universe multiverse
+deb-amd64 http://archive.ubuntu.com/ubuntu trusty-updates main restricted universe multiverse
+deb-amd64 http://archive.ubuntu.com/ubuntu trusty-proposed main restricted universe multiverse
+deb-amd64 http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse
 
-deb-src http://it.archive.ubuntu.com/ubuntu trusty main restricted universe multiverse
-deb-src http://it.archive.ubuntu.com/ubuntu trusty-security main restricted universe multiverse
-deb-src http://it.archive.ubuntu.com/ubuntu trusty-updates main restricted universe multiverse
-deb-src http://it.archive.ubuntu.com/ubuntu trusty-proposed main restricted universe multiverse
-deb-src http://it.archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse
+deb-src http://archive.ubuntu.com/ubuntu trusty main restricted universe multiverse
+deb-src http://archive.ubuntu.com/ubuntu trusty-security main restricted universe multiverse
+deb-src http://archive.ubuntu.com/ubuntu trusty-updates main restricted universe multiverse
+deb-src http://archive.ubuntu.com/ubuntu trusty-proposed main restricted universe multiverse
+deb-src http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse
 
-deb-i386 http://it.archive.ubuntu.com/ubuntu trusty main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
-deb-i386 http://it.archive.ubuntu.com/ubuntu trusty-security main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
-deb-i386 http://it.archive.ubuntu.com/ubuntu trusty-updates main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
-deb-i386 http://it.archive.ubuntu.com/ubuntu trusty-proposed main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
-deb-i386 http://it.archive.ubuntu.com/ubuntu trusty-backports main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-i386 http://archive.ubuntu.com/ubuntu trusty main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-i386 http://archive.ubuntu.com/ubuntu trusty-security main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-i386 http://archive.ubuntu.com/ubuntu trusty-updates main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-i386 http://archive.ubuntu.com/ubuntu trusty-proposed main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-i386 http://archive.ubuntu.com/ubuntu trusty-backports main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
 
-deb-amd64 http://it.archive.ubuntu.com/ubuntu trusty main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
-deb-amd64 http://it.archive.ubuntu.com/ubuntu trusty-security main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
-deb-amd64 http://it.archive.ubuntu.com/ubuntu trusty-updates main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
-deb-amd64 http://it.archive.ubuntu.com/ubuntu trusty-proposed main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
-deb-i386 http://it.archive.ubuntu.com/ubuntu trusty-backports main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-amd64 http://archive.ubuntu.com/ubuntu trusty main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-amd64 http://archive.ubuntu.com/ubuntu trusty-security main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-amd64 http://archive.ubuntu.com/ubuntu trusty-updates main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-amd64 http://archive.ubuntu.com/ubuntu trusty-proposed main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-i386 http://archive.ubuntu.com/ubuntu trusty-backports main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
 
 deb-i386 http://extras.ubuntu.com/ubuntu trusty main
 deb-amd64 http://extras.ubuntu.com/ubuntu trusty main
@@ -63,7 +63,7 @@ deb-i386 http://security.ubuntu.com/ubuntu trusty-security main restricted unive
 deb-amd64 http://security.ubuntu.com/ubuntu trusty-security main restricted universe multiverse
 deb-src http://security.ubuntu.com/ubuntu trusty-security main restricted universe multiverse
 
-clean http://it.archive.ubuntu.com/ubuntu
+clean http://archive.ubuntu.com/ubuntu
 clean http://extras.ubuntu.com/ubuntu
 clean http://archive.canonical.com
 clean http://security.ubuntu.com/ubuntu
