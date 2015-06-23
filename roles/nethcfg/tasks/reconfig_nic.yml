@@ -1,0 +1,19 @@
+- name: Configurazione scheda di rete esterna
+  shell: /sbin/e-smith/db networks setprop eth0 role red bootproto dhcp 
+  sudo: yes
+
+- name: Configurazione scheda di rete interna
+  shell: /sbin/e-smith/db networks setprop eth1 role green ipaddr {{ serverip }} netmask {{ servernetmask }}
+  sudo: yes
+
+- name: Attivo configurazioni di rete
+  shell: /sbin/e-smith/signal-event interface-update
+  sudo: yes
+
+- name: Configurazione rete trusted
+  shell: /sbin/e-smith/db networks set {{ servernet }} network Description "Local LAN" Mask {{ servernetmask }}
+  sudo: yes
+
+- name: Modifico configurazioni
+  shell: /sbin/e-smith/signal-event network-modify
+  sudo: yes
