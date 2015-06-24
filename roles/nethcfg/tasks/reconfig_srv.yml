@@ -65,12 +65,20 @@
   shell: /sbin/e-smith/signal-event group-create domusers
   sudo: yes
 
+- name: Abilito il ricaricamento dei servizi smb su ibay-create
+  shell: test -L {{ item }}/smb || cd {{ item }} && ln -sf reload smb
+  with_items:
+    - /etc/e-smith/events/ibay-delete/services2adjust
+    - /etc/e-smith/events/ibay-create/services2adjust
+    - /etc/e-smith/events/ibay-modify/services2adjust
+  sudo: yes
+
 - name: Configurazione share Condiviso
   shell: /sbin/e-smith/db accounts set shared ibay AclRead domusers,domadmins AclWrite domusers,domadmins Description "Cartella condivisa" GroupAccess rw HttpStatus disabled OtherAccess r OwningGroup locals SmbAuditStatus enabled SmbGuestAccessType none SmbRecycleBinStatus enabled SmbRecycleBinVersionsStatus enabled SmbStatus enabled
   sudo: yes
 
 - name: Attivazione share condiviso
-  shell: /sbin/e-smith/signal-event nethserver-ibays-update
+  shell: /sbin/e-smith/signal-event ibay-create shared
   sudo: yes
 
 - name: Configurazione squid
