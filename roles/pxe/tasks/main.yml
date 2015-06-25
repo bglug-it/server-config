@@ -117,10 +117,18 @@
     dest: /var/lib/tftpboot/utils/hdt.img
   sudo: yes
 
-- name: Copia configurazione kickstart - Edubuntu
-  template: src=ks/edubuntu-trusty.cfg dest=/var/lib/nethserver/ibay/ks/edubuntu-trusty.cfg
-  sudo: yes
+- name: Sovrascrivo la variabile mirrorpath se è su Virtualbox
+  set_fact: oldmirrorpath="{{ mirrorpath }}" mirrorpath=""
+  when: ansible_bios_version == "VirtualBox"
 
-- name: Copia configurazione kickstart - Ubuntu
-  template: src=ks/ubuntu-trusty.cfg dest=/var/lib/nethserver/ibay/ks/ubuntu-trusty.cfg
+- name: Copia configurazioni kickstart
+  template: src=ks/{{ item }} dest=/var/lib/nethserver/ibay/ks/{{ item }}
   sudo: yes
+  with_items:
+    - client-trusty.cfg
+    - docenti-trusty.cfg
+    - ubuntu-trusty.cfg
+
+- name: Ripristino impostazioni mirrorpath
+  set_fact: mirrorpath="{{ oldmirrorpath }}"
+  when: ansible_bios_version == "VirtualBox"

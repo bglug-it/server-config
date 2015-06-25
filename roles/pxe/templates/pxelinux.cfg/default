@@ -1,21 +1,21 @@
 UI /utils/vesamenu.c32
-DEFAULT edu64
+DEFAULT client
 TIMEOUT 30
 
 MENU TITLE BgLUG PXE Boot
 MENU BACKGROUND /utils/bglug.png
 
-LABEL edu64
-	MENU LABEL Installa Edubuntu a ^64 bit
+LABEL client
+	MENU LABEL Installa nuova macchina CLIENT
 	LINUX	/ubuntu/14.04/amd64/linux
 	INITRD	/ubuntu/14.04/amd64/initrd.gz
-	APPEND	vga=normal ks=http://{{ serverfqdn }}/ks/edubuntu-trusty.cfg -- quiet
+	APPEND	vga=normal ks=http://{{ serverfqdn }}/ks/client-trusty.cfg -- quiet
 	
-LABEL edu32
-	MENU LABEL Installa Edubuntu a ^32 bit
-	LINUX	/ubuntu/14.04/i386/linux
-	INITRD	/ubuntu/14.04/i386/initrd.gz
-	APPEND 	vga=normal ks=http://{{ serverfqdn }}/ks/edubuntu-trusty.cfg -- quiet
+LABEL docenti
+	MENU LABEL Installa nuova macchina DOCENTI
+	LINUX	/ubuntu/14.04/amd64/linux
+	INITRD	/ubuntu/14.04/amd64/initrd.gz
+	APPEND	vga=normal ks=http://{{ serverfqdn }}/ks/docenti-trusty.cfg -- quiet
 	
 MENU SEPARATOR
 
