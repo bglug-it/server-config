@@ -66,7 +66,7 @@
   sudo: yes
 
 - name: Abilito il ricaricamento dei servizi smb su ibay-create
-  shell: test -L {{ item }}/smb || cd {{ item }} && ln -sf reload smb
+  file: src="reload" dest="{{ item }}/smb" state=link force=yes
   with_items:
     - /etc/e-smith/events/ibay-delete/services2adjust
     - /etc/e-smith/events/ibay-create/services2adjust
