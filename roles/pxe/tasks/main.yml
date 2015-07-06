@@ -128,6 +128,7 @@
     - client-trusty.cfg
     - docenti-trusty.cfg
     - ubuntu-trusty.cfg
+    - post-ks.sh
 
 - name: Ripristino impostazioni mirrorpath
   set_fact: mirrorpath="{{ oldmirrorpath }}"
