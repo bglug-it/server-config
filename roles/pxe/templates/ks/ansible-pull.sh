@@ -10,4 +10,4 @@ logfile=/var/lib/ansible-pull.log
 branch=master
 playbook=local.yml
 
-ansible-pull -d "${repo}" -U "${url}" -C "${branch}" "${playbook}"
+ansible-pull --accept-host-key -d "${repo}" -U "${url}" -C "${branch}" "${playbook}"

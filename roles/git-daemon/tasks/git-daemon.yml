@@ -56,6 +56,15 @@
   sudo: yes
   sudo_user: git-daemon
 
+- name: Installo task di cron per aggiornamento repo
+  copy:
+    src: git-daemon-crontab
+    dest: /etc/cron.d/git-daemon
+    mode: 0644
+    owner: root
+    group: root
+  sudo: yes
+
 - name: Installo l'init
   copy:
     src: git-daemon-init

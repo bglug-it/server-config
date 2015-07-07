@@ -1,0 +1,1 @@
+@daily git-daemon pushd /var/lib/git-daemon/repositories/client-pull-installation.git; git fetch -p origin; popd
