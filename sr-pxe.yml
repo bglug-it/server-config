@@ -1,8 +1,0 @@
----
-- hosts: server
-  vars_files:
-    - domain.yml
-  roles:
-    - pxe
-    - ubuntu-mirror
-    - mac2hostname

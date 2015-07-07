@@ -3,8 +3,14 @@
 
 # Installo pacchetti addizionali
 - include: neth_pkgs.yml
+  tags:
+    - nethcfg
 
 - include: reconfig_nic.yml
   when: ansible_product_name == "VirtualBox"
+  tags:
+    - nethcfg
 
 - include: reconfig_srv.yml
+  tags:
+    - netcfg

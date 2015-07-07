@@ -1,0 +1,5 @@
+---
+dependencies:
+  - { role: pxe, tags: [ 'client-install' ] }
+  - { role: ubuntu-mirror, tags: [ 'client-install' ] }
+  - { role: mac2hostname, tags: [ 'client-install' ] }

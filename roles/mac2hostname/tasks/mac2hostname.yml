@@ -1,0 +1,60 @@
+---
+# Installa e configura il servizio per rinominare il client
+# Grazie per il servizio a Enrico Bacis
+
+- name: Installazione dipendenze Python
+  yum: pkg=python-bottle state=present
+  sudo: yes
+
+- name: Check installazione + versione mac2hostname
+  shell: rpm -q mac2hostname
+  ignore_errors: yes
+  register: check_mac2hostname_pkg
+  changed_when: check_mac2hostname_pkg.rc != 0 or check_mac2hostname_pkg.stdout.find('2.0.0-1') == -1
+
+- name: Installazione mac2hostname
+  yum: pkg=http://syntaxerrormmm.zapto.org/downloads/rpm/mac2hostname-2.0.0-1.el6.noarch.rpm state=present
+  when: check_mac2hostname_pkg|changed
+  sudo: yes
+
+- name: Verifica aggiunta servizi
+  shell: /sbin/e-smith/db configuration show mac2hostname
+  sudo: yes
+  register: chk_mac2hostname_srv
+  changed_when: chk_mac2hostname_srv.rc != 0
+  ignore_errors: yes
+
+- name: Aggiungo il servizio ai servizi gestiti da NethServer
+  shell: /sbin/e-smith/db configuration set mac2hostname service status enabled TCPPort 3000 access private
+  sudo: yes
+  when: chk_mac2hostname_srv|changed
+
+- name: Default per NetServer - Cartella defaults
+  shell: mkdir -p /etc/e-smith/db/configuration/defaults/mac2hostname
+  sudo: yes
+  when: chk_mac2hostname_srv|changed
+
+- name: Default per NethServer - Tipo
+  shell: echo "service" > /etc/e-smith/db/configuration/defaults/mac2hostname/type
+  sudo: yes
+  when: chk_mac2hostname_srv|changed
+
+- name: Default per NethServer - Stato
+  shell: echo "enabled" > /etc/e-smith/db/configuration/defaults/mac2hostname/status
+  sudo: yes
+  when: chk_mac2hostname_srv|changed
+
+- name: Aggiunta servizio
+  shell: /sbin/e-smith/signal-event runlevel-adjust
+  sudo: yes
+  when: chk_mac2hostname_srv|changed
+
+- name: Aggiunta servizio di rete e cambio firewall
+  shell: /sbin/e-smith/signal-event firewall-adjust
+  sudo: yes
+  when: chk_mac2hostname_srv|changed
+
+- name: Avvio di mac2hostname
+  shell: service mac2hostname start
+  sudo: yes
+  when: chk_mac2hostname_srv|changed
