@@ -40,6 +40,8 @@
   sudo: yes
   sudo_user: git-daemon
   when: chk_clientpullinstall_repo|success
+  tags:
+    - git-daemon-update
 
 # E' in forma di shell perché non c'è modo di passare ad ansible
 # il parametro --mirror
