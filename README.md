@@ -29,6 +29,9 @@ lanciare i seguenti comandi:
 Aggiornamento 14/06/2015: vengono provisionate via Ansible alcune
 configurazioni dal Vagrantfile.
 
+Aggiornamento 25/06/2015: la macchina Vagrant ora si appoggia ad una scheda
+"interna" *host-only* anziché una *bridged*.
+
 ### To Do List ###
 
 * Implementare configurazioni per repo Ubuntu (test)
