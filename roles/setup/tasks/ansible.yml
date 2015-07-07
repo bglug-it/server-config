@@ -15,16 +15,16 @@
   sudo: yes
   tags: ansible
 
-- name: Download della gestione client con ansible
-  git:
-    repo: "https://github.com/bglug-it/ps-clientmgmt.git"
-    dest: /home/amgmt/clientmgmt
-  tags:
-    - git
-    - ansible
-
-- name: Attivo sotto modulo ansdyninv
-  shell: cd /home/amgmt/clientmgmt/ansdyninv; git submodule init && git submodule update
-  tags:
-    - git
-    - ansible
+  #- name: Download della gestione client con ansible
+  #  git:
+  #    repo: "https://github.com/bglug-it/ps-clientmgmt.git"
+  #    dest: /home/amgmt/clientmgmt
+  #  tags:
+  #    - git
+  #    - ansible
+  #
+  #- name: Attivo sotto modulo ansdyninv
+  #  shell: cd /home/amgmt/clientmgmt/ansdyninv; git submodule init && git submodule update
+  #  tags:
+  #    - git
+  #    - ansible
