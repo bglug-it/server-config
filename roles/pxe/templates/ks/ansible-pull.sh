@@ -1,9 +1,13 @@
 #!/bin/bash
 
-url=https://github.com/syntaxerrormmm/pulltest.git
+# Script provvisorio.
+# Potremmo decidere di far eseguire uno script generato da servizio
+# domainhelper contenente anche l'eventuale branch da usare.
+
+url=git://{{ serverfqdn }}/client-pull-installation.git
 repo=/var/lib/{{ domainfull }}/config
 logfile=/var/lib/ansible-pull.log
+branch=master
+playbook=local.yml
 
-export https_proxy=https://{{ serverip }}:3128
-ansible-pull -d "${repo}" -U "${url}"
-unset https_proxy
+ansible-pull -d "${repo}" -U "${url}" -C "${branch}" "${playbook}"
