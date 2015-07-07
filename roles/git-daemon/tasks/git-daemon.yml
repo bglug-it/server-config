@@ -33,11 +33,12 @@
   register: chk_clientpullinstall_repo
   changed_when: chk_clientpullinstall_repo.rc != 0
   ignore_errors: yes
+  sudo: yes
 
 - name: Aggiorno il repo se già esistente
-  git:
-    repo: https://github.com/bglug-it/client-pull-installation.git
-    dest: /var/lib/git-daemon/repositories/client-pull-installation.git
+  shell: pushd /var/lib/git-daemon/repositories/client-pull-installation.git; git fetch -p origin; popd
+  sudo: yes
+  sudo_user: git-daemon
   when: chk_clientpullinstall_repo|success
 
 # E' in forma di shell perché non c'è modo di passare ad ansible
