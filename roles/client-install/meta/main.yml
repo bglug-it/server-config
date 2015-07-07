@@ -1,5 +1,6 @@
 ---
 dependencies:
-  - { role: pxe, tags: [ 'client-install' ] }
-  - { role: ubuntu-mirror, tags: [ 'client-install' ] }
-  - { role: mac2hostname, tags: [ 'client-install' ] }
+  - { role: pxe, tags: [ 'client-install', 'pxe' ] }
+  - { role: ubuntu-mirror, tags: [ 'client-install', 'ubuntu-mirror' ] }
+  - { role: mac2hostname, tags: [ 'client-install', 'mac2hostname' ] }
+  - { role: git-daemon, tags: [ 'client-install', 'git-daemon' ] }

@@ -1,0 +1,5 @@
+---
+- include: git-daemon.yml
+  tags:
+    - client-install
+    - git-daemon

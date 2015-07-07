@@ -1,0 +1,124 @@
+---
+# Configura e lancia il servizio git-daemon per servire i repository locali
+
+- name: Installo git-daemon
+  yum: pkg=git-daemon state=present
+  sudo: yes
+
+- name: Creazione gruppo git
+  group:
+    name: git
+    system: yes
+    state: present
+  sudo: yes
+
+- name: Creazione utente git-daemon
+  user:
+    name: git-daemon
+    system: yes
+    group: git
+    home: /var/lib/git-daemon
+    state: present
+  sudo: yes
+
+- name: Creo directory repositories
+  file:
+    path: /var/lib/git-daemon/repositories
+    state: directory
+  sudo: yes
+  sudo_user: git-daemon
+
+- name: Verifica presenza repo
+  shell: test -d /var/lib/git-daemon/repositories/client-pull-installation.git
+  register: chk_clientpullinstall_repo
+  changed_when: chk_clientpullinstall_repo.rc != 0
+  ignore_errors: yes
+
+- name: Aggiorno il repo se già esistente
+  git:
+    repo: https://github.com/bglug-it/client-pull-installation.git
+    dest: /var/lib/git-daemon/repositories/client-pull-installation.git
+  when: chk_clientpullinstall_repo|success
+
+# E' in forma di shell perché non c'è modo di passare ad ansible
+# il parametro --mirror
+- name: Clono il repository client-pull-installation
+  shell: git clone --mirror https://github.com/bglug-it/client-pull-installation.git /var/lib/git-daemon/repositories/client-pull-installation.git
+  sudo: yes
+  sudo_user: git-daemon
+  when: chk_clientpullinstall_repo|changed
+
+- name: Rendo il repository esportabile
+  file:
+    path: /var/lib/git-daemon/repositories/client-pull-installation.git/git-daemon-export-ok
+    state: touch
+  sudo: yes
+  sudo_user: git-daemon
+
+- name: Installo l'init
+  copy:
+    src: git-daemon-init
+    dest: /etc/init.d/git-daemon
+    mode: 0755
+    owner: root
+    group: root
+  sudo: yes
+    
+- name: Configuro l'avvio di git-daemon
+  shell: /sbin/chkconfig --add git-daemon
+  sudo: yes
+
+- name: Verifica aggiunta servizio
+  shell: /sbin/e-smith/db configuration show git-daemon
+  sudo: yes
+  register: chk_gitdaemon_srv
+  changed_when: chk_gitdaemon_srv.rc != 0
+  ignore_errors: yes
+
+- name: Aggiungo servizio a gestione NethServer
+  shell: /sbin/e-smith/db configuration set git-daemon service status enabled TCPPort 9418 access private
+  sudo: yes
+  when: chk_gitdaemon_srv|changed
+
+- name: Creazione directory defaults per NethServer
+  file:
+    path: /etc/e-smith/db/configuration/defaults/git-daemon
+    recurse: yes
+    state: directory
+  sudo: yes
+  when: chk_gitdaemon_srv|changed
+
+- name: Creazione tipo default per NethServer
+  lineinfile:
+    dest: /etc/e-smith/db/configuration/defaults/git-daemon/type
+    regexp: "^service"
+    line: "service"
+    create: yes
+    state: present
+  sudo: yes
+  when: chk_gitdaemon_srv|changed
+
+- name: Creazione stato default per NethServer
+  lineinfile:
+    dest: /etc/e-smith/db/configuration/defaults/git-daemon/status
+    regexp: "^enabled"
+    line: "enabled"
+    create: yes
+    state: present
+  sudo: yes
+  when: chk_gitdaemon_srv|changed
+
+- name: Aggiunta servizio
+  shell: /sbin/e-smith/signal-event runlevel-adjust
+  sudo: yes
+  when: chk_gitdaemon_srv|changed
+
+- name: Aggiunta servizio di rete e cambio firewall
+  shell: /sbin/e-smith/signal-event firewall-adjust
+  sudo: yes
+  when: chk_gitdaemon_srv|changed
+
+- name: Avvio servizio
+  shell: service git-daemon start
+  sudo: yes
+  when: chk_gitdaemon_srv|changed
