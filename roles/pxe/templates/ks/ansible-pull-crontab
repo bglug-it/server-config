@@ -1,0 +1,1 @@
+@reboot root /var/lib/{{ domainfull }}/bin/ansible-pull.sh >>/var/log/ansible-pull.log 2>&1

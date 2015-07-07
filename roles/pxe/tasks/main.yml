@@ -129,6 +129,12 @@
     - docenti-trusty.cfg
     - ubuntu-trusty.cfg
     - post-ks.sh
+    - ansible-pull.sh
+    - ansible-pull-crontab
+
+- name: Copio logrotate per configurazione pull
+  copy: src=ansible-pull-logrotate dest=/var/lib/nethserver/ibay/ks/ansible-pull-logrotate
+  sudo: yes
 
 - name: Ripristino impostazioni mirrorpath
   set_fact: mirrorpath="{{ oldmirrorpath }}"
