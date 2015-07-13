@@ -1,0 +1,14 @@
+---
+# Installa e configura il servizio per rinominare il client
+# Grazie per il servizio a Enrico Bacis
+
+- name: Check installazione + versione doraemon
+  shell: rpm -q doraemon
+  ignore_errors: yes
+  register: check_doraemon_pkg
+  changed_when: check_doraemon_pkg.rc != 0 or check_doraemon_pkg.stdout.find('1.0.0-1') == -1
+
+- name: Installazione doraemon
+  yum: pkg=http://syntaxerrormmm.zapto.org/downloads/rpm/doraemon-1.0.0-1.ns6.noarch.rpm state=present
+  when: check_doraemon_pkg|changed
+  sudo: yes

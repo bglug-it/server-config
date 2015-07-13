@@ -129,6 +129,7 @@
     - docenti-trusty.cfg
     - ubuntu-trusty.cfg
     - post-ks.sh
+    - getvaultpass.py
     - ansible-pull.sh
     - ansible-pull-crontab
 

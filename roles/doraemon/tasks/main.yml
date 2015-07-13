@@ -1,4 +1,4 @@
 ---
-- include: mac2hostname.yml
+- include: doraemon.yml
   tags:
     - "client-install"
