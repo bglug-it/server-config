@@ -31,5 +31,5 @@ install -m644 -o root -g root /tmp/ansible-pull-crontab /etc/cron.d/ansible-pull
 rm -f /tmp/ansible-pull-crontab
 # Installo il logrotate
 wget -q http://{{ serverfqdn }}/ks/ansible-pull-logrotate -O /tmp/ansible-pull-logrotate
-install -m644 -o root -g root /tmp/ansible-pull-logrotate /etc/logrotate.d/ansible-pull
+install -m644 -o root -g root /tmp/ansible-pull-logrotate /etc/logrotate.d/ansible
 rm -f /tmp/ansible-pull-logrotate
