@@ -16,8 +16,7 @@ encrypted = b64decode(base64enc.content)
 longpass = cipher.decrypt(encrypted)
 
 fd, filename = mkstemp()
-with open(filename, 'w+') as f:
-  f.write(longpass.strip('x'))
+os.write(fd, longpass.strip('x'))
 os.close(fd)
 
 print(filename)
