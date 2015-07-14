@@ -11,4 +11,3 @@ vim domain.yml
 # Configure the server machine using Ansible tasks.
 ansible-playbook init.yml --ask-pass
 ansible-playbook setup.yml
-ansible-playbook sr-pxe.yml
