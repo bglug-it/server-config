@@ -14,8 +14,4 @@ base64enc = get("http://{{ serverfqdn }}:3000/vaultpass")
 encrypted = b64decode(base64enc.content)
 longpass = cipher.decrypt(encrypted)
 
-if not path.exists('/root/.ansible'):
-  makedirs('/root/.ansible')
-
-with open('/root/.ansible/vault.txt', 'w+') as vaultfile:
-  vaultfile.write(longpass.strip('x'))
+print(longpass.strip('x'))

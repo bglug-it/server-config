@@ -17,7 +17,8 @@ install -d -o root -g root /var/lib/{{ domainfull }}/bin
 
 # Installo lo script per la decrittazione della password del vault
 wget -q http://{{ serverfqdn }}/ks/getvaultpass.py -O /tmp/getvaultpass.py
-python /tmp/getvaultpass.py && rm -f /tmp/getvaultpass.py
+install -m744 -o root -g root /tmp/getvaultpass.py /var/lib/{{ domainfull}}/bin/getvaultpass.py
+rm -f /tmp/getvaultpass.py
 
 # Installo lo script per l'avvio di ansible-pull da root
 wget -q http://{{ serverfqdn }}/ks/ansible-pull.sh -O /tmp/ansible-pull.sh
