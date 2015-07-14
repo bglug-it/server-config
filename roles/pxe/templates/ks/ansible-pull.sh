@@ -10,4 +10,7 @@ logfile=/var/lib/ansible-pull.log
 branch=master
 playbook=local.yml
 
-ansible-pull --accept-host-key -d "${repo}" -U "${url}" -C "${branch}" "${playbook}" --vault-password "$(/var/lib/{{ domainfull }}/bin/getvaultpass.py)"
+vaultpassfile=$(/var/lib/{{ domainfull }}/bin/getvaultpass.py)
+
+ansible-pull --accept-host-key -d "${repo}" -U "${url}" -C "${branch}" "${playbook}" --vault-password-file "${vaultpassfile}"
+rm -f "${vaultpassfile}"
