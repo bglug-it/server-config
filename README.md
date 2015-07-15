@@ -1,5 +1,5 @@
 # Progetto Scuola @ [BgLUG](http://bglug.it) - Scenario implementativo 1 #
-## PDC con SAMBA e Nethserver ##
+## PDC con Nethserver ##
 
 
 ### Utilizzo delle configurazioni con [`ansible`](http://www.ansible.com) ###
@@ -34,6 +34,7 @@ Aggiornamento 25/06/2015: la macchina Vagrant ora si appoggia ad una scheda
 
 ### To Do List ###
 
-* Implementare configurazioni per repo Ubuntu (test)
-* Implementare aggiornamento automatico del sistema via `ansible`
+* Separare informazioni dominio (`/etc/domaininfo` ?)
+* Sistemare ruoli pxe (splittare pxe e kickstart)
 * Implementare backup
+* Descrivere la procedura installazione fisica
