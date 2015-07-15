@@ -8,7 +8,16 @@
   register: check_doraemon_pkg
   changed_when: check_doraemon_pkg.rc != 0 or check_doraemon_pkg.stdout.find('1.0.0-2') == -1
 
+- name: Rimozione versioni precedenti
+  yum: pkg=doraemon state=absent
+  sudo: yes
+  when: check_doraemon_pkg|changed
+
 - name: Installazione doraemon
   yum: pkg=http://syntaxerrormmm.zapto.org/downloads/rpm/doraemon-1.0.0-2.ns6.noarch.rpm state=present
   when: check_doraemon_pkg|changed
+  sudo: yes
+
+- name: Verifico avvio di doraemon
+  service: name=doraemon status=restarted
   sudo: yes
