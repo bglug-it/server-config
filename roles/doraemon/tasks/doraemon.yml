@@ -19,5 +19,5 @@
   sudo: yes
 
 - name: Verifico avvio di doraemon
-  service: name=doraemon status=restarted
+  service: name=doraemon state=restarted
   sudo: yes
