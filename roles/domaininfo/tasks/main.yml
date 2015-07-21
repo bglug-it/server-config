@@ -1,0 +1,5 @@
+---
+
+- name: Ricarico le informazioni del dominio da locale
+  include_vars: /etc/domain.yml
+  tags: domaininfo

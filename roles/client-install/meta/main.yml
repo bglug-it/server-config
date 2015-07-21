@@ -1,5 +1,6 @@
 ---
 dependencies:
+  - { role: domaininfo, tags: [ 'client-install', 'domaininfo' ] }
   - { role: pxe, tags: [ 'client-install', 'pxe' ] }
   - { role: kickstart, tags: [ 'client-install', 'kickstart', 'ks' ] }
   - { role: ubuntu-mirror, tags: [ 'client-install', 'ubuntu-mirror' ] }
