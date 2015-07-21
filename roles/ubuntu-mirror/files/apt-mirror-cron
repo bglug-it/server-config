@@ -1,0 +1,3 @@
+#!/bin/bash
+
+apt-mirror >/var/log/apt-mirror.log 2>&1

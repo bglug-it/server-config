@@ -1,0 +1,6 @@
+/var/log/apt-mirror.log {
+	daily
+	rotate 15
+	compress
+	missingok
+}	

@@ -8,3 +8,11 @@
 - name: Installazione configurazione apt-mirror
   copy: src=apt-mirror.list dest=/etc/apt-mirror.list
   sudo: yes
+
+- name: Installazione cron per sincronizzazione notturna
+  copy: src=apt-mirror-cron dest=/etc/cron.daily/apt-mirror mode=0755
+  sudo: yes
+
+- name: Installazione logrotate per sincronizzazione notturna
+  copy: src=apt-mirror-logrotate dest=/etc/logrotate.d/apt-mirror mode=0644
+  sudo: yes

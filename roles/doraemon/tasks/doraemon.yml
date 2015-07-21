@@ -14,7 +14,7 @@
   when: check_doraemon_pkg|changed
 
 - name: Installazione doraemon
-  yum: pkg=http://syntaxerrormmm.zapto.org/downloads/rpm/doraemon-1.0.0-2.ns6.noarch.rpm state=present
+  yum: pkg=http://sys42.eu/downloads/rpm/doraemon-1.0.0-2.ns6.noarch.rpm state=present
   when: check_doraemon_pkg|changed
   sudo: yes
 

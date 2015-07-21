@@ -1,4 +1,4 @@
 ---
 - include: ubuntu-mirror.yml
-  tags:
-    - "client-install"
+  when: ansible_bios_version != "VirtualBox"
+  tags: ubuntu-mirror
