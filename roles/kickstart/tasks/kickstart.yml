@@ -31,9 +31,14 @@
   file: path=/var/lib/nethserver/ibay/ks/profiles state=directory
   sudo: yes
 
-- name: Sovrascrivo la variabile mirrorpath se è su Virtualbox
-  set_fact: oldmirrorpath="{{ mirrorpath }}" mirrorpath=""
+# Gestisco caso con virtualbox, dove non devo overridare il mirror
+- name: ubuntumirrorpath per Virtualbox (no mirror)
+  set_fact: ubuntumirrorpath=""
   when: ansible_bios_version == "VirtualBox"
+
+- name: ubuntumirrorpath per altro (usa mirror locale)
+  set_fact: ubuntumirrorpath="{{ ansible_local.domain.mirrorpath }}"
+  when: ansible_bios_version != "VirtualBox"
 
 - name: Copia profili kickstart
   template: src=profiles/{{ item }} dest=/var/lib/nethserver/ibay/ks/profiles/{{ item }}
@@ -51,10 +56,6 @@
     - getvaultpass.py
     - ansible-pull.sh
     - ansible-pull-crontab
-
-- name: Ripristino impostazioni mirrorpath
-  set_fact: mirrorpath="{{ oldmirrorpath }}"
-  when: ansible_bios_version == "VirtualBox"
 
 - name: Copio logrotate per configurazione pull
   copy: src=ansible-pull-logrotate dest=/var/lib/nethserver/ibay/ks/ansible-pull-logrotate

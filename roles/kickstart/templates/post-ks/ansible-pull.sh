@@ -4,13 +4,13 @@
 # Potremmo decidere di far eseguire uno script generato da servizio
 # domainhelper contenente anche l'eventuale branch da usare.
 
-url=git://{{ serverfqdn }}/client-pull-installation.git
-repo=/var/lib/{{ domainfull }}/config
+url=git://{{ ansible_local.domain.serverfqdn }}/client-pull-installation.git
+repo=/var/lib/{{ ansible_local.domain.domainfull }}/config
 logfile=/var/lib/ansible-pull.log
 branch=master
 playbook=local.yml
 
-vaultpassfile=$(/var/lib/{{ domainfull }}/bin/getvaultpass.py)
+vaultpassfile=$(/var/lib/{{ ansible_local.domain.domainfull }}/bin/getvaultpass.py)
 
 ansible-pull --accept-host-key -d "${repo}" -U "${url}" -C "${branch}" "${playbook}" --vault-password-file "${vaultpassfile}"
 rm -f "${vaultpassfile}"

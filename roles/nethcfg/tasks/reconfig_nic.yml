@@ -3,7 +3,7 @@
   sudo: yes
 
 - name: Configurazione scheda di rete interna
-  shell: /sbin/e-smith/db networks setprop eth1 role green ipaddr {{ serverip }} netmask {{ servernetmask }}
+  shell: /sbin/e-smith/db networks setprop eth1 role green ipaddr {{ ansible_local.domain.serverip }} netmask {{ ansible_local.domain.servernetmask }}
   sudo: yes
 
 - name: Attivo configurazioni di rete
@@ -11,7 +11,7 @@
   sudo: yes
 
 - name: Configurazione rete trusted
-  shell: /sbin/e-smith/db networks set {{ servernet }} network Description "Local LAN" Mask {{ servernetmask }}
+  shell: /sbin/e-smith/db networks set {{ ansible_local.domain.servernet }} network Description "Local LAN" Mask {{ ansible_local.domain.servernetmask }}
   sudo: yes
 
 - name: Modifico configurazioni

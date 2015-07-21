@@ -4,6 +4,10 @@
   copy: src=../../../domain.yml dest=/etc/domain.yml
   sudo: yes
 
+- name: Creo la cartella per le configurazioni di Ansible
+  file: path=/etc/ansible/facts.d state=directory owner=root mode=0755
+  sudo: yes
+
 - name: Utilizzo un piccolo wrapper per passare come fatti informazioni di dominio
-  copy: src=domain.fact dest=/etc/ansible/fact.d/domain.fact mode=0744 owner=root
+  copy: src=domain.fact dest=/etc/ansible/facts.d/domain.fact mode=0755 owner=root
   sudo: yes
