@@ -1,15 +1,14 @@
-# Ansible configuration playbooks for SMB domain controller with [NethServer](http://www.nethserver.org/) #
+# Ansible configuration playbooks for SMB domain controller with NethServer #
 
-<img src="https://avatars1.githubusercontent.com/u/12886037?v=3&s=200"
-width="100" height="100" alt="BgLUG logo" />
-## Progetto Scuola @ [BgLUG](http://bglug.it) - Scenary 1 ##
+## Progetto Scuola <img src="https://avatars1.githubusercontent.com/u/12886037?v=3&s=200" width="20" height="20" alt="BgLUG Logo" /> [BgLUG][] - Scenary 1 ##
 
-Here there are [Ansible](http://www.ansible.com/) configuration for a SMB
-domain controller with the use of a NethServer server.
+Starting from a [NethServer][] configured machine (please check out the
+[wiki](/wiki)), these playbooks provision a SMB domain controller which can be
+used with a network of Ubuntu clients.
 
-It presume a machine with NethServer has been already been configured as base
-(please check out the [wiki](https://github.com/bglug-it/server-config/wiki)
-for more information, when available).
+Using the default settings, it will also provide an environment to boot from
+network, install and configure the clients, using a local copy of Ubuntu's
+repositories.
 
 ### Quick start ###
 
@@ -25,20 +24,19 @@ Or, more simply:
 
     $ bash run.sh
 
-### Use [`vagrant`](http://www.vagrantup.com) for testing purposes ###
+### Use [`vagrant`][] for testing purposes ###
 
 You may use the included `Vagrantfile` to do any tests before deploying the
 machine.
 
-You just need `vagrant` installed on your machine, then you may run these
-commands:
+You just need `vagrant` and `ansible` installed on the host machine, then you
+may run the following commands:
 
     $ cd /path/to/server-config
     $ vagrant up
 
-Update 14/06/2015: some basic configuration to the Vagrant box are now
-provisioned via Ansible, thus requiring that you have it installed on the host
-machine.
+Update 14/06/2015: some basic configurations to the Vagrant box are now
+provisioned via Ansible, thus making it a dependency.
 
 Update 25/06/2015: the Vagrant box now uses a *host-only* interface instead of
 a *bridged* one.
@@ -49,3 +47,8 @@ a *bridged* one.
 * Implement backup
 * Detail physical installation procedure for the server machine within the
   Wiki.
+
+[bglug]: http://bglug.it/ "BgLUG Homepage"
+[ansible]: http://www.ansible.com "Ansible Homepage"
+[nethserver]: http://www.nethserver.org "NethServer Homepage"
+[vagrant]: http://www.vagrantup.com "Vagrant Homepage"
