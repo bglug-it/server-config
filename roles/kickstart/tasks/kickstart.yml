@@ -1,0 +1,62 @@
+---
+- name: Verifica configurazione ibay kickstart
+  shell: /sbin/e-smith/db accounts show ks
+  register: chk_ks_created
+  changed_when: chk_ks_created.rc != 0
+  ignore_errors: yes
+  sudo: yes
+
+- name: Configurazione web kickstart
+  shell: /sbin/e-smith/db accounts set ks ibay Description "Kickstart share" GroupAccess rw HttpAccess private HttpAliasType default HttpAllowOverrideStatus disabled HttpForceSslStatus disabled HttpPasswordStatus disabled HttpStatus enabled HttpVirtualHost __ANY__ OtherAccess r OwningGroup locals SmbAuditStatus disabled SmbStatus disabled
+  when: chk_ks_created|failed
+  sudo: yes
+
+- name: Attivazione web kickstart
+  shell: /sbin/e-smith/signal-event ibay-create ks
+  when: chk_ks_created|failed
+  sudo: yes
+
+- name: Verifica presenza directory mirror
+  file: path=/var/spool/apt-mirror/mirror state=directory
+  register: chk_mirror_dir
+  ignore_errors: yes
+  sudo: yes
+
+- name: Collegamento directory mirror
+  file: path=/var/lib/nethserver/ibay/ks/mirror src=/var/spool/apt-mirror/mirror state=link
+  sudo: yes
+  when: chk_mirror_dir|success
+
+- name: Creazione directory kickstart
+  file: path=/var/lib/nethserver/ibay/ks/profiles state=directory
+  sudo: yes
+
+- name: Sovrascrivo la variabile mirrorpath se è su Virtualbox
+  set_fact: oldmirrorpath="{{ mirrorpath }}" mirrorpath=""
+  when: ansible_bios_version == "VirtualBox"
+
+- name: Copia profili kickstart
+  template: src=profiles/{{ item }} dest=/var/lib/nethserver/ibay/ks/profiles/{{ item }}
+  sudo: yes
+  with_items:
+    - client-trusty.cfg
+    - docenti-trusty.cfg
+    - ubuntu-trusty.cfg
+
+- name: Copia configurazioni kickstart
+  template: src=post-ks/{{ item }} dest=/var/lib/nethserver/ibay/ks/{{ item }}
+  sudo: yes
+  with_items:
+    - post-ks.sh
+    - getvaultpass.py
+    - ansible-pull.sh
+    - ansible-pull-crontab
+
+- name: Ripristino impostazioni mirrorpath
+  set_fact: mirrorpath="{{ oldmirrorpath }}"
+  when: ansible_bios_version == "VirtualBox"
+
+- name: Copio logrotate per configurazione pull
+  copy: src=ansible-pull-logrotate dest=/var/lib/nethserver/ibay/ks/ansible-pull-logrotate
+  sudo: yes
+

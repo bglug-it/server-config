@@ -1,0 +1,5 @@
+---
+- include: kickstart.yml
+  tags:
+    - kickstart
+    - ks

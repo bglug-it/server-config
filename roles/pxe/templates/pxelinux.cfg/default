@@ -9,13 +9,13 @@ LABEL client
 	MENU LABEL Installa nuova macchina CLIENT
 	LINUX	/ubuntu/14.04/amd64/linux
 	INITRD	/ubuntu/14.04/amd64/initrd.gz
-	APPEND	vga=normal ks=http://{{ serverfqdn }}/ks/client-trusty.cfg -- quiet
+	APPEND	vga=normal ks=http://{{ serverfqdn }}/ks/profiles/client-trusty.cfg -- quiet
 	
 LABEL docenti
 	MENU LABEL Installa nuova macchina DOCENTI
 	LINUX	/ubuntu/14.04/amd64/linux
 	INITRD	/ubuntu/14.04/amd64/initrd.gz
-	APPEND	vga=normal ks=http://{{ serverfqdn }}/ks/docenti-trusty.cfg -- quiet
+	APPEND	vga=normal ks=http://{{ serverfqdn }}/ks/profiles/docenti-trusty.cfg -- quiet
 	
 MENU SEPARATOR
 

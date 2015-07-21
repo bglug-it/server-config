@@ -18,34 +18,6 @@
   when: chk_tftp_enabled|changed
   sudo: yes
 
-- name: Verifica configurazione ibay kickstart
-  shell: /sbin/e-smith/db accounts show ks
-  register: chk_ks_created
-  changed_when: chk_ks_created.rc != 0
-  ignore_errors: yes
-  sudo: yes
-
-- name: Configurazione web kickstart
-  shell: /sbin/e-smith/db accounts set ks ibay Description "Kickstart share" GroupAccess rw HttpAccess private HttpAliasType default HttpAllowOverrideStatus disabled HttpForceSslStatus disabled HttpPasswordStatus disabled HttpStatus enabled HttpVirtualHost __ANY__ OtherAccess r OwningGroup locals SmbAuditStatus disabled SmbStatus disabled
-  when: chk_ks_created|failed
-  sudo: yes
-
-- name: Attivazione web kickstart
-  shell: /sbin/e-smith/signal-event ibay-create ks
-  when: chk_ks_created|failed
-  sudo: yes
-
-- name: Verifica presenza directory mirror
-  file: path=/var/spool/apt-mirror/mirror state=directory
-  register: chk_mirror_dir
-  ignore_errors: yes
-  sudo: yes
-
-- name: Collegamento directory mirror
-  file: path=/var/lib/nethserver/ibay/ks/mirror src=/var/spool/apt-mirror/mirror state=link
-  sudo: yes
-  when: chk_mirror_dir|success
-
 - name: Creo directory necessarie
   file: path={{ item }} state=directory
   with_items:
@@ -101,42 +73,18 @@
 
 - name: memdisk
   get_url:
-    url: http://syntaxerrormmm.zapto.org/pxe-bootimg/memdisk
+    url: http://sys42.eu/pxe-bootimg/memdisk
     dest: /var/lib/tftpboot/utils/memdisk
   sudo: yes
 
 - name: memtest86
   get_url:
-    url: http://syntaxerrormmm.zapto.org/pxe-bootimg/memtest86/vmlinuz
+    url: http://sys42.eu/pxe-bootimg/memtest86/vmlinuz
     dest: /var/lib/tftpboot/utils/memtest86/vmlinuz
   sudo: yes
 
 - name: hdt
   get_url:
-    url: http://syntaxerrormmm.zapto.org/pxe-bootimg/hdt.img
+    url: http://sys42.eu/pxe-bootimg/hdt.img
     dest: /var/lib/tftpboot/utils/hdt.img
   sudo: yes
-
-- name: Sovrascrivo la variabile mirrorpath se è su Virtualbox
-  set_fact: oldmirrorpath="{{ mirrorpath }}" mirrorpath=""
-  when: ansible_bios_version == "VirtualBox"
-
-- name: Copia configurazioni kickstart
-  template: src=ks/{{ item }} dest=/var/lib/nethserver/ibay/ks/{{ item }}
-  sudo: yes
-  with_items:
-    - client-trusty.cfg
-    - docenti-trusty.cfg
-    - ubuntu-trusty.cfg
-    - post-ks.sh
-    - getvaultpass.py
-    - ansible-pull.sh
-    - ansible-pull-crontab
-
-- name: Copio logrotate per configurazione pull
-  copy: src=ansible-pull-logrotate dest=/var/lib/nethserver/ibay/ks/ansible-pull-logrotate
-  sudo: yes
-
-- name: Ripristino impostazioni mirrorpath
-  set_fact: mirrorpath="{{ oldmirrorpath }}"
-  when: ansible_bios_version == "VirtualBox"
