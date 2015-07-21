@@ -1,5 +1,0 @@
----
-# Copia le configurazioni per il dominio in locale sul server.
-- name: Copia le configurazioni di dominio.
-  copy: src=../../../domain.yml dest=/etc/domain.yml
-  sudo: yes
