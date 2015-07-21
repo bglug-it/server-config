@@ -1,11 +1,18 @@
-# Progetto Scuola @ [BgLUG](http://bglug.it) - Scenario implementativo 1 #
-## PDC con Nethserver ##
+# Ansible configuration playbooks for SMB domain controller with [NethServer](http://www.nethserver.org/) #
 
+![BgLUG logo](https://avatars1.githubusercontent.com/u/12886037?v=3&s=200)
+## Progetto Scuola @ [BgLUG](http://bglug.it) - Scenary 1 ##
 
-### Utilizzo delle configurazioni con [`ansible`](http://www.ansible.com) ###
+Here there are [Ansible](http://www.ansible.com/) configuration for a SMB
+domain controller with the use of a NethServer server.
 
-Qui sono presenti i files di configurazione per il server [NethServer](http://www.nethserver.org/).
-Per configurarlo:
+It presume a machine with NethServer has been already been configured as base
+(please check out the [wiki](https://github.com/bglug-it/server-config/wiki)
+for more information, when available).
+
+### Quick start ###
+
+You may proceed in using the files in this repo proceeding as follows:
 
     $ vim hosts
     $ vim domain.yml
@@ -13,28 +20,31 @@ Per configurarlo:
          -e "admin_sshkey=/path/to/id_rsa.pub"
     $ ansible-playbook setup.yml 
 
-Oppure, più semplicemente:
+Or, more simply:
 
     $ bash run.sh
 
-### Gestione con [`vagrant`](http://www.vagrantup.com) ###
+### Use [`vagrant`](http://www.vagrantup.com) for testing purposes ###
 
-Per utilizzare `vagrant` e il `Vagrantfile` nel
-repo, è necessario avere `vagrant` installato sulla propria macchina e
-lanciare i seguenti comandi:
+You may use the included `Vagrantfile` to do any tests before deploying the
+machine.
 
-    $ cd /path/to/ps-srvmgt
+You just need `vagrant` installed on your machine, then you may run these
+commands:
+
+    $ cd /path/to/server-config
     $ vagrant up
 
-Aggiornamento 14/06/2015: vengono provisionate via Ansible alcune
-configurazioni dal Vagrantfile.
+Update 14/06/2015: some basic configuration to the Vagrant box are now
+provisioned via Ansible, thus requiring that you have it installed on the host
+machine.
 
-Aggiornamento 25/06/2015: la macchina Vagrant ora si appoggia ad una scheda
-"interna" *host-only* anziché una *bridged*.
+Update 25/06/2015: the Vagrant box now uses a *host-only* interface instead of
+a *bridged* one.
 
 ### To Do List ###
 
-* Separare informazioni dominio (`/etc/domaininfo` ?)
-* Sistemare ruoli pxe (splittare pxe e kickstart)
-* Implementare backup
-* Descrivere la procedura installazione fisica
+* Splitting and finalize pxe roles (pxe + kickstart)
+* Implement backup
+* Detail physical installation procedure for the server machine within the
+  Wiki.
