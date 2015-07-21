@@ -1,0 +1,4 @@
+---
+
+- include: ansible-pull.yml
+  tags: ansible-pull

@@ -1,0 +1,16 @@
+---
+- name: Creazione directory per ansible-pull
+  file: path=/var/lib/nethserver/ibay/ks/ansible-pull state=directory
+  sudo: yes
+
+- name: Template
+  template: src={{ item }} dest=/var/lib/nethserver/ibay/ks/ansible-pull/{{ item }}
+  with_items:
+    - run.sh
+    - getvaultpass.py
+    - crontab
+  sudo: yes
+
+- name: Logrotate
+  copy: src=logrotate dest=/var/lib/nethserver/ibay/ks/ansible-pull/logrotate
+  sudo: yes

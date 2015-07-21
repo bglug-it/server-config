@@ -49,15 +49,5 @@
     - ubuntu-trusty.cfg
 
 - name: Copia configurazioni kickstart
-  template: src=post-ks/{{ item }} dest=/var/lib/nethserver/ibay/ks/{{ item }}
+  template: src=post-ks.sh dest=/var/lib/nethserver/ibay/ks/{{ item }}
   sudo: yes
-  with_items:
-    - post-ks.sh
-    - getvaultpass.py
-    - ansible-pull.sh
-    - ansible-pull-crontab
-
-- name: Copio logrotate per configurazione pull
-  copy: src=ansible-pull-logrotate dest=/var/lib/nethserver/ibay/ks/ansible-pull-logrotate
-  sudo: yes
-

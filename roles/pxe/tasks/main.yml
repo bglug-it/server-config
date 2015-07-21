@@ -1,4 +1,3 @@
 ---
 - include: pxe.yml
-  tags:
-    - "client-install"
+  tags: pxe

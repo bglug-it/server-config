@@ -12,7 +12,7 @@ repositories.
 
 ### Quick start ###
 
-You may proceed in using the files in this repo proceeding as follows:
+You may use this repo proceeding as follows:
 
     $ vim hosts
     $ vim domain.yml
@@ -43,7 +43,6 @@ a *bridged* one.
 
 ### To Do List ###
 
-* Splitting and finalize pxe roles (pxe + kickstart)
 * Implement backup
 * Detail physical installation procedure for the server machine within the
   Wiki.

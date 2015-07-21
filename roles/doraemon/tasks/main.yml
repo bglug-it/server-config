@@ -1,5 +1,3 @@
 ---
 - include: doraemon.yml
-  tags:
-    - "client-install"
-    - doraemon
+  tags: doraemon

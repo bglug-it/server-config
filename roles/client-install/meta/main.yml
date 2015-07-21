@@ -1,7 +1,8 @@
 ---
 dependencies:
-  - { role: pxe, tags: [ 'client-install', 'pxe' ] }
-  - { role: kickstart, tags: [ 'client-install', 'kickstart', 'ks' ] }
-  - { role: ubuntu-mirror, tags: [ 'client-install', 'ubuntu-mirror' ] }
-  - { role: doraemon, tags: [ 'client-install', 'doraemon' ] }
-  - { role: git-daemon, tags: [ 'client-install', 'git-daemon' ] }
+  - { role: pxe, tags: [ 'client-install' ] }
+  - { role: kickstart, tags: [ 'client-install' ] }
+  - { role: ansible-pull, tags: [ 'client-install' ] }
+  - { role: ubuntu-mirror, tags: [ 'client-install' ] }
+  - { role: doraemon, tags: [ 'client-install' ] }
+  - { role: git-daemon, tags: [ 'client-install' ] }
