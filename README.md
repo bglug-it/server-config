@@ -1,9 +1,9 @@
 # Ansible configuration playbooks for SMB domain controller with NethServer #
 
-## Progetto Scuola <img src="https://avatars1.githubusercontent.com/u/12886037?v=3&s=200" width="20" height="20" alt="BgLUG Logo" /> [BgLUG][] - Scenary 1 ##
+## Progetto Scuola [<img src="https://avatars1.githubusercontent.com/u/12886037?v=3&s=200" width="25" height="25" alt="BgLUG Logo" /> BgLUG][bglug] - Scenary 1 ##
 
 Starting from a [NethServer][] configured machine (please check out the
-[wiki](/wiki)), these playbooks provision a SMB domain controller which can be
+[wiki][]), these playbooks provision a SMB domain controller which can be
 used with a network of Ubuntu clients.
 
 Using the default settings, it will also provide an environment to boot from
@@ -24,7 +24,7 @@ Or, more simply:
 
     $ bash run.sh
 
-### Use [`vagrant`][] for testing purposes ###
+### Use [`vagrant`][vagrant] for testing purposes ###
 
 You may use the included `Vagrantfile` to do any tests before deploying the
 machine.
@@ -52,3 +52,4 @@ a *bridged* one.
 [ansible]: http://www.ansible.com "Ansible Homepage"
 [nethserver]: http://www.nethserver.org "NethServer Homepage"
 [vagrant]: http://www.vagrantup.com "Vagrant Homepage"
+[wiki]: https://github.com/bglug-it/server-config/wiki "server-config wiki"
