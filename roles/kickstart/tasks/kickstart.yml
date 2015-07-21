@@ -49,5 +49,5 @@
     - ubuntu-trusty.cfg
 
 - name: Copia configurazioni kickstart
-  template: src=post-ks.sh dest=/var/lib/nethserver/ibay/ks/{{ item }}
+  template: src=post-ks.sh dest=/var/lib/nethserver/ibay/ks/post-ks.sh
   sudo: yes
