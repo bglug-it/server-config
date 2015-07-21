@@ -1,6 +1,7 @@
 # Ansible configuration playbooks for SMB domain controller with [NethServer](http://www.nethserver.org/) #
 
-![BgLUG logo](https://avatars1.githubusercontent.com/u/12886037?v=3&s=200)
+<img src="https://avatars1.githubusercontent.com/u/12886037?v=3&s=200"
+width="100" height="100" alt="BgLUG logo" />
 ## Progetto Scuola @ [BgLUG](http://bglug.it) - Scenary 1 ##
 
 Here there are [Ansible](http://www.ansible.com/) configuration for a SMB
