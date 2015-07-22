@@ -33,11 +33,11 @@
 
 # Gestisco caso con virtualbox, dove non devo overridare il mirror
 - name: ubuntumirrorpath per Virtualbox (no mirror)
-  set_fact: ubuntumirrorpath=""
+  set_fact: ubuntumirrorpath="" secmirror="security.ubuntu.com" secpath="/ubuntu"
   when: ansible_bios_version == "VirtualBox"
 
 - name: ubuntumirrorpath per altro (usa mirror locale)
-  set_fact: ubuntumirrorpath="{{ ansible_local.domain.mirrorpath }}"
+  set_fact: ubuntumirrorpath="{{ ansible_local.domain.mirrorpath }}" secmirror="{{ ansible_local.domain.serverfqdn }}" secpath="/ks/mirror/security.ubuntu.com/ubuntu"
   when: ansible_bios_version != "VirtualBox"
 
 - name: Copia profili kickstart
@@ -46,7 +46,6 @@
   with_items:
     - client-trusty.cfg
     - docenti-trusty.cfg
-    - ubuntu-trusty.cfg
 
 - name: Copia configurazioni kickstart
   template: src=post-ks.sh dest=/var/lib/nethserver/ibay/ks/post-ks.sh
