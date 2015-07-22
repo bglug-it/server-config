@@ -28,7 +28,7 @@
   sudo: yes
 
 - name: Attivazione configurazione DHCP
-  shell: /sbin/e-smith/signal-event network-modify
+  shell: /sbin/e-smith/signal-event nethserver-dnsmasq-save
   sudo: yes
 
 - name: Configurazione servizio DNS

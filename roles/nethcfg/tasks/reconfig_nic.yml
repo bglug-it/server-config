@@ -15,5 +15,5 @@
   sudo: yes
 
 - name: Modifico configurazioni
-  shell: /sbin/e-smith/signal-event network-modify
+  shell: /sbin/e-smith/signal-event trusted-networks-modify
   sudo: yes
