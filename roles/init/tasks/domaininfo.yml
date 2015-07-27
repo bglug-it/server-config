@@ -11,3 +11,6 @@
 - name: Utilizzo un piccolo wrapper per passare come fatti informazioni di dominio
   copy: src=domain.fact dest=/etc/ansible/facts.d/domain.fact mode=0755 owner=root
   sudo: yes
+
+- name: Rileggo i fatti per essere sicuri che vengano utilizzati
+  setup: filter=ansible_local
