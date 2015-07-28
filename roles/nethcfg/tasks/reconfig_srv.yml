@@ -65,6 +65,14 @@
   shell: /sbin/e-smith/signal-event group-create domusers
   sudo: yes
 
+- name: Creazione gruppo Domain Operators
+  shell: /sbin/e-smith/db accounts set domopers group Description "Domain Operators" Removable no
+  sudo: yes
+
+- name: Configurazione nuovo gruppo Domain Operators
+  shell: /sbin/e-smith/signal-event group-create domopers
+  sudo: yes
+
 - name: Abilito il ricaricamento dei servizi smb su ibay-create
   file: src="reload" dest="{{ item }}/smb" state=link force=yes
   with_items:
