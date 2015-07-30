@@ -9,15 +9,16 @@
 - name: Installo epel-release
   yum: name=epel-release state=present
   sudo: yes
-  when: check_epel|success
+  when: check_epel|failed
   register: epel_installed
+  ignore_errors: yes
 
 - name: Installo epel-release da URL
   yum:
     name: "http://dl.fedoraproject.org/pub/epel/6/{{ ansible_architecture }}/epel-release-6-8.noarch.rpm"
     state: present
   sudo: yes
-  when: check_epel|failed
+  when: epel_installed|failed
   register: rpm_epel_installed
 
 - name: Abilito il repo EPEL
