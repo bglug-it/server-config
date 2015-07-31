@@ -24,7 +24,7 @@
 - name: Abilito il repo EPEL
   shell: yum-config-manager --enable epel
   sudo: yes
-  when: epel_installed|changed or rpm_epel_installed|changed
+  when: epel_installed|changed or epel_installed|success or rpm_epel_installed|changed
   changed_when: "'[epel]' in epel_enabled.stdout and epel_enabled.rc == 0"
   register: epel_enabled
 
