@@ -90,7 +90,7 @@
   sudo: yes
 
 - name: Configurazione squid
-  shell: /sbin/e-smith/db configuration setprop squid BlueMode transparent GreenMode transparent PortBlock enabled status enabled DiskCache enabled DiskCacheSize 500
+  shell: /sbin/e-smith/db configuration setprop squid BlueMode transparent_ssl GreenMode transparent_ssl PortBlock enabled status enabled DiskCache enabled DiskCacheSize 500
   sudo: yes
 
 - name: Attivazione configurazione squid
