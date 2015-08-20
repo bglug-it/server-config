@@ -18,3 +18,11 @@
 - name: Integro la CA nel db
   shell: certutil -A -n "{{ ansible_local.domain.domainfull }}" -t "TCu,Cuw,Tuw" -i /tmp/ca.crt -d /var/lib/nethserver/ibay/ks
   sudo: yes
+
+- name: Pulizia
+  shell: rm -f {{ item }}
+  sudo: yes
+  with_items:
+    - /tmp/ca.crt
+    - /var/lib/nethserver/ibay/ks/key3.db
+    - /var/lib/nethserver/ibay/ks/secmod.db
