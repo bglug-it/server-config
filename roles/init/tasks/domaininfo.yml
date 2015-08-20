@@ -8,6 +8,12 @@
   file: path=/etc/ansible/facts.d state=directory owner=root mode=0755
   sudo: yes
 
+- name: Installo PyYAML, necessario per i facts
+  yum:
+    name: PyYAML
+    state: present
+  sudo: yes
+
 - name: Utilizzo un piccolo wrapper per passare come fatti informazioni di dominio
   copy: src=domain.fact dest=/etc/ansible/facts.d/domain.fact mode=0755 owner=root
   sudo: yes
