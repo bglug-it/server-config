@@ -49,6 +49,13 @@
   shell: /sbin/e-smith/signal-event nethserver-ntp-update
   sudo: yes
 
+- name: Utilizzo unix extensions nei template per ibay
+  replace:
+    dest: /etc/e-smith/templates/etc/samba/smb.conf/10global
+    regexp: '^unix extensions = no$'
+    replace: 'unix extensions = yes'
+  sudo: yes
+
 - name: Configurazione SMB
   shell: /sbin/e-smith/db configuration setprop smb RoamingProfiles yes ServerRole PDC Workgroup "{{ ansible_local.domain.domainshort }}" status enabled
   sudo: yes
