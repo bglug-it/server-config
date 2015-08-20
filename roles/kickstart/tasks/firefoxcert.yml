@@ -11,8 +11,8 @@
   copy:
     src: cert8.db
     dest: /var/lib/nethserver/ibay/ks/cert8.db
-  owner: root
-  mode: 0644
+    owner: root
+    mode: 0644
   sudo: yes
 
 - name: Integro la CA nel db
