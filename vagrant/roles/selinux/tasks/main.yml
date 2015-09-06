@@ -1,0 +1,7 @@
+---
+# Installing selinux bindings as first step
+- name: Installo bindings selinux per Python
+  yum:
+    name: libselinux-python
+    state: present
+  sudo: yes

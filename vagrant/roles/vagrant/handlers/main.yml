@@ -1,4 +1,0 @@
----
-- name: interface update
-  shell: /sbin/e-smith/signal-event interface-update
-  sudo: yes

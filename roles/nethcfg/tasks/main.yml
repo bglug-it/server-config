@@ -7,7 +7,6 @@
     - nethpkg
 
 - include: reconfig_nic.yml
-  when: ansible_product_name == "VirtualBox"
   tags:
     - nethnic
 

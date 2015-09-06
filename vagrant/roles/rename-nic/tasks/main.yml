@@ -1,0 +1,3 @@
+---
+- include: rename-nic.yml
+  tags: rename-nic

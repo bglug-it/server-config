@@ -1,0 +1,3 @@
+---
+extnic: wan0
+intnic: lan0

@@ -1,9 +1,9 @@
 - name: Configurazione scheda di rete esterna
-  shell: /sbin/e-smith/db networks setprop eth0 role red bootproto dhcp 
+  shell: /sbin/e-smith/db networks setprop {{ extnic }} role red bootproto dhcp 
   sudo: yes
 
 - name: Configurazione scheda di rete interna
-  shell: /sbin/e-smith/db networks setprop eth1 role green ipaddr {{ ansible_local.domain.serverip }} netmask {{ ansible_local.domain.servernetmask }}
+  shell: /sbin/e-smith/db networks setprop {{ intnic }} role green ipaddr {{ ansible_local.domain.serverip }} netmask {{ ansible_local.domain.servernetmask }}
   sudo: yes
 
 - name: Attivo configurazioni di rete
