@@ -36,7 +36,7 @@
   ignore_errors: true
 
 - name: Configurazione forza password
-  shell: /sbin/e-smith/db configuration setprop passwordstrength PassExpires no Users none
+  shell: /sbin/e-smith/db configuration setprop passwordstrength PassExpires no Users none Admin strong MaxPassAge 180 MinPassAge 0 PassExpires no PassWarning 7
   sudo: yes
   when: chk_passstr|changed
 
