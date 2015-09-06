@@ -46,13 +46,13 @@
   when: chk_passstr|changed
 
 - name: Verifica configurazione DHCP
-  shell: /sbin/e-smith/db dhcp getprop {{ extnic }} DhcpRangeStart
+  shell: /sbin/e-smith/db dhcp getprop {{ intnic }} DhcpRangeStart
   sudo: yes
   ignore_errors: true
   register: chk_dhcp
 
 - name: Configurazione servizio DHCP
-  shell: /sbin/e-smith/db dhcp set {{ extnic }} range DhcpRangeStart {{ ansible_local.domain.dhcprange_start }} DhcpRangeEnd {{ ansible_local.domain.dhcprange_end }} status enabled
+  shell: /sbin/e-smith/db dhcp set {{ intnic }} range DhcpRangeStart {{ ansible_local.domain.dhcprange_start }} DhcpRangeEnd {{ ansible_local.domain.dhcprange_end }} status enabled
   sudo: yes
   when: chk_dhcp|failed
 
