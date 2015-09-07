@@ -40,16 +40,26 @@
   set_fact: ubuntumirrorpath="{{ ansible_local.domain.mirrorpath }}" secmirror="{{ ansible_local.domain.serverfqdn }}" secpath="/ks/mirror/security.ubuntu.com/ubuntu"
   when: ansible_bios_version != "VirtualBox"
 
-- name: Copia profili kickstart
-  template: src=profiles/{{ item }} dest=/var/lib/nethserver/ibay/ks/profiles/{{ item }}
+- name: Copia profilo kickstart per client
+  template:
+    src: profiles/client-trusty.cfg
+    dest: /var/lib/nethserver/ibay/ks/profiles/client-trusty.cfg
   sudo: yes
-  with_items:
-    - client-trusty.cfg
-    - docenti-trusty.cfg
 
-- name: Copia configurazioni kickstart
-  template: src="post-{{ item }}-ks.sh" "dest=/var/lib/nethserver/ibay/ks/post-{{ item }}-ks.sh"
-  with_items:
-    - client
-    - docenti
+- name: Copia profilo kickstart per docenti
+  template:
+    src: profiles/docenti-trusty.cfg
+    dest: /var/lib/nethserver/ibay/ks/profiles/docenti-trusty.cfg
+  sudo: yes
+
+- name: Copia script post-installazione per client
+  template:
+    src: post-client-ks.sh
+    dest: /var/lib/nethserver/ibay/ks/post-client-ks.sh
+  sudo: yes
+
+- name: Copia script post-installazione per docenti
+  template:
+    src: post-docenti-ks.sh
+    dest: /var/lib/nethserver/ibay/ks/post-docenti-ks.sh
   sudo: yes
