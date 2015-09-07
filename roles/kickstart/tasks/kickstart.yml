@@ -48,5 +48,8 @@
     - docenti-trusty.cfg
 
 - name: Copia configurazioni kickstart
-  template: src=post-ks.sh dest=/var/lib/nethserver/ibay/ks/post-ks.sh
+  template: src="post-{{ item }}-ks.sh" "dest=/var/lib/nethserver/ibay/ks/post-{{ item }}-ks.sh"
+  with_items:
+    - client
+    - docenti
   sudo: yes
