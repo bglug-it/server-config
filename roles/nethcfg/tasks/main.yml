@@ -13,3 +13,7 @@
 - include: reconfig_srv.yml
   tags:
     - nethcfg
+
+- include: domain_groups.yml
+  tags:
+    - domaingroups

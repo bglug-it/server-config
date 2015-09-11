@@ -1,0 +1,5 @@
+---
+- include: npm.yml
+  tags:
+    - npm
+    - networkpackagemanager
