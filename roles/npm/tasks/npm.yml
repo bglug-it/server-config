@@ -1,16 +1,8 @@
 ---
-- name: Check installazione + versione networkpackagemanager
-  shell: rpm -q nethserver-networkpackagemanager
-  ignore_errors: yes
-  register: check_npm_pkg
-  changed_when: check_npm_pkg.rc != 0 or check_npm_pkg.stdout.find('{{ npm_version }}') == -1
-
-- name: Rimozione versioni precedenti
-  yum: pkg=nethserver-networkpackagemanager state=absent
-  sudo: yes
-  when: check_npm_pkg|changed
+# Anche in questo caso, avendo preparato il repo, l'ultima versione viene installata da repo
 
 - name: Installazione networkpackagemanager
-  yum: pkg='http://sys42.eu/downloads/rpm/nethserver-networkpackagemanager-{{ npm_version }}.ns6.noarch.rpm' state=present
-  when: check_npm_pkg|changed
+  yum:
+    pkg: nethserver-networkpackagemanager
+    state: latest
   sudo: yes

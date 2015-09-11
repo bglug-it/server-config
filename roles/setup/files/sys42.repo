@@ -1,0 +1,5 @@
+[sys42]
+name=NethServer sys42.eu repo
+baseurl=http://nethserver.sys42.eu
+enabled=1
+gpgcheck=0

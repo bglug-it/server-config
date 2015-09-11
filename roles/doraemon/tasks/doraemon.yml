@@ -2,20 +2,12 @@
 # Installa e configura il servizio per rinominare il client
 # Grazie per il servizio a Enrico Bacis
 
-- name: Check installazione + versione doraemon
-  shell: rpm -q doraemon
-  ignore_errors: yes
-  register: check_doraemon_pkg
-  changed_when: check_doraemon_pkg.rc != 0 or check_doraemon_pkg.stdout.find('{{ doraemon_version }}') == -1
-
-- name: Rimozione versioni precedenti
-  yum: pkg=doraemon state=absent
-  sudo: yes
-  when: check_doraemon_pkg|changed
+# Considerando di aver creato il repo, viene comunque installata l'ultima versione disponibile
 
 - name: Installazione doraemon
-  yum: pkg='http://sys42.eu/downloads/rpm/doraemon-{{ doraemon_version }}.ns6.noarch.rpm' state=present
-  when: check_doraemon_pkg|changed
+  yum:
+    pkg: doraemon
+    state: latest
   sudo: yes
 
 - name: Verifico avvio di doraemon
