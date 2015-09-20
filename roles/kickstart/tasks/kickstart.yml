@@ -63,3 +63,16 @@
     src: post-docenti-ks.sh
     dest: /var/lib/nethserver/ibay/ks/post-docenti-ks.sh
   sudo: yes
+
+- name: Copio la chiave GPG del repository ansible per installazione locale
+  copy:
+    src: ppa-ansible.gpg
+    dest: /var/lib/nethserver/ibay/ks/ppa-ansible.gpg
+  sudo: yes
+
+- name: Copio la configurazione del repo di ansible per installazione locale
+  template:
+    src: ansible-ansible-trusty.list
+    dest: /var/lib/nethserver/ibay/ks/ansible-ansible-trusty.list
+  sudo: yes
+    
