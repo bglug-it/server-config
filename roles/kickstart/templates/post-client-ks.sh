@@ -5,7 +5,7 @@ TARGETHOSTNAME=$(wget -qO- http://{{ ansible_local.domain.serverfqdn }}:3000/wha
 echo $TARGETHOSTNAME > /etc/hostname
 sed -i "s/kickseed/$TARGETHOSTNAME/g" /etc/hosts
 
-{% if ansible_product_name != 'VirtualBox' %}
+{% if ansible_product_name == 'VirtualBox' %}
 # Installo l'ultimo ansible per ansible-pull
 export https_proxy=https://{{ ansible_local.domain.serverip }}:3128
 add-apt-repository -y ppa:ansible/ansible
