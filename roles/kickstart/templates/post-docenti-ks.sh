@@ -13,8 +13,7 @@ apt-get update && apt-get install -y ansible
 unset https_proxy
 {% else %}
 # Adding ansible manually from local
-wget -q http://{{ ansible_local.domain.serverfqdn }}/ks/ppa-ansible.gpg -O /tmp/ppa-ansible.gpg
-apt-key add /tmp/ppa-ansible.gpg && rm -f /tmp/ppa-ansible.gpg
+wget -qO- http://{{ ansible_local.domain.serverfqdn }}/ks/ppa-ansible.gpg | apt-key add -
 wget -q http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-ansible-trusty.list -O /etc/apt/sources.list.d/ansible-ansible-trusty.list
 apt-get update && apt-get install -y ansible
 {% endif %}
