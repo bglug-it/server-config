@@ -5,19 +5,19 @@ TARGETHOSTNAME=$(wget -qO- http://{{ ansible_local.domain.serverfqdn }}:3000/wha
 echo $TARGETHOSTNAME > /etc/hostname
 sed -i "s/kickseed/$TARGETHOSTNAME/g" /etc/hosts
 
-if ping -c4 8.8.8.8 >/dev/null 2>&1; then
-  # Installo l'ultimo ansible per ansible-pull
-  export https_proxy=https://{{ ansible_local.domain.serverip }}:3128
-  add-apt-repository -y ppa:ansible/ansible
-  apt-get update && apt-get install -y ansible
-  unset https_proxy
-else
-  # Adding ansible manually from local
-  wget -q http://{{ ansible_local.domain.serverfqdn }}/ks/ppa-ansible.gpg -O /tmp/ppa-ansible.gpg
-  apt-key add /tmp/ppa-ansible.gpg && rm -f /tmp/ppa-ansible.gpg
-  wget -q http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-ansible-trusty.list -O /etc/apt/sources.list.d/ansible-ansible-trusty.list
-  apt-get update && apt-get install -y ansible
-fi
+{% if ansible_product_name != 'VirtualBox' %}
+# Installo l'ultimo ansible per ansible-pull
+export https_proxy=https://{{ ansible_local.domain.serverip }}:3128
+add-apt-repository -y ppa:ansible/ansible
+apt-get update && apt-get install -y ansible
+unset https_proxy
+{% else %}
+# Adding ansible manually from local
+wget -q http://{{ ansible_local.domain.serverfqdn }}/ks/ppa-ansible.gpg -O /tmp/ppa-ansible.gpg
+apt-key add /tmp/ppa-ansible.gpg && rm -f /tmp/ppa-ansible.gpg
+wget -q http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-ansible-trusty.list -O /etc/apt/sources.list.d/ansible-ansible-trusty.list
+apt-get update && apt-get install -y ansible
+{% endif %}
 
 # Creo directory dipendenti
 install -d -o root -g root /var/lib/{{ ansible_local.domain.domainfull }}/config
