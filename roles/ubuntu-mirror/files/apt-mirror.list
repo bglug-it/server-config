@@ -71,3 +71,4 @@ clean http://archive.ubuntu.com/ubuntu
 clean http://extras.ubuntu.com/ubuntu
 clean http://archive.canonical.com
 clean http://security.ubuntu.com/ubuntu
+clean http://ppa.launchpad.net/ansible/ansible/ubuntu
