@@ -12,5 +12,5 @@ playbook=local.yml
 
 vaultpassfile=$(/var/lib/{{ ansible_local.domain.domainfull }}/bin/getvaultpass.py)
 
-ansible-pull --accept-host-key -d "${repo}" -U "${url}" -C "${branch}" "${playbook}" --vault-password-file "${vaultpassfile}" $@
+ansible-pull --only-if-changed --accept-host-key -d "${repo}" -U "${url}" -C "${branch}" "${playbook}" --vault-password-file "${vaultpassfile}" $@
 rm -f "${vaultpassfile}"
