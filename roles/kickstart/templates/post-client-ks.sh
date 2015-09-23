@@ -28,7 +28,7 @@ install -m744 -o root -g root /tmp/getvaultpass.py /var/lib/{{ ansible_local.dom
 rm -f /tmp/getvaultpass.py
 
 # Installo lo script per l'avvio di ansible-pull da root
-wget -q http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/run.sh -O /tmp/ansible-pull.sh
+wget -q http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/ansible-pull.sh -O /tmp/ansible-pull.sh
 install -m744 -o root -g root /tmp/ansible-pull.sh /var/lib/{{ ansible_local.domain.domainfull }}/bin/ansible-pull.sh
 rm -f /tmp/ansible-pull.sh
 
