@@ -3,24 +3,27 @@ d-i	debian-installer/language		string it
 d-i	debian-installer/locale			string it_IT.UTF-8
 d-i	debian-installer/preferred-locale 	string it_IT.UTF-8
 d-i	debian-installer/supported-locales 	string it_IT it_IT@euro en_US en_US.UTF-8
+
 # Keyboard settings
 d-i	console-setup/ask_detect		boolean false
 d-i	keyboard-configuration/layoutcode 	string it
+
 # Network
 d-i	netcfg/choose_interface 		select auto
+
 # Adjust the default hostname.
 # Not specifying the hostname should ask for it at install-time.
 #d-i	netcfg/get_hostname	string edubuntu
 #d-i	netcfg/get_hostname	seen false
 # Enabling non-free firmware
 d-i	hw-detect/load_firmware			boolean true
+
 # Setting up repositories from local mirror
 d-i	mirror/country				string manual
 d-i	mirror/protocol				string http
 d-i	mirror/http/hostname			string archive.ubuntu.com
 d-i	mirror/http/directory			string /ubuntu
 d-i	mirror/http/proxy 			string
-# Enable extras.ubuntu.com.
 d-i	apt-setup/extras			boolean true
 d-i	apt-setup/restricted			boolean true
 d-i	apt-setup/universe			boolean true
@@ -30,10 +33,23 @@ d-i	apt-setup/contrib			boolean true
 d-i	apt-setup/services-select 		multiselect security, updates
 d-i	apt-setup/security_host			string security.ubuntu.com
 d-i	apt-setup/security_path			string /ubuntu
-# Timezone
+
+# Setup and enable libreoffice PPA
+d-i	apt-setup/local0/repository		string	http://ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
+d-i 	apt-setup/local0/comment		string LibreOffice Official PPA
+d-i 	apt-setup/local0/key 			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x36E81C9267FD1383FCC4490983FBA1751378B444&op=get
+
+# Setup and enable ansible PPA
+d-i	apt-setup/local1/repository		string http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main
+d-i	apt-setup/local1/comment		string Ansible Official PPA
+d-i	apt-setup/local1/key			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367&op=get	
+
+# Time and date
+d-i	clock-setup/utc				boolean true
 d-i 	time/zone				string	Europe/Rome
 d-i	clock-setup/ntp				boolean true
 d-i	clock-setup/ntp-server			string ntp1.inrim.it
+
 # Partitioning
 d-i	partman-auto/init_automatically_partition	select biggest_free
 d-i	partman-auto/disk			string /dev/sda
@@ -47,31 +63,27 @@ d-i	partman/confirm				boolean true
 d-i	partman/confirm_nooverwrite		boolean true
 d-i	partman/mount_style			select uuid
 d-i	user-setup/encrypt-home			boolean false
-# Setup and enable libreoffice PPA
-d-i	apt-setup/local0/repository		string	http://ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
-d-i 	apt-setup/local0/comment		string LibreOffice Official PPA
-d-i 	apt-setup/local0/key 			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x36E81C9267FD1383FCC4490983FBA1751378B444&op=get
-# Setup and enable ansible PPA
-d-i	apt-setup/local1/repository		string http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main
-d-i	apt-setup/local1/comment		string Ansible Official PPA
-d-i	apt-setup/local1/key			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367&op=get	
+
+# Kernel installation
+d-i 	base-installer/kernel/image		string linux-generic
+
 # Install the Edubuntu desktop.
-tasksel	tasksel/first	multiselect ubuntu-desktop, edubuntu-desktop-gnome
-tasksel	tasksel/first	seen false
+tasksel	tasksel/first				multiselect ubuntu-desktop, edubuntu-desktop-gnome, ubuntu-edu-secondary
+tasksel	tasksel/first				seen false
 # No asking for installation in language
 d-i	pkgsel/install-language-support		boolean false
 # Upgrade installation to full
-d-i pkgsel/upgrade			select full-upgrade
+d-i 	pkgsel/upgrade				select full-upgrade
 # Language pack selection
-d-i pkgsel/language-packs multiselect it, en
+d-i 	pkgsel/language-packs			multiselect it, en
 # Disable popularity contest
 popularity-contest popularity-contest/participate	boolean false
 # Install both GNOME and KDE translation packages.
-d-i	pkgsel/language-pack-patterns	string language-pack-gnome-$LL language-pack-kde-$LL kde-i18n-$LL
+d-i	pkgsel/language-pack-patterns		string language-pack-gnome-$LL language-pack-kde-$LL kde-i18n-$LL
 # Adding libreoffice and ansible
-d-i	pkgsel/include			string openssh-server libreoffice libreoffice-l10n ansible
+d-i	pkgsel/include				string openssh-server libreoffice libreoffice-l10n ansible vim screen git curl
 # Grub installation on MBR
-d-i	grub-installer/only_debian	boolean true
+d-i	grub-installer/only_debian		boolean true
 # On live DVDs, don't spend huge amounts of time removing substantial
 # application packages pulled in by language packs. Given that we clearly
 # have the space to include them on the DVD, they're useful and we might as
