@@ -73,7 +73,7 @@ tasksel	tasksel/first				seen false
 # No asking for installation in language
 d-i	pkgsel/install-language-support		boolean false
 # Upgrade installation to full
-d-i 	pkgsel/upgrade				select full-upgrade
+#d-i 	pkgsel/upgrade				select full-upgrade
 # Language pack selection
 d-i 	pkgsel/language-packs			multiselect it, en
 # Disable popularity contest
