@@ -1,0 +1,52 @@
+# Localization - Italiano
+d-i	debian-installer/language		string it
+d-i	debian-installer/locale			string it_IT.UTF-8
+d-i	debian-installer/preferred-locale 	string it_IT.UTF-8
+d-i	debian-installer/supported-locales 	string it_IT it_IT@euro en_US en_US.UTF-8
+# Keyboard settings
+d-i	console-setup/ask_detect		boolean false
+d-i	keyboard-configuration/layoutcode 	string it
+# Network
+d-i	netcfg/choose_interface 		select auto
+# Adjust the default hostname.
+# Not specifying the hostname should ask for it at install-time.
+#d-i	netcfg/get_hostname	string edubuntu
+#d-i	netcfg/get_hostname	seen false
+# Enabling non-free firmware
+d-i	hw-detect/load_firmware			boolean true
+# Setting up repositories from local mirror
+d-i	mirror/country				string manual
+d-i	mirror/protocol				string http
+d-i	mirror/http/hostname			string {{ ansible_local.domain.serverfqdn }}
+d-i	mirror/http/directory			string /ks/mirror/archive.ubuntu.com/ubuntu
+d-i	mirror/http/proxy 			string
+# Enable extras.ubuntu.com.
+d-i	apt-setup/extras			boolean true
+# Setup and enable libreoffice PPA
+d-i	apt-setup/local0/repository		string	http://{{ ansible_local.domain.mirrorpath }}ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
+d-i 	apt-setup/local0/comment		string LibreOffice Official PPA
+d-i 	apt-setup/local0/key 			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x36E81C9267FD1383FCC4490983FBA1751378B444&op=get
+# Setup and enable ansible PPA
+d-i	apt-setup/local1/repository		string http://{{ ansible_local.domain.mirrorpath }}ppa.launchpad.net/ansible/ansible/ubuntu trusty main
+d-i	apt-setup/local1/comment		string Ansible Official PPA
+d-i	apt-setup/local1/key			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367&op=get	
+# Install the Edubuntu desktop.
+tasksel	tasksel/first	multiselect ubuntu-desktop, edubuntu-desktop-gnome
+tasksel	tasksel/first	seen false
+# Upgrade installation to full
+d-i pkgsel/upgrade			select full-upgrade
+# Language pack selection
+d-i pkgsel/language-packs multiselect it, en
+# Disable popularity contest
+popularity-contest popularity-contest/participate	boolean false
+# Install both GNOME and KDE translation packages.
+d-i	pkgsel/language-pack-patterns	string language-pack-gnome-$LL language-pack-kde-$LL kde-i18n-$LL
+# Adding libreoffice and ansible
+d-i	pkgsel/include			string openssh-server libreoffice libreoffice-l10n ansible
+# Grub installation on MBR
+d-i	grub-installer/only_debian	boolean true
+# On live DVDs, don't spend huge amounts of time removing substantial
+# application packages pulled in by language packs. Given that we clearly
+# have the space to include them on the DVD, they're useful and we might as
+# well keep them installed.
+ubiquity	ubiquity/keep-installed	string icedtea6-plugin openoffice.org

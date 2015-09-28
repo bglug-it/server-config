@@ -28,7 +28,12 @@
   when: chk_mirror_dir|success
 
 - name: Creazione directory kickstart
-  file: path=/var/lib/nethserver/ibay/ks/profiles state=directory
+  file:
+    path: "/var/lib/nethserver/ibay/ks/{{ item }}"
+    state: directory
+  with_items:
+    - profiles
+    - preseed
   sudo: yes
 
 # Gestisco caso con virtualbox, dove non devo overridare il mirror
@@ -50,6 +55,18 @@
   template:
     src: profiles/docenti-trusty.cfg
     dest: /var/lib/nethserver/ibay/ks/profiles/docenti-trusty.cfg
+  sudo: yes
+
+- name: Copia preseed con repo
+  template:
+    src: preseed/edubuntu.seed
+    dest: /var/lib/nethserver/ibay/ks/preseed/edubuntu.seed
+  sudo: yes
+
+- name: Copia preseed senza repo
+  copy:
+    src: preseed/edubuntu-nomirror.seed
+    dest: /var/lib/nethserver/ibay/ks/preseed/edubuntu-nomirror.seed
   sudo: yes
 
 - name: Copia script post-installazione per client
@@ -75,4 +92,9 @@
     src: ansible-ansible-trusty.list
     dest: /var/lib/nethserver/ibay/ks/ansible-ansible-trusty.list
   sudo: yes
-    
+
+- name: Copio la configurazione del repo di LibreOffice per installazione locale
+  template:
+    src: libreoffice-5-trusty.list
+    dest: /var/lib/nethserver/ibay/ks/libreoffice-5-trusty.list
+  sudo: yes
