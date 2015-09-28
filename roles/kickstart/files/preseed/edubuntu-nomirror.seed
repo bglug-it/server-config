@@ -58,6 +58,8 @@ d-i	apt-setup/local1/key			string http://keyserver.ubuntu.com:11371/pks/lookup?s
 # Install the Edubuntu desktop.
 tasksel	tasksel/first	multiselect ubuntu-desktop, edubuntu-desktop-gnome
 tasksel	tasksel/first	seen false
+# No asking for installation in language
+d-i	pkgsel/install-language-support		boolean false
 # Upgrade installation to full
 d-i pkgsel/upgrade			select full-upgrade
 # Language pack selection

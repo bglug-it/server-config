@@ -58,18 +58,20 @@ d-i	apt-setup/local1/key			string http://keyserver.ubuntu.com:11371/pks/lookup?s
 # Install the Edubuntu desktop.
 tasksel	tasksel/first	multiselect ubuntu-desktop, edubuntu-desktop-gnome
 tasksel	tasksel/first	seen false
+# No asking for installation in language
+d-i	pkgsel/install-language-support		boolean false
 # Upgrade installation to full
-d-i pkgsel/upgrade			select full-upgrade
+d-i 	pkgsel/upgrade				select full-upgrade
 # Language pack selection
-d-i pkgsel/language-packs multiselect it, en
+d-i 	pkgsel/language-packs			multiselect it, en
 # Disable popularity contest
 popularity-contest popularity-contest/participate	boolean false
 # Install both GNOME and KDE translation packages.
-d-i	pkgsel/language-pack-patterns	string language-pack-gnome-$LL language-pack-kde-$LL kde-i18n-$LL
+d-i	pkgsel/language-pack-patterns		string language-pack-gnome-$LL language-pack-kde-$LL kde-i18n-$LL
 # Adding libreoffice and ansible
-d-i	pkgsel/include			string openssh-server libreoffice libreoffice-l10n ansible
+d-i	pkgsel/include				string openssh-server libreoffice libreoffice-l10n ansible
 # Grub installation on MBR
-d-i	grub-installer/only_debian	boolean true
+d-i	grub-installer/only_debian		boolean true
 # On live DVDs, don't spend huge amounts of time removing substantial
 # application packages pulled in by language packs. Given that we clearly
 # have the space to include them on the DVD, they're useful and we might as
