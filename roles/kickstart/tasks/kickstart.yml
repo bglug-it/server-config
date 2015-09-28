@@ -61,12 +61,14 @@
   template:
     src: preseed/edubuntu.seed
     dest: /var/lib/nethserver/ibay/ks/preseed/edubuntu.seed
+  when: ansible_bios_version != "VirtualBox"
   sudo: yes
 
 - name: Copia preseed senza repo
   copy:
     src: preseed/edubuntu-nomirror.seed
-    dest: /var/lib/nethserver/ibay/ks/preseed/edubuntu-nomirror.seed
+    dest: /var/lib/nethserver/ibay/ks/preseed/edubuntu.seed
+  when: ansible_bios_version == "VirtualBox"
   sudo: yes
 
 - name: Copia script post-installazione per client

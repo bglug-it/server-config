@@ -23,29 +23,17 @@ MENU BEGIN
 MENU TITLE Edubuntu Classica
 
 LABEL edubuntu-64
-	MENU LABEL Installa Edubuntu 64 bit (nomirror)
-	LINUX	/ubuntu/14.04/amd64/linux
-	INITRD	/ubuntu/14.04/amd64/initrd.gz
-	APPEND	locale=it_IT.UTF-8 keyboard-configuration/layoutcode=it url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/edubuntu-nomirror.seed
-	
-LABEL edubuntu-64-mirr
-	MENU LABEL Installa Edubuntu 64 bit (con mirror)
+	MENU LABEL Installa Edubuntu 64 bit
 	LINUX	/ubuntu/14.04/amd64/linux
 	INITRD	/ubuntu/14.04/amd64/initrd.gz
 	APPEND	locale=it_IT.UTF-8 keyboard-configuration/layoutcode=it url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/edubuntu.seed
 	
 LABEL edubuntu-32
-	MENU LABEL Installa Edubuntu 32 bit (nomirror)
-	LINUX	/ubuntu/14.04/i386/linux
-	INITRD	/ubuntu/14.04/i386/initrd.gz
-	APPEND	locale=it_IT.UTF-8 keyboard-configuration/layoutcode=it url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/edubuntu-nomirror.seed
-
-LABEL edubuntu-32-mirr
-	MENU LABEL Installa Edubuntu 32 bit (con mirror)
+	MENU LABEL Installa Edubuntu 32 bit
 	LINUX	/ubuntu/14.04/i386/linux
 	INITRD	/ubuntu/14.04/i386/initrd.gz
 	APPEND	locale=it_IT.UTF-8 keyboard-configuration/layoutcode=it url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/edubuntu.seed
-	
+
 MENU SEPARATOR
 
 LABEL return-edu
