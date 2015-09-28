@@ -53,6 +53,8 @@ LABEL return-edu
 	MENU EXIT
 MENU END
 
+MENU SEPARATOR
+
 LABEL local
 	MENU LABEL Boot from ^local hard drive
 	LOCALBOOT 0
