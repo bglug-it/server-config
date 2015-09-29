@@ -84,6 +84,7 @@ d-i	pkgsel/language-pack-patterns		string language-pack-gnome-$LL language-pack-
 d-i	pkgsel/include				string openssh-server libreoffice libreoffice-l10n ansible vim screen git curl
 # Grub installation on MBR
 d-i	grub-installer/only_debian		boolean true
+d-i	grub-installer/bootdev			string /dev/sda
 # On live DVDs, don't spend huge amounts of time removing substantial
 # application packages pulled in by language packs. Given that we clearly
 # have the space to include them on the DVD, they're useful and we might as
