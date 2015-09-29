@@ -19,7 +19,7 @@ d-i	netcfg/choose_interface 		select auto
 d-i	hw-detect/load_firmware			boolean true
 
 # Setting up repositories from local mirror
-d-i	mirror/country				string it
+d-i	mirror/country				string manual
 d-i	mirror/protocol				string http
 d-i	mirror/http/hostname			string archive.ubuntu.com
 d-i	mirror/http/directory			string /ubuntu
