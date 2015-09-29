@@ -19,7 +19,7 @@ d-i	netcfg/choose_interface 		select auto
 d-i	hw-detect/load_firmware			boolean true
 
 # Setting up repositories from local mirror
-d-i	mirror/country				string manual
+d-i	mirror/country				string it
 d-i	mirror/protocol				string http
 d-i	mirror/http/hostname			string archive.ubuntu.com
 d-i	mirror/http/directory			string /ubuntu
@@ -68,25 +68,27 @@ d-i	user-setup/encrypt-home			boolean false
 d-i 	base-installer/kernel/image		string linux-generic
 
 # Install the Edubuntu desktop.
-tasksel	tasksel/first				multiselect ubuntu-desktop, edubuntu-desktop-gnome, ubuntu-edu-secondary
+tasksel	tasksel/first				multiselect standard, ubuntu-desktop, edubuntu-desktop-gnome
 tasksel	tasksel/first				seen false
+
 # No asking for installation in language
 d-i	pkgsel/install-language-support		boolean false
-# Upgrade installation to full
-#d-i 	pkgsel/upgrade				select full-upgrade
+
+# Policy to upgrade: none
+d-i	pkgsel/update-policy			select none
+
 # Language pack selection
 d-i 	pkgsel/language-packs			multiselect it, en
+
 # Disable popularity contest
 popularity-contest popularity-contest/participate	boolean false
+
 # Install both GNOME and KDE translation packages.
 d-i	pkgsel/language-pack-patterns		string language-pack-gnome-$LL language-pack-kde-$LL kde-i18n-$LL
+
 # Adding libreoffice and ansible
-d-i	pkgsel/include				string openssh-server libreoffice libreoffice-l10n ansible vim screen git curl
+d-i	pkgsel/include				string openssh-server libreoffice libreoffice-l10n ansible vim screen git curl ubuntu-edu-secondary
+
 # Grub installation on MBR
 d-i	grub-installer/only_debian		boolean true
-d-i	grub-installer/bootdev			string /dev/sda
-# On live DVDs, don't spend huge amounts of time removing substantial
-# application packages pulled in by language packs. Given that we clearly
-# have the space to include them on the DVD, they're useful and we might as
-# well keep them installed.
-ubiquity	ubiquity/keep-installed	string icedtea6-plugin openoffice.org
+d-i	grub-installer/bootdev			string default
