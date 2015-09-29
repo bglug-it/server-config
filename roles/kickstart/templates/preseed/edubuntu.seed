@@ -2,7 +2,7 @@
 d-i	debian-installer/language		string it
 d-i	debian-installer/locale			string it_IT.UTF-8
 d-i	debian-installer/preferred-locale 	string it_IT.UTF-8
-d-i	debian-installer/supported-locales 	string it_IT it_IT@euro en_US en_US.UTF-8
+d-i	debian-installer/supported-locales 	multiselect it_IT it_IT@euro en_US en_US.UTF-8
 
 # Keyboard settings
 d-i	console-setup/ask_detect		boolean false
@@ -68,11 +68,13 @@ d-i	user-setup/encrypt-home			boolean false
 d-i 	base-installer/kernel/image		string linux-generic
 
 # Install the Edubuntu desktop.
-tasksel	tasksel/first				multiselect standard, ubuntu-desktop, edubuntu-desktop-gnome, ubuntu-edu-secondary
+tasksel tasksel/desktop				multiselect edubuntu-desktop-gnome
+tasksel	tasksel/first				multiselect standard, edubuntu-desktop-gnome
 #tasksel	tasksel/first				seen false
 
 # No asking for installation in language
-d-i	pkgsel/install-language-support		boolean false
+d-i	pkgsel/install-language-support		boolean true
+d-i	pkgsel/ignore-incomplete-language-support boolean true
 
 # Policy to upgrade: none
 d-i	pkgsel/update-policy			select none
@@ -87,10 +89,10 @@ d-i 	pkgsel/language-packs			multiselect it, en
 popularity-contest popularity-contest/participate	boolean false
 
 # Install both GNOME and KDE translation packages.
-d-i	pkgsel/language-pack-patterns		string language-pack-gnome-$LL language-pack-kde-$LL kde-i18n-$LL
+d-i	pkgsel/language-pack-patterns		string language-pack-gnome-$LL language-pack-kde-$LL kde-i18n-$LL libreoffice-help-$LL libreoffice-l10n-$LL firefox-locale-$LL gimp-help-$LL thunderbird-locale-$LL
 
 # Adding libreoffice and ansible
-d-i	pkgsel/include				string openssh-server libreoffice libreoffice-l10n-it libreoffice-help-it firefox-locale-it ansible vim screen git curl
+d-i	pkgsel/include				string openssh-server libreoffice ansible vim screen git curl
 
 # Grub installation on MBR
 d-i	grub-installer/only_debian		boolean true
