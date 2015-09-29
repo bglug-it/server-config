@@ -94,4 +94,4 @@ d-i	pkgsel/include				string openssh-server libreoffice libreoffice-l10n-it libr
 
 # Grub installation on MBR
 d-i	grub-installer/only_debian		boolean true
-d-i	grub-installer/bootdev			string default
+d-i	grub-installer/bootdev			string /dev/sda
