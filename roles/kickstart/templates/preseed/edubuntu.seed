@@ -69,13 +69,16 @@ d-i 	base-installer/kernel/image		string linux-generic
 
 # Install the Edubuntu desktop.
 tasksel	tasksel/first				multiselect standard, ubuntu-desktop, edubuntu-desktop-gnome, ubuntu-edu-secondary
-tasksel	tasksel/first				seen false
+#tasksel	tasksel/first				seen false
 
 # No asking for installation in language
 d-i	pkgsel/install-language-support		boolean false
 
 # Policy to upgrade: none
 d-i	pkgsel/update-policy			select none
+
+# UPgrade after installation: no
+d-i	pkgsel/upgrade				select none
 
 # Language pack selection
 d-i 	pkgsel/language-packs			multiselect it, en
