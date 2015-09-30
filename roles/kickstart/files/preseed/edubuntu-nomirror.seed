@@ -78,7 +78,8 @@ tasksel	tasksel/first				multiselect edubuntu-desktop-gnome
 # No asking for installation in language
 d-i	pkgsel/install-language-support		boolean true
 d-i	pkgsel/ignore-incomplete-language-support boolean true
-pkgsel	pkgsel/ignore-incomplete-language-support boolean true
+d-i	localechooser/translation/warn-severe	boolean true
+d-i	localechooser/translation/warn-light	boolean true
 
 # Policy to upgrade: none
 d-i	pkgsel/update-policy			select none
