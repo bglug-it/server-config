@@ -97,12 +97,11 @@ d-i	pkgsel/include				string openssh-server libreoffice ansible vim screen git c
 
 # Post installation tasks
 # Update system
-d-i 	preseed/late_command string in-target apt-get -y upgrade
-d-i	preseed/late_command string in-target apt-get -y dist-upgrade
-
-# Removing unwanted packages
-d-i	preseed/late_command string in-target apt-get -yf purge libnss-mdns unity-webapps-common zeitgeist-core zeitgeist-datahub
-d-i	preseed/late_command string in-target apt-get -y autoremove
+d-i 	preseed/late_command string in-target apt-get -y upgrade; \
+	in-target apt-get -y dist-upgrade; \
+	in-target apt-get -y purge libnss-mdns unity-webapps-common zeitgeist-core zeitgeist-datahub; \
+	in-target apt-get -y autoremove; \
+	in-target sed -i'' -e 's/ubuntu/gnome-fallback/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 
 # Grub installation on MBR
 d-i	grub-installer/only_debian		boolean true
