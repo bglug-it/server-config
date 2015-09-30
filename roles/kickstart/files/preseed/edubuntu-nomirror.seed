@@ -1,3 +1,6 @@
+# No questions if possible
+debconf	debconf/priority			string critical
+
 # Localization - Italiano
 d-i	debian-installer/language		string it
 d-i	debian-installer/locale			string it_IT.UTF-8
