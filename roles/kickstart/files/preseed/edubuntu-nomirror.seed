@@ -68,9 +68,7 @@ d-i	user-setup/encrypt-home			boolean false
 d-i 	base-installer/kernel/image		string linux-generic
 
 # Install the Edubuntu desktop.
-tasksel tasksel/desktop				multiselect edubuntu-desktop-gnome
-tasksel	tasksel/first				multiselect standard, edubuntu-desktop-gnome
-#tasksel	tasksel/first				seen false
+tasksel	tasksel/first				multiselect edubuntu-desktop-gnome
 
 # No asking for installation in language
 d-i	pkgsel/install-language-support		boolean true
