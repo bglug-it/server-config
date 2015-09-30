@@ -90,8 +90,20 @@ popularity-contest popularity-contest/participate	boolean false
 d-i	pkgsel/language-pack-patterns		string language-pack-gnome-$LL language-pack-kde-$LL kde-i18n-$LL libreoffice-help-$LL libreoffice-l10n-$LL firefox-locale-$LL gimp-help-$LL thunderbird-locale-$LL
 
 # Adding libreoffice and ansible
-d-i	pkgsel/include				string openssh-server libreoffice ansible vim screen git curl virtualbox-guest-dkms
+d-i	pkgsel/include				string openssh-server libreoffice ansible vim screen git curl cifs-utils ubuntu-edu-secondary libnss-myhostname virtualbox-guest-dkms
+
+# Post installation tasks
+# Update system
+d-i 	preseed/late_command string in-target apt-get -y upgrade
+d-i	preseed/late_command string in-target apt-get -y dist-upgrade
+
+# Removing unwanted packages
+d-i	preseed/late_command string in-target apt-get -yf purge libnss-mdns unity-webapps-common zeitgeist-core zeitgeist-datahub
+d-i	preseed/late_command string in-target apt-get -y autoremove
 
 # Grub installation on MBR
 d-i	grub-installer/only_debian		boolean true
 d-i	grub-installer/bootdev			string /dev/sda
+
+# No reboot message
+d-i	finish-install/reboot_in_progress	note
