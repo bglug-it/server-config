@@ -47,7 +47,7 @@ deb-amd64 http://archive.ubuntu.com/ubuntu trusty main/debian-installer restrict
 deb-amd64 http://archive.ubuntu.com/ubuntu trusty-security main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
 deb-amd64 http://archive.ubuntu.com/ubuntu trusty-updates main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
 deb-amd64 http://archive.ubuntu.com/ubuntu trusty-proposed main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
-deb-i386 http://archive.ubuntu.com/ubuntu trusty-backports main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-amd64 http://archive.ubuntu.com/ubuntu trusty-backports main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
 
 deb-i386 http://extras.ubuntu.com/ubuntu trusty main
 deb-amd64 http://extras.ubuntu.com/ubuntu trusty main
