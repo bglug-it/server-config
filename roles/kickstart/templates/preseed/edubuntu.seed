@@ -9,7 +9,9 @@ d-i	debian-installer/supported-locales 	multiselect it_IT it_IT@euro en_US en_US
 
 # Keyboard settings
 d-i	console-setup/ask_detect		boolean false
+d-i	console-setup/layoutcode		string it
 d-i	keyboard-configuration/layoutcode 	string it
+d-i	keyboard-configuration/variantcode	string nodeadkeys
 
 # Network
 d-i	netcfg/choose_interface 		select auto
