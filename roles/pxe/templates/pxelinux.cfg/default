@@ -26,7 +26,7 @@ LABEL edubuntu-64
 	MENU LABEL Installa Edubuntu 64 bit
 	LINUX	/ubuntu/14.04/amd64/linux
 	INITRD	/ubuntu/14.04/amd64/initrd.gz
-	APPEND	locale=it_IT.UTF-8 keyboard-configuration/layoutcode=it url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/edubuntu.seed
+	APPEND	locale=it_IT.UTF-8 console-setup/detect=false keyboard-configuration/layoutcode=it console-setup/layoutcode=it url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/edubuntu.seed
 	
 LABEL edubuntu-32
 	MENU LABEL Installa Edubuntu 32 bit
