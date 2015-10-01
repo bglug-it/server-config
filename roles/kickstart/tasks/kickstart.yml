@@ -64,7 +64,7 @@
   when: ansible_bios_version != "VirtualBox"
   sudo: yes
 
-  - name: Copia preseed - virtuale
+- name: Copia preseed - virtuale
   template:
     src: preseed/edubuntu-vm.seed
     dest: /var/lib/nethserver/ibay/ks/preseed/edubuntu.seed
