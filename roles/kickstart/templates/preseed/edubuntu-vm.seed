@@ -26,8 +26,8 @@ d-i	hw-detect/load_firmware			boolean true
 # Setting up repositories from local mirror
 d-i	mirror/country				string manual
 d-i	mirror/protocol				string http
-d-i	mirror/http/hostname			string it.archive.ubuntu.com
-d-i	mirror/http/directory			string /ubuntu
+d-i	mirror/http/hostname			string {{ ansible_local.domain.serverfqdn }}
+d-i	mirror/http/directory			string /ks/mirror/archive.ubuntu.com/ubuntu
 d-i	mirror/http/proxy 			string
 d-i	apt-setup/extras			boolean true
 d-i	apt-setup/restricted			boolean true
@@ -36,16 +36,16 @@ d-i	apt-setup/backports			boolean true
 d-i	apt-setup/non-free			boolean true
 d-i	apt-setup/contrib			boolean true
 d-i	apt-setup/services-select 		multiselect security, updates
-d-i	apt-setup/security_host			string security.ubuntu.com
-d-i	apt-setup/security_path			string /ubuntu
+d-i	apt-setup/security_host			string {{ ansible_local.domain.serverfqdn }}
+d-i	apt-setup/security_path			string /ks/mirror/security.ubuntu.com/ubuntu
 
 # Setup and enable libreoffice PPA
-d-i	apt-setup/local0/repository		string	http://ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
+d-i	apt-setup/local0/repository		string	http://{{ ansible_local.domain.mirrorpath }}ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
 d-i 	apt-setup/local0/comment		string LibreOffice Official PPA
 d-i 	apt-setup/local0/key 			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x36E81C9267FD1383FCC4490983FBA1751378B444&op=get
 
 # Setup and enable ansible PPA
-d-i	apt-setup/local1/repository		string http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main
+d-i	apt-setup/local1/repository		string http://{{ ansible_local.domain.mirrorpath }}ppa.launchpad.net/ansible/ansible/ubuntu trusty main
 d-i	apt-setup/local1/comment		string Ansible Official PPA
 d-i	apt-setup/local1/key			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367&op=get	
 
@@ -53,7 +53,7 @@ d-i	apt-setup/local1/key			string http://keyserver.ubuntu.com:11371/pks/lookup?s
 d-i	clock-setup/utc				boolean true
 d-i 	time/zone				string	Europe/Rome
 d-i	clock-setup/ntp				boolean true
-d-i	clock-setup/ntp-server			string ntp1.inrim.it
+d-i	clock-setup/ntp-server			string {{ ansible_local.domain.ntpserver }}
 
 # Partitioning
 d-i	partman-auto/init_automatically_partition	select biggest_free
@@ -97,7 +97,7 @@ popularity-contest popularity-contest/participate	boolean false
 d-i	pkgsel/language-pack-patterns		string language-pack-gnome-$LL language-pack-kde-$LL kde-i18n-$LL libreoffice-help-$LL libreoffice-l10n-$LL firefox-locale-$LL gimp-help-$LL thunderbird-locale-$LL
 
 # Adding libreoffice and ansible
-d-i	pkgsel/include				string openssh-server libreoffice ansible vim screen git curl cifs-utils ubuntu-edu-secondary libnss-myhostname virtualbox-guest-dkms geogebra geogebra-gnome
+d-i	pkgsel/include				string openssh-server libreoffice ansible vim screen git curl cifs-utils ubuntu-edu-secondary libnss-myhostname geogebra geogebra-gnome
 
 # Post installation tasks
 # Update system
