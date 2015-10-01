@@ -97,7 +97,7 @@ popularity-contest popularity-contest/participate	boolean false
 d-i	pkgsel/language-pack-patterns		string language-pack-gnome-$LL language-pack-kde-$LL kde-i18n-$LL libreoffice-help-$LL libreoffice-l10n-$LL firefox-locale-$LL gimp-help-$LL thunderbird-locale-$LL
 
 # Adding libreoffice and ansible
-d-i	pkgsel/include				string openssh-server libreoffice ansible vim screen git curl cifs-utils ubuntu-edu-secondary libnss-myhostname virtualbox-guest-dkms
+d-i	pkgsel/include				string openssh-server libreoffice ansible vim screen git curl cifs-utils ubuntu-edu-secondary libnss-myhostname virtualbox-guest-dkms geogebra geogebra-gnome
 
 # Post installation tasks
 # Update system
