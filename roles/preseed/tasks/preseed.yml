@@ -46,7 +46,7 @@
 - name: Copia script post-installazione
   template:
     src: 'preseed/{{ item }}'
-    dest: '/var/lib/nethserver/ibay/ks/{{ item }}'
+    dest: '/var/lib/nethserver/ibay/ks/preseed/{{ item }}'
   with_items:
     - post-client-ks.sh
     - post-docenti-ks.sh
