@@ -1,0 +1,8 @@
+---
+- include: preseed.yml
+  tags:
+    - preseed
+
+- include: firefoxcert.yml
+  tags:
+    - firefox

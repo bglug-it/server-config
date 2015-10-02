@@ -9,13 +9,13 @@ LABEL client
 	MENU LABEL Installa nuova macchina CLIENT
 	LINUX	/ubuntu/14.04/amd64/linux
 	INITRD	/ubuntu/14.04/amd64/initrd.gz
-	APPEND	vga=normal ks=http://{{ ansible_local.domain.serverfqdn }}/ks/profiles/client-trusty.cfg -- quiet
+	APPEND	vga=normal auto=true url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/client-trusty.seed -- quiet
 	
 LABEL docenti
 	MENU LABEL Installa nuova macchina DOCENTI
 	LINUX	/ubuntu/14.04/amd64/linux
 	INITRD	/ubuntu/14.04/amd64/initrd.gz
-	APPEND	vga=normal ks=http://{{ ansible_local.domain.serverfqdn }}/ks/profiles/docenti-trusty.cfg -- quiet
+	APPEND	vga=normal auto=true url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/docenti-trusty.seed -- quiet
 	
 MENU SEPARATOR
 
@@ -32,7 +32,7 @@ LABEL edubuntu-32
 	MENU LABEL Installa Edubuntu 32 bit
 	LINUX	/ubuntu/14.04/i386/linux
 	INITRD	/ubuntu/14.04/i386/initrd.gz
-	APPEND	locale=it_IT.UTF-8 keyboard-configuration/layoutcode=it url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/edubuntu.seed
+	APPEND	auto=true url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/edubuntu.seed quiet
 
 MENU SEPARATOR
 

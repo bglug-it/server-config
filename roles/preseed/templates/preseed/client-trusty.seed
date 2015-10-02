@@ -54,6 +54,14 @@ d-i 	time/zone				string Europe/Rome
 d-i	clock-setup/ntp				boolean true
 d-i	clock-setup/ntp-server			string {{ ansible_local.domain.ntpserver }}
 
+# Hostname
+d-i 	netcfg/hostname				string kickseed
+
+# User creation
+d-i	passwd/user-fullname			string BgLUG User
+d-i	passwd/username				string bglug
+d-i	passwd/user-password-crypted		string 74810f762fb7a0d8011131b2d8509619 
+
 # Partitioning
 d-i	partman-auto/init_automatically_partition	select biggest_free
 d-i	partman-auto/disk			string /dev/sda
@@ -96,7 +104,11 @@ popularity-contest popularity-contest/participate	boolean false
 d-i	pkgsel/language-pack-patterns		string language-pack-gnome-$LL language-pack-kde-$LL kde-i18n-$LL libreoffice-help-$LL libreoffice-l10n-$LL firefox-locale-$LL gimp-help-$LL thunderbird-locale-$LL
 
 # Adding libreoffice and ansible
-d-i	pkgsel/include				string openssh-server libreoffice ansible vim screen git curl cifs-utils ubuntu-edu-secondary libnss-myhostname geogebra geogebra-gnome
+{% if ansible_bios_version == 'VirtualBox' %}
+d-i	pkgsel/include				string dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-secondary libreoffice ansible libnss-myhostname sysv-rc-conf virtualbox-guest-dkms
+{% else %}
+d-i	pkgsel/include				string dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-secondary libreoffice ansible libnss-myhostname sysv-rc-conf
+{% endif %}
 
 # Post installation tasks
 # Update system
@@ -104,7 +116,8 @@ d-i 	preseed/late_command string in-target apt-get -y upgrade; \
 	in-target apt-get -y dist-upgrade; \
 	in-target apt-get -y purge libnss-mdns unity-webapps-common zeitgeist-core zeitgeist-datahub; \
 	in-target apt-get -y autoremove; \
-	in-target sed -i'' -e 's/ubuntu/gnome-fallback/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+	in-target sed -i'' -e 's/ubuntu/gnome-fallback/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf \
+	in-target \curl -sSL http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/post-client-ks.sh | bash >/root/post-ks.log 2>&1
 
 # Grub installation on MBR
 d-i	grub-installer/only_debian		boolean true
