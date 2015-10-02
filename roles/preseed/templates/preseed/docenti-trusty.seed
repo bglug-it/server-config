@@ -56,7 +56,7 @@ d-i	clock-setup/ntp-server			string {{ ansible_local.domain.ntpserver }}
 # User creation
 d-i	passwd/user-fullname			string BgLUG User
 d-i	passwd/username				string bglug
-d-i	passwd/user-password-crypted		string 74810f762fb7a0d8011131b2d8509619 
+d-i	passwd/user-password-crypted		string $1$33bB/LIt$MEHmvzVIgYRJs/5L4z34L/
 
 # Partitioning
 d-i	partman-auto/init_automatically_partition	select biggest_free
