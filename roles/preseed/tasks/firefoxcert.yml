@@ -7,16 +7,24 @@
     url: "http://localhost/proxy.crt"
     dest: /tmp/ca.crt
 
+- name: Creo directory per certificati
+  file:
+    path: /var/lib/nethserver/ibay/ks/server-ca
+    state: directory
+    owner: root
+    mode: 0755
+  sudo: yes
+
 - name: 'Utilizzo cert8.db precedentemente fornito (pulito da FF appena aperto)'
   copy:
     src: cert8.db
-    dest: /var/lib/nethserver/ibay/ks/cert8.db
+    dest: /var/lib/nethserver/ibay/ks/server-ca/cert8.db
     owner: root
     mode: 0644
   sudo: yes
 
 - name: Integro la CA nel db
-  shell: certutil -A -n "{{ ansible_local.domain.domainfull }}" -t "TCu,Cuw,Tuw" -i /tmp/ca.crt -d /var/lib/nethserver/ibay/ks
+  shell: certutil -A -n "{{ ansible_local.domain.domainfull }}" -t "TCu,Cuw,Tuw" -i /tmp/ca.crt -d /var/lib/nethserver/ibay/ks/server-ca
   sudo: yes
 
 - name: Pulizia
@@ -24,5 +32,5 @@
   sudo: yes
   with_items:
     - /tmp/ca.crt
-    - /var/lib/nethserver/ibay/ks/key3.db
-    - /var/lib/nethserver/ibay/ks/secmod.db
+    - /var/lib/nethserver/ibay/ks/server-ca/key3.db
+    - /var/lib/nethserver/ibay/ks/server-ca/secmod.db

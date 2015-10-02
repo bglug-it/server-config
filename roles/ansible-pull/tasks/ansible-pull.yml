@@ -6,6 +6,7 @@
 - name: Template
   template: src={{ item }} dest=/var/lib/nethserver/ibay/ks/ansible-pull/{{ item }}
   with_items:
+    - init-ansible.sh
     - ansible-pull.sh
     - getvaultpass.py
     - crontab
