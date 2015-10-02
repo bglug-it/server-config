@@ -9,13 +9,13 @@ LABEL client
 	MENU LABEL Installa nuova macchina CLIENT
 	LINUX	/ubuntu/14.04/amd64/linux
 	INITRD	/ubuntu/14.04/amd64/initrd.gz
-	APPEND	vga=normal auto=true url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/client-trusty.seed -- quiet
+	APPEND	vga=normal auto=true hostname=kickseed url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/client-trusty.seed -- quiet
 	
 LABEL docenti
 	MENU LABEL Installa nuova macchina DOCENTI
 	LINUX	/ubuntu/14.04/amd64/linux
 	INITRD	/ubuntu/14.04/amd64/initrd.gz
-	APPEND	vga=normal auto=true url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/docenti-trusty.seed -- quiet
+	APPEND	vga=normal auto=true hostname=kickseed url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/docenti-trusty.seed -- quiet
 	
 MENU SEPARATOR
 

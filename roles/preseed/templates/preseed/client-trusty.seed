@@ -13,8 +13,6 @@ d-i	keyboard-configuration/layoutcode 	string it
 d-i	netcfg/choose_interface 		select auto
 
 # Adjust the default hostname.
-d-i	netcfg/get_hostname			string kickseed
-# Hostname
 d-i 	netcfg/hostname				string kickseed
 
 # Enabling non-free firmware
