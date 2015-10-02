@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Aggiorna crontab e logrotate forzosamente.
+\curl -sSL http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/init-ansible.sh | bash
+
 # Script provvisorio.
 # Potremmo decidere di far eseguire uno script generato da servizio
 # domainhelper contenente anche l'eventuale branch da usare.
