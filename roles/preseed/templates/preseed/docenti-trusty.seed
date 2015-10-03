@@ -112,8 +112,8 @@ d-i 	preseed/late_command string in-target apt-get -y upgrade; \
 	in-target apt-get -y dist-upgrade; \
 	in-target apt-get -y purge libnss-mdns unity-webapps-common zeitgeist-core zeitgeist-datahub; \
 	in-target apt-get -y autoremove; \
-	in-target sed -i'' -e 's/ubuntu/gnome-fallback/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf \
-	in-target curl -sSL http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/post-docenti-ks.sh | bash >/root/post-ks.log 2>&1
+	sed -i'' -e 's/ubuntu/gnome-fallback/g' /target/usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; \
+	in-target "curl -sSL http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/postseed-docenti.sh | /bin/bash >/root/post-ks.log 2>&1";
 
 # Grub installation on MBR
 d-i	grub-installer/only_debian		boolean true
