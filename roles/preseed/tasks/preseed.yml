@@ -50,10 +50,6 @@
   with_items:
     - postseed-client.sh
     - postseed-docenti.sh
-  sudo: yes
-
-- name: Copia script per pulseaudio
-  copy:
-    src: preseed/pulseaudio-perms.sh
-    dest: /var/lib/nethserver/ibay/ks/preseed/pulseaudio-perms.sh
+    - pulseaudio-perms.sh
+    - checksum.fact
   sudo: yes

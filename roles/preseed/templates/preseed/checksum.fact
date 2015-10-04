@@ -1,0 +1,54 @@
+#!/usr/bin/env python
+
+from subprocess import Popen, PIPE, STDOUT
+from os.path import isfile
+from json import dumps, loads
+from hashlib import md5
+import requests
+
+repo_path = '/var/lib/{{ ansible_local.domain.domainfull }}/config'
+pkgver_file = '/var/lib/{{ ansible_local.domain.domainfull }}/pkg-ver.txt'
+repover_file = '/var/lib/{{ ansible_local.domain.domainfull }}/repo-ver.txt'
+
+local_pkg_hash = ''
+local_repo_hash = ''
+
+live_repo_hash = ''
+# Getting live versions for repo
+p = Popen("bash -c \"pushd %s >/dev/null; git log --pretty=oneline -1 | cut -d' ' -f 1; popd > /dev/null\"" % repo_path, shell=True, stdout=PIPE, stderr=STDOUT)
+live_repo_hash = p.communicate()[0].strip()
+
+live_pkg_hash = ''
+# Recreating pkg checksum
+r = requests.get("http://%s:3000/ansible_host" % '{{ ansible_local.domain.serverfqdn }}')
+if r.status_code == 200:
+  response = loads(r.text.encode('ascii', 'ignore'))
+  retval = sorted(response['addpkg']) + [ '-' ] + sorted(response['delpkg'])
+  live_pkg_hash = md5("".join(retval)).hexdigest()
+
+if isfile(pkgver_file):
+  local_pkg_hash = open(pkgver_file, 'r').read().strip()
+
+if isfile(repover_file):
+  local_repo_hash = open(repover_file, 'r').read().strip()
+
+pkg_needed = False
+repo_needed = False
+
+# Determining if run for packages and for configuraton has to be done
+if local_pkg_hash != live_pkg_hash:
+  pkg_needed = True
+
+if local_repo_hash != live_repo_hash:
+  repo_needed = True
+
+retval = {
+  'needs_repo_run': repo_needed,
+  'repover': live_repo_hash,
+  'repover_file': repover_file,
+  'needs_pkg_run': pkg_needed,
+  'pkgver': live_pkg_hash,
+  'pkgver_file': pkgver_file
+}
+
+print(dumps(retval))

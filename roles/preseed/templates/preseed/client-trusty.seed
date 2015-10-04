@@ -101,16 +101,16 @@ d-i	pkgsel/language-pack-patterns		string language-pack-gnome-$LL language-pack-
 
 # Adding libreoffice and ansible
 {% if ansible_bios_version == 'VirtualBox' %}
-d-i	pkgsel/include				string dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-secondary libreoffice ansible libnss-myhostname sysv-rc-conf virtualbox-guest-dkms
+d-i	pkgsel/include				string epoptes-client dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-secondary libreoffice ansible libnss-myhostname sysv-rc-conf virtualbox-guest-dkms
 {% else %}
-d-i	pkgsel/include				string dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-secondary libreoffice ansible libnss-myhostname sysv-rc-conf
+d-i	pkgsel/include				string epoptes-client dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-secondary libreoffice ansible libnss-myhostname sysv-rc-conf
 {% endif %}
 
 # Post installation tasks
 # Update system
 d-i 	preseed/late_command string in-target apt-get -y upgrade; \
 	in-target apt-get -y dist-upgrade; \
-	in-target apt-get -y purge libnss-mdns unity-webapps-common zeitgeist-core zeitgeist-datahub; \
+	in-target apt-get -y purge libnss-mdns unity-webapps-common zeitgeist-core zeitgeist-datahub epoptes; \
 	in-target apt-get -y autoremove; \
 	sed -i'' -e 's/ubuntu/gnome-fallback/g' /target/usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; \
 	in-target /bin/bash -c "curl -sSL http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/postseed-client.sh | /bin/bash >/root/postseed.log 2>&1";
