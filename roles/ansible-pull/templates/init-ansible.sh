@@ -2,7 +2,7 @@
 
 # Creo directory dipendenti
 install -d -o root -g users /var/lib/{{ ansible_local.domain.domainfull }}/config
-chmod -R root:users /var/lib/{{ ansible_local.domain.domainfull }}
+chown -R root:users /var/lib/{{ ansible_local.domain.domainfull }}
 
 # Installo il cronjob per ansible-pull
 wget -q http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/crontab -O /etc/cron.d/ansible-pull
