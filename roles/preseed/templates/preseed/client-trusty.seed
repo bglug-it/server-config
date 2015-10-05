@@ -101,9 +101,9 @@ d-i	pkgsel/language-pack-patterns		string language-pack-gnome-$LL language-pack-
 
 # Adding libreoffice and ansible
 {% if ansible_bios_version == 'VirtualBox' %}
-d-i	pkgsel/include				string epoptes-client dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-secondary libreoffice ansible libnss-myhostname sysv-rc-conf virtualbox-guest-dkms
+d-i	pkgsel/include				string epoptes-client dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-secondary libreoffice ansible libnss-myhostname sysv-rc-conf unattended-upgrades update-notifier-common virtualbox-guest-dkms
 {% else %}
-d-i	pkgsel/include				string epoptes-client dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-secondary libreoffice ansible libnss-myhostname sysv-rc-conf
+d-i	pkgsel/include				string epoptes-client dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-secondary libreoffice ansible libnss-myhostname sysv-rc-conf unattended-upgrades update-notifier-common
 {% endif %}
 
 # Post installation tasks
