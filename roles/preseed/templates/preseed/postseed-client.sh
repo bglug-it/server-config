@@ -6,4 +6,4 @@ echo $TARGETHOSTNAME > /etc/hostname
 sed -i'' -e "s/kickseed/$TARGETHOSTNAME/g" /etc/hosts
 
 # Installo i file necessari per ansible.
-curl -sSL http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/init-ansible.sh | /bin/bash
+curl -sSL http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/init-ansible.sh | bash
