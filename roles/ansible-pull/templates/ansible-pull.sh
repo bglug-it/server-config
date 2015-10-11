@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Aggiorna crontab e logrotate forzosamente.
+echo "$(date --rfc-3339=seconds) Loading and running init-ansible.sh"
 /usr/bin/curl -sSL http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/init-ansible.sh | /bin/bash
 
 # Script provvisorio.
@@ -13,7 +14,9 @@ logfile=/var/lib/ansible-pull.log
 branch=master
 playbook=local.yml
 
+echo "$(date --rfc-3339=seconds) Getting vault password"
 vaultpassfile=$(/usr/bin/curl -sSL http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/getvaultpass.py | /usr/bin/python)
 
+echo "$(date --rfc-3339=seconds) Running ansible-pull"
 /usr/bin/ansible-pull --accept-host-key -d "${repo}" -U "${url}" -C "${branch}" "${playbook}" --vault-password-file "${vaultpassfile}" $@
 rm -f "${vaultpassfile}"
