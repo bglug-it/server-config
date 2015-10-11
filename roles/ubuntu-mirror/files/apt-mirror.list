@@ -82,5 +82,5 @@ clean http://extras.ubuntu.com/ubuntu
 clean http://archive.canonical.com
 clean http://security.ubuntu.com/ubuntu
 clean http://ppa.launchpad.net/ansible/ansible/ubuntu
-clean http://ppa.launchpad.net/libreoffice/ppa/ubuntu
+clean http://ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu
 clean http://bglug.sys42.eu/ubuntu

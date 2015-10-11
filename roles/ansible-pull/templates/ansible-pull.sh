@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Aggiorna crontab e logrotate forzosamente.
-curl -sSL http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/init-ansible.sh | bash
+/usr/bin/curl -sSL http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/init-ansible.sh | /bin/bash
 
 # Script provvisorio.
 # Potremmo decidere di far eseguire uno script generato da servizio
@@ -13,7 +13,7 @@ logfile=/var/lib/ansible-pull.log
 branch=master
 playbook=local.yml
 
-vaultpassfile=$(\curl -sSL http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/getvaultpass.py | python)
+vaultpassfile=$(/usr/bin/curl -sSL http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/getvaultpass.py | /usr/bin/python)
 
-ansible-pull --accept-host-key -d "${repo}" -U "${url}" -C "${branch}" "${playbook}" --vault-password-file "${vaultpassfile}" $@
+/usr/bin/ansible-pull --accept-host-key -d "${repo}" -U "${url}" -C "${branch}" "${playbook}" --vault-password-file "${vaultpassfile}" $@
 rm -f "${vaultpassfile}"
