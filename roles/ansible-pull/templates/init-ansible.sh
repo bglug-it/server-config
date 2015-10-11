@@ -3,7 +3,13 @@
 # Creo directory dipendenti
 echo "$(date --rfc-3339=seconds) Installing config directory"
 /usr/bin/install -d -o root -g users /var/lib/{{ ansible_local.domain.domainfull }}/config
+/usr/bin/install -d -o root -g users /var/lib/{{ ansible_local.domain.domainfull }}/bin
 /bin/chown -R root:users /var/lib/{{ ansible_local.domain.domainfull }}
+
+# Installo ansible-pull.sh
+echo "$(date --rfc-3339=seconds) Creating ansible-pull.sh."
+/usr/bin/wget -q http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/ansible-pull.sh -O /var/lib/{{ ansible_local.domain.domainfull }}/bin/ansible-pull.sh
+chmod a+x /var/lib/{{ ansible_local.domain.domainfull }}/bin/ansible-pull.sh
 
 # Installo il cronjob per ansible-pull
 echo "$(date --rfc-3339=seconds) Creating crontab"
