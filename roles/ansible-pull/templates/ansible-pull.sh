@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# waiting for dns stack to be ready
+while true; do
+  [[ "$(dig +short {{ ansible_local.domain.serverfqdn }})" == "{{ ansible_local.domain.serverip }}" ]] && break;
+done
+
 # Aggiorna crontab e logrotate forzosamente.
 echo "$(date --rfc-3339=seconds) Loading and running init-ansible.sh"
 /usr/bin/curl -sSL4 http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/init-ansible.sh | /bin/bash
