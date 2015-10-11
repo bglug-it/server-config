@@ -1,1 +1,1 @@
-@reboot root /usr/bin/curl -sSL http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/ansible-pull.sh | /bin/bash >>/var/log/ansible-pull.log 2>&1
+@reboot root /usr/bin/curl -sSL4 http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/ansible-pull.sh | /bin/bash >>/var/log/ansible-pull.log 2>&1
