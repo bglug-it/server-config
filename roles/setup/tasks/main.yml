@@ -3,6 +3,10 @@
 - include: ssh-keygen.yml
   tags: ssh
 
+- include: lock-nethrelease.yml
+  sudo: yes
+  tags: lock-nethrelease
+
 - include: centos_pkgs.yml
   when: ansible_distribution == "CentOS" and ansible_os_family == "RedHat"
   tags: centos
