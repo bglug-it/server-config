@@ -1,4 +1,9 @@
 ---
 - include: ubuntu-mirror.yml
-  when: ansible_bios_version != "VirtualBox"
+  when: not use_local_mirror|bool
   tags: ubuntu-mirror
+
+- include: local-mirror.yml
+  when: use_local_mirror|bool
+  sudo: yes
+  tags: local-mirror

@@ -2,11 +2,15 @@
 
 echo "Please review ansible hosts settings."
 sleep 2
-vim hosts
+$EDITOR hosts
 
 echo "Please review settings for domain/server settings."
 sleep 2
-vim domain.yml
+$EDITOR domain.yml
+
+echo "Please review mirror settings from mirror.yml."
+sleep 2
+$EDITOR mirror.yml
 
 # Configure the server machine using Ansible tasks.
 ansible-playbook init.yml --ask-pass

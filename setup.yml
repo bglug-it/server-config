@@ -1,6 +1,8 @@
 ---
 
 - hosts: server
+  vars_files:
+    - mirror.yml
   roles:
     - setup
     - nethcfg
