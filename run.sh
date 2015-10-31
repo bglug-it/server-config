@@ -2,7 +2,7 @@
 
 echo "Please review ansible hosts settings."
 sleep 2
-$EDITOR hosts
+$EDITOR ./hosts
 
 echo "Please review settings for domain/server settings."
 sleep 2

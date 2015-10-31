@@ -14,11 +14,10 @@
     state: present
 
 - name: Checking if already locked
-  shell: yum versionlock list | grep -q nethserver-release && echo 'Locked'
+  shell: yum versionlock list | grep -q nethserver-release && echo 'Locked' || true
   register: chk_locked_nethrelease
-  ignore_errors: true
   changed_when: "'Locked' not in chk_locked_nethrelease.stdout"
 
-- name: Locking nethserver-release version
+- name: Locking nethserver-release version to 6.6
   shell: yum versionlock add nethserver-release
   when: chk_locked_nethrelease|changed
