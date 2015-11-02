@@ -205,13 +205,16 @@
   ignore_errors: true
   register: chk_crt
   changed_when: "'CommonName={{ ansible_local.domain.serverfqdn }}' not in chk_crt.stdout"
+  tags: regen-ca
 
 - name: Completo la configurazione per produzione certificato
-  shell: /sbin/e-smith/db configuration setprop pki CertificateDuration 3650 CommonName {{ ansible_local.domain.serverfqdn }}
+  shell: /sbin/e-smith/db configuration setprop pki CertificateDuration 3650 CommonName {{ ansible_local.domain.serverfqdn }} CountryCode {{ ansible_local.domain.org_countrycode }} EmailAddress {{ ansible_local.domain.org_email }} Locality "{{ ansible_local.domain.org_city }}" Organization "{{ ansible_local.domain.org_company }}"
   sudo: yes
-  when: chk_crt|changed
+  tags: regen-ca
+  when: chk_crt|changed or force_regen_ca|bool
 
 - name: Rigenero il certificato con le informazioni inserite
   shell: /sbin/e-smith/signal-event certificate-update
   sudo: yes
+  when: chk_crt|changed or force_regen_ca|bool
   tags: regen-ca
