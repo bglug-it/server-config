@@ -38,12 +38,12 @@ d-i	apt-setup/security_host			string {{ ansible_local.domain.serverfqdn }}
 d-i	apt-setup/security_path			string /ks/mirror/security.ubuntu.com/ubuntu
 
 # Setup and enable libreoffice PPA
-d-i	apt-setup/local0/repository		string	http://{{ ansible_local.domain.mirrorpath }}ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
+d-i	apt-setup/local0/repository		string	http://{{ execmirrorpath }}ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
 d-i 	apt-setup/local0/comment		string LibreOffice Official PPA
 d-i 	apt-setup/local0/key 			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x36E81C9267FD1383FCC4490983FBA1751378B444&op=get
 
 # Setup and enable ansible PPA
-d-i	apt-setup/local1/repository		string http://{{ ansible_local.domain.mirrorpath }}ppa.launchpad.net/ansible/ansible/ubuntu trusty main
+d-i	apt-setup/local1/repository		string http://{{ execmirrorpath }}ppa.launchpad.net/ansible/ansible/ubuntu trusty main
 d-i	apt-setup/local1/comment		string Ansible Official PPA
 d-i	apt-setup/local1/key			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367&op=get	
 

@@ -1,3 +1,4 @@
 ---
 extnic: wan0
 intnic: lan0
+force_regen_ca: false

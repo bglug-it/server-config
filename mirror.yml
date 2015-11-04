@@ -1,3 +1,0 @@
----
-use_local_mirror: true
-mirror_nfs: 192.168.255.1:/var/spool/apt-mirror/mirror

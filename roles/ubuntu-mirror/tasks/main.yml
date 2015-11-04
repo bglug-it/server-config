@@ -1,9 +1,26 @@
 ---
-- include: ubuntu-mirror.yml
-  when: not use_local_mirror|bool
-  tags: ubuntu-mirror
+
+- name: Configuring executive mirrorpath
+  set_fact:
+    execmirrorpath: "{{ ansible_local.domain.mirrorpath }}"
+  when: ansible_local.domain.mirror_mode == 'local' or ansible_local.domain.mirror_mode == 'nfs'
 
 - include: local-mirror.yml
-  when: use_local_mirror|bool
+  when: ansible_local.domain.mirror_mode == 'local'
+  tags:
+    - mirror
+    - local-mirror
+
+- include: nfs-mirror.yml
+  when: ansible_local.domain.mirror_mode == 'nfs'
   sudo: yes
-  tags: local-mirror
+  tags:
+    - mirror
+    - nfs-mirror
+
+- include: remote-mirror.yml
+  when: ansible_local.domain.mirror_mode == 'remote'
+  sudo: yes
+  tags:
+    - mirror
+    - remote-mirror

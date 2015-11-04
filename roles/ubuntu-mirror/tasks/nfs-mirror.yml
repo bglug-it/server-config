@@ -1,0 +1,36 @@
+---
+# Managing when there's a local mirror served via NFS
+
+- name: Adding required packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - nfs-utils
+    - nfs-utils-lib
+
+- name: Checking if already mounted
+  shell: mount | grep -q "{{ ansible_local.domain.mirror_nfs_share }}" && echo "Mounted" || true
+  register: chk_mount_nfs
+  changed_when: "'Mounted' not in chk_mount_nfs.stdout"
+
+
+- name: Creating mountpoint directory
+  file:
+    path: /var/spool/apt-mirror/mirror
+    recurse: yes
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  when: chk_mount_nfs|changed
+
+- name: Adding mountpoint to fstab
+  lineinfile:
+    dest: /etc/fstab
+    line: "{{ ansible_local.domain.mirror_nfs_share }} /var/spool/apt-mirror/mirror nfs4 defaults 0 0"
+  when: chk_mount_nfs|changed
+
+- name: Mounting share
+  shell: mount /var/spool/apt-mirror/mirror
+  when: chk_mount_nfs|changed
