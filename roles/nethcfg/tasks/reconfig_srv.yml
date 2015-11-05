@@ -133,6 +133,38 @@
   ignore_errors: true
   register: chk_shared
 
+- name: Copying default templates for new template type
+  shell: cp -r /etc/e-smith/templates/etc/samba/smb.conf/ibay-default /etc/e-smith/templates/etc/samba/smb.conf/ibay-shared
+  sudo: yes
+  when: force_ibay_shared|bool or chk_shared|failed
+
+- name: Configuring ibay-shared template structure (directory mask)
+  lineinfile:
+    dest: /etc/e-smith/templates/etc/samba/smb.conf/ibay-shared/20profile_default
+    line: 'directory mask = 0775'
+    insertafter: '^create mask'
+    state: present
+  sudo: yes
+  when: force_ibay_shared|bool or chk_shared|failed
+
+- name: Configuring force create mode
+  lineinfile:
+    dest: /etc/e-smith/templates/etc/samba/smb.conf/ibay-shared/20profile_default
+    line: 'force create mode = 0664'
+    insertafter: '^directory mask'
+    state: present
+  sudo: yes
+  when: force_ibay_shared|bool or chk_shared|failed
+
+- name: Configuring force directory mode
+  lineinfile:
+    dest: /etc/e-smith/templates/etc/samba/smb.conf/ibay-shared/20profile_default
+    line: 'force directory mode = 0775'
+    insertafter: '^force create mode'
+    state: present
+  sudo: yes
+  when: force_ibay_shared|bool or chk_shared|failed
+
 - name: Configurazione share Condiviso
   shell: /sbin/e-smith/db accounts set shared ibay AclRead domusers,domadmins AclWrite domusers,domadmins Description "Cartella condivisa" GroupAccess rw HttpStatus disabled OtherAccess r OwningGroup locals SmbAuditStatus enabled SmbGuestAccessType none SmbRecycleBinStatus enabled SmbRecycleBinVersionsStatus enabled SmbStatus enabled
   sudo: yes
@@ -142,6 +174,16 @@
   shell: /sbin/e-smith/signal-event ibay-create shared
   sudo: yes
   when: chk_shared|failed
+
+- name: Changing ibay profile for shared
+  shell: /sbin/e-smith/db accounts setprop shared SmbProfileType shared 
+  sudo: yes
+  when: force_ibay_shared|bool or chk_shared|failed
+
+- name: Forcing regeneration of smb.conf
+  shell: /sbin/e-smith/signal-event nethserver-samba-update
+  sudo: yes
+  when: force_ibay_shared|bool or chk_shared|failed
 
 - name: Verifica configurazione squid
   shell: /sbin/e-smith/db configuration printprop squid GreenMode
