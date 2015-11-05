@@ -22,5 +22,5 @@ org_phone: "+39 0363 50598"
 org_street: "Via Zenale e Butinone, 20"
 mirror_mode: nfs
 #remote_mirror: ubuntu.fastbull.org
-mirror_nfs_share: 192.168.255.1:/var/spool/apt-mirror/mirror
+mirror_nfs_share: 192.168.150.131:/var/spool/apt-mirror/mirror
 client_gitbranch: master
