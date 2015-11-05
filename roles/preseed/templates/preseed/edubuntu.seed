@@ -22,7 +22,7 @@ d-i	hw-detect/load_firmware			boolean true
 # Setting up repositories from local mirror
 d-i	mirror/country				string manual
 d-i	mirror/protocol				string http
-{% if execmirrorpath != '' }
+{% if execmirrorpath != '' %}
 d-i	mirror/http/hostname			string {{ ansible_local.domain.serverfqdn }}
 d-i	mirror/http/directory			string /ks/mirror/archive.ubuntu.com/ubuntu
 {% else %}
