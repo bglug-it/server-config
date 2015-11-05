@@ -3,4 +3,3 @@
 - hosts: vagrant
   roles:
     - rename-nic 
-    - developuser
