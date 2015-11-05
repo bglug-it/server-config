@@ -21,8 +21,13 @@ d-i	hw-detect/load_firmware			boolean true
 # Setting up repositories from local mirror
 d-i	mirror/country				string manual
 d-i	mirror/protocol				string http
+{% if execmirrorpath != '' }
 d-i	mirror/http/hostname			string {{ ansible_local.domain.serverfqdn }}
 d-i	mirror/http/directory			string /ks/mirror/archive.ubuntu.com/ubuntu
+{% else %}
+d-i	mirror/http/hostname			string archive.ubuntu.com
+d-i	mirror/http/directory			string /ubuntu
+{% endif %}
 d-i	mirror/http/proxy 			string
 d-i	mirror/suite				string trusty
 
@@ -34,8 +39,13 @@ d-i	apt-setup/backports			boolean true
 d-i	apt-setup/non-free			boolean true
 d-i	apt-setup/contrib			boolean true
 d-i	apt-setup/services-select 		multiselect security, updates
+{% if execmirrorpath != '' }
 d-i	apt-setup/security_host			string {{ ansible_local.domain.serverfqdn }}
 d-i	apt-setup/security_path			string /ks/mirror/security.ubuntu.com/ubuntu
+{% else %}
+d-i	apt-setup/security_host			string security.ubuntu.com
+d-i	apt-setup/security_path			string /ubuntu
+{% endif %}
 
 # Setup and enable libreoffice PPA
 d-i	apt-setup/local0/repository		string	http://{{ execmirrorpath }}ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
