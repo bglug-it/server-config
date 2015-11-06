@@ -1,9 +1,16 @@
 UI /utils/vesamenu.c32
-DEFAULT client
+DEFAULT local
 TIMEOUT 30
 
 MENU TITLE BgLUG PXE Boot
 MENU BACKGROUND /utils/bglug.png
+
+LABEL local
+	MENU LABEL Avvia dal primo disco locale
+	KERNEL	/utils/chain.c32
+	APPEND	hd0
+
+MENU SEPARATOR
 
 LABEL client
 	MENU LABEL Installa nuova macchina CLIENT
@@ -40,12 +47,6 @@ LABEL return-edu
 	MENU LABEL ^Torna al menu principale
 	MENU EXIT
 MENU END
-
-MENU SEPARATOR
-
-LABEL local
-	MENU LABEL Boot from ^local hard drive
-	LOCALBOOT 0
 
 MENU SEPARATOR
 

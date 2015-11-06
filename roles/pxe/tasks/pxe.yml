@@ -47,6 +47,12 @@
     dest: /var/lib/tftpboot/utils/vesamenu.c32
   sudo: yes
 
+- name: chain.c32
+  get_url:
+    url: "http://bglug.sys42.eu/chain.c32"
+    dest: /var/lib/tftpboot/utils/chain.c32
+  sudo: yes
+
 - name: linux i386 
   get_url:
     url: http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-i386/current/images/netboot/ubuntu-installer/i386/linux
