@@ -60,7 +60,9 @@ deb-amd64 http://archive.canonical.com/ trusty partner
 deb-amd64 http://archive.canonical.com/ trusty-proposed partner
 
 deb-i386 http://security.ubuntu.com/ubuntu trusty-security main restricted universe multiverse
+deb-i386 http://security.ubuntu.com/ubuntu trusty-security main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
 deb-amd64 http://security.ubuntu.com/ubuntu trusty-security main restricted universe multiverse
+deb-amd64 http://security.ubuntu.com/ubuntu trusty-security main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
 deb-src http://security.ubuntu.com/ubuntu trusty-security main restricted universe multiverse
 
 # Ansible
