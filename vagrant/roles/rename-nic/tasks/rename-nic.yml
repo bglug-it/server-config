@@ -8,7 +8,7 @@
   sudo: yes
 
 - name: Creo interfaccia esterna in NethServer
-  shell: /sbin/e-smith/db networks set {{ extnic }} ethernet bootproto dhcp device {{ extnic }} hwaddr {{ ansible_eth0.macaddress }} onboot yes role red
+  shell: /sbin/e-smith/db networks set {{ extnic }} ethernet bootproto dhcp device {{ extnic }} hwaddr {{ ansible_eth0.macaddress }} onboot yes peerdns yes role red
   sudo: yes
 
 - name: Pulizia vecchia interfaccia esterna
