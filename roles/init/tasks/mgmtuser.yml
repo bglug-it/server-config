@@ -12,7 +12,7 @@
     src: sudoers.d
     dest: /etc/sudoers.d/amgmt
     mode: "u=r,g=r"
-    validate: "visudo -cf %s"
+    validate: "/usr/sbin/visudo -cf %s"
 
 - name: Installazione chiave privata PC locale
   authorized_key:
