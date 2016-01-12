@@ -3,8 +3,8 @@
   copy:
     src: sys42.repo
     dest: /etc/yum.repos.d/sys42.repo
-  sudo: yes
+  become: yes
 
 - name: Ricalcolo repository disponibili
   shell: yum repolist
-  sudo: yes
+  become: yes

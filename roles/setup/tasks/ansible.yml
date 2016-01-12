@@ -2,19 +2,19 @@
 
 - name: Verifica installazione git 
   yum: name=git state=present
-  sudo: yes
+  become: yes
   tags: git
 
 - name: Verifica installazione ansible 
   yum: name=ansible state=present
-  sudo: yes
+  become: yes
   tags: ansible
 
 - name: Installazione python-argparse
   shell:
     name: "ftp://fr2.rpmfind.net/linux/centos/6.7/extras/i386/Packages/python-argparse-1.2.1-2.el6.centos.noarch.rpm"
     state: present
-  sudo: yes
+  become: yes
   tags: ansible
 
   #- name: Download della gestione client con ansible

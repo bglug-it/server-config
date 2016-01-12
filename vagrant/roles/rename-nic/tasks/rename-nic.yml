@@ -5,36 +5,36 @@
     dest: /etc/udev/rules.d/70-persistent-net.rules
     regexp: 'eth0'
     replace: '{{ extnic }}'
-  sudo: yes
+  become: yes
 
 - name: Creo interfaccia esterna in NethServer
   shell: /sbin/e-smith/db networks set {{ extnic }} ethernet bootproto dhcp device {{ extnic }} hwaddr {{ ansible_eth0.macaddress }} onboot yes peerdns yes role red
-  sudo: yes
+  become: yes
 
 - name: Pulizia vecchia interfaccia esterna
   shell: /sbin/e-smith/db networks delete eth0
-  sudo: yes
+  become: yes
 
 - name: Rinomino interfaccia interna
   replace:
     dest: /etc/udev/rules.d/70-persistent-net.rules
     regexp: 'eth1'
     replace: '{{ intnic }}'
-  sudo: yes
+  become: yes
 
 - name: Creo interfaccia interna in NethServer
   shell: /sbin/e-smith/db networks set {{ intnic }} ethernet bootproto none device {{ intnic }} hwaddr {{ ansible_eth1.macaddress }} ipaddr 192.168.1.1 netmask 255.255.255.0 onboot yes role green
-  sudo: yes
+  become: yes
 
 - name: Pulizia vecchia interfaccia interna
   shell: /sbin/e-smith/db networks delete eth1
-  sudo: yes
+  become: yes
 
 # Forzo il processo a tornare zero, altrimenti non va.
 - name: Ricreo le interfacce
   shell: udevadm control --reload-rules && udevadm trigger --attr-match=subsystem=net
-  sudo: yes
+  become: yes
 
 - name: Segnalo il cambiamento a livello di interfacce
   shell: /sbin/e-smith/signal-event interface-update
-  sudo: yes
+  become: yes

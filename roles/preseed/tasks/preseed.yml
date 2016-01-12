@@ -4,34 +4,34 @@
   register: chk_ks_created
   changed_when: chk_ks_created.rc != 0
   ignore_errors: yes
-  sudo: yes
+  become: yes
 
 - name: Configurazione web preseed
   shell: /sbin/e-smith/db accounts set ks ibay Description "Preseed share" GroupAccess rw HttpAccess private HttpAliasType default HttpAllowOverrideStatus disabled HttpForceSslStatus disabled HttpPasswordStatus disabled HttpStatus enabled HttpVirtualHost __ANY__ OtherAccess r OwningGroup locals SmbAuditStatus disabled SmbStatus disabled
   when: chk_ks_created|failed
-  sudo: yes
+  become: yes
 
 - name: Attivazione web preseed
   shell: /sbin/e-smith/signal-event ibay-create ks
   when: chk_ks_created|failed
-  sudo: yes
+  become: yes
 
 - name: Verifica presenza directory mirror
   file: path=/var/spool/apt-mirror/mirror state=directory
   register: chk_mirror_dir
   ignore_errors: yes
-  sudo: yes
+  become: yes
 
 - name: Collegamento directory mirror
   file: path=/var/lib/nethserver/ibay/ks/mirror src=/var/spool/apt-mirror/mirror state=link
-  sudo: yes
+  become: yes
   when: chk_mirror_dir|success
 
 - name: Creazione directory preseed
   file:
     path: "/var/lib/nethserver/ibay/ks/preseed"
     state: directory
-  sudo: yes
+  become: yes
 
 - name: Copia profili preseed
   template:
@@ -41,7 +41,7 @@
     - edubuntu.seed
     - client-trusty.seed
     - docenti-trusty.seed
-  sudo: yes
+  become: yes
 
 - name: Copia script post-installazione
   template:
@@ -52,4 +52,4 @@
     - postseed-docenti.sh
     - pulseaudio-perms.sh
     - checksum.fact
-  sudo: yes
+  become: yes

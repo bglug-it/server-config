@@ -1,8 +1,8 @@
 ---
 - name: ntp save
   shell: /sbin/e-smith/signal-event nethserver-ntp-save
-  sudo: yes
+  become: yes
 
 - name: password-policy-update
   shell: /sbin/e-smith/signal-event password-policy-update
-  sudo: yes
+  become: yes

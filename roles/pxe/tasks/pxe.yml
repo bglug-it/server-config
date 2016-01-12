@@ -6,17 +6,17 @@
   register: chk_tftp_enabled
   changed_when: "'pxelinux.0' not in chk_tftp_enabled.stdout"
   ignore_errors: yes
-  sudo: yes
+  become: yes
 
 - name: Configuro tftp
   shell: /sbin/e-smith/db configuration setprop dnsmasq tftp-status enabled dhcp-boot pxelinux.0
   when: chk_tftp_enabled|changed
-  sudo: yes
+  become: yes
 
 - name: Attivo tftp
   shell: /sbin/e-smith/signal-event nethserver-dnsmasq-save
   when: chk_tftp_enabled|changed
-  sudo: yes
+  become: yes
 
 - name: Creo directory necessarie
   file: path={{ item }} state=directory
@@ -25,72 +25,72 @@
     - /var/lib/tftpboot/ubuntu/14.04/i386
     - /var/lib/tftpboot/ubuntu/14.04/amd64
     - /var/lib/tftpboot/utils/memtest86
-  sudo: yes
+  become: yes
 
 - name: pxelinux.0
   get_url:
     url: http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-i386/current/images/netboot/pxelinux.0
     dest: /var/lib/tftpboot/pxelinux.0
-  sudo: yes
+  become: yes
 
 - name: pxelinux.cfg/default
   template: src=pxelinux.cfg/default dest=/var/lib/tftpboot/pxelinux.cfg/default
-  sudo: yes
+  become: yes
 
 - name: bglug.png
   copy: src=bglug.png dest=/var/lib/tftpboot/utils/bglug.png
-  sudo: yes
+  become: yes
 
 - name: vesamenu.c32
   get_url:
     url: http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-i386/current/images/netboot/ubuntu-installer/i386/boot-screens/vesamenu.c32
     dest: /var/lib/tftpboot/utils/vesamenu.c32
-  sudo: yes
+  become: yes
 
 - name: chain.c32
   get_url:
     url: "http://bglug.sys42.eu/chain.c32"
     dest: /var/lib/tftpboot/utils/chain.c32
-  sudo: yes
+  become: yes
 
 - name: linux i386 
   get_url:
     url: http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-i386/current/images/netboot/ubuntu-installer/i386/linux
     dest: /var/lib/tftpboot/ubuntu/14.04/i386/linux
-  sudo: yes
+  become: yes
 
 - name: initrd.gz i386
   get_url:
     url: http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-i386/current/images/netboot/ubuntu-installer/i386/initrd.gz
     dest: /var/lib/tftpboot/ubuntu/14.04/i386/initrd.gz
-  sudo: yes
+  become: yes
 
 - name: linux amd64
   get_url:
     url: http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/linux
     dest: /var/lib/tftpboot/ubuntu/14.04/amd64/linux
-  sudo: yes
+  become: yes
 
 - name: initrd.gz amd64
   get_url:
     url: http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/initrd.gz
     dest: /var/lib/tftpboot/ubuntu/14.04/amd64/initrd.gz
-  sudo: yes
+  become: yes
 
 - name: memdisk
   get_url:
     url: http://sys42.eu/pxe-bootimg/memdisk
     dest: /var/lib/tftpboot/utils/memdisk
-  sudo: yes
+  become: yes
 
 - name: memtest86
   get_url:
     url: http://sys42.eu/pxe-bootimg/memtest86/vmlinuz
     dest: /var/lib/tftpboot/utils/memtest86/vmlinuz
-  sudo: yes
+  become: yes
 
 - name: hdt
   get_url:
     url: http://sys42.eu/pxe-bootimg/hdt.img
     dest: /var/lib/tftpboot/utils/hdt.img
-  sudo: yes
+  become: yes

@@ -5,4 +5,4 @@
   yum:
     pkg: nethserver-networkpackagemanager
     state: latest
-  sudo: yes
+  become: yes

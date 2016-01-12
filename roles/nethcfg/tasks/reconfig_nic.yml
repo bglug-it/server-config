@@ -1,19 +1,19 @@
 - name: Configurazione scheda di rete esterna
   shell: /sbin/e-smith/db networks setprop {{ extnic }} role red bootproto dhcp 
-  sudo: yes
+  become: yes
 
 - name: Configurazione scheda di rete interna
   shell: /sbin/e-smith/db networks setprop {{ intnic }} role green ipaddr {{ ansible_local.domain.serverip }} netmask {{ ansible_local.domain.servernetmask }}
-  sudo: yes
+  become: yes
 
 - name: Attivo configurazioni di rete
   shell: /sbin/e-smith/signal-event interface-update
-  sudo: yes
+  become: yes
 
 - name: Configurazione rete trusted
   shell: /sbin/e-smith/db networks set {{ ansible_local.domain.servernet }} network Description "Local LAN" Mask {{ ansible_local.domain.servernetmask }}
-  sudo: yes
+  become: yes
 
 - name: Modifico configurazioni
   shell: /sbin/e-smith/signal-event trusted-networks-modify
-  sudo: yes
+  become: yes

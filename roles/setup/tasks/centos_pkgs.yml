@@ -8,7 +8,7 @@
 
 - name: Installo epel-release
   yum: name=epel-release state=present
-  sudo: yes
+  become: yes
   when: check_epel|failed
   register: epel_installed
   ignore_errors: yes
@@ -17,31 +17,31 @@
   yum:
     name: "http://dl.fedoraproject.org/pub/epel/6/{{ ansible_architecture }}/epel-release-6-8.noarch.rpm"
     state: present
-  sudo: yes
+  become: yes
   when: epel_installed|failed
   register: rpm_epel_installed
 
 - name: Abilito il repo EPEL
   shell: yum-config-manager --enable epel
-  sudo: yes
+  become: yes
   when: epel_installed|changed or epel_installed|success or rpm_epel_installed|changed
   changed_when: "'[epel]' in epel_enabled.stdout and epel_enabled.rc == 0"
   register: epel_enabled
 
 - name: Pulizia e ricaricam. repo
   shell: yum clean all && yum repolist
-  sudo: yes
+  become: yes
   when: epel_enabled|changed
   tags: repo
 
 - name: Aggiorno il sistema
   yum: name=* state=latest
-  sudo: yes
+  become: yes
   tags: upgrade
 
 - name: Installo pacchetti addizionali
   yum: name={{ item }} state=present
-  sudo: yes
+  become: yes
   with_items: addin_pkgs
   tags: pkg
 
@@ -50,4 +50,4 @@
   yum:
     name: "http://rpm.mag-sol.com/Centos/6/{{ ansible_architecture }}/perl-Authen-SASL-2.16-1.el6.noarch.rpm"
     state: present
-  sudo: yes
+  become: yes

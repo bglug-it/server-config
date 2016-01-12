@@ -2,21 +2,21 @@
 # Copia le configurazioni per il dominio in locale sul server.
 - name: Copia le configurazioni di dominio.
   copy: src=../../../domain.yml dest=/etc/domain.yml force=yes
-  sudo: yes
+  become: yes
 
 - name: Creo la cartella per le configurazioni di Ansible
   file: path=/etc/ansible/facts.d state=directory owner=root mode=0755
-  sudo: yes
+  become: yes
 
 - name: Installo PyYAML, necessario per i facts
   yum:
     name: PyYAML
     state: present
-  sudo: yes
+  become: yes
 
 - name: Utilizzo un piccolo wrapper per passare come fatti informazioni di dominio
   copy: src=domain.fact dest=/etc/ansible/facts.d/domain.fact mode=0755 owner=root
-  sudo: yes
+  become: yes
 
 - name: Rileggo i fatti per essere sicuri che vengano utilizzati
   setup: filter=ansible_local

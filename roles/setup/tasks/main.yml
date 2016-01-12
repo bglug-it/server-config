@@ -4,7 +4,7 @@
   tags: ssh
 
 - include: lock-nethrelease.yml
-  sudo: yes
+  become: yes
   tags: lock-nethrelease
 
 - include: centos_pkgs.yml

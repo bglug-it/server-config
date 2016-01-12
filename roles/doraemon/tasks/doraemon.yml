@@ -8,8 +8,8 @@
   yum:
     pkg: doraemon
     state: latest
-  sudo: yes
+  become: yes
 
 - name: Verifico avvio di doraemon
   service: name=doraemon state=restarted
-  sudo: yes
+  become: yes

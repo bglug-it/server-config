@@ -4,4 +4,4 @@
   yum:
     name: libselinux-python
     state: present
-  sudo: yes
+  become: yes

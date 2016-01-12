@@ -4,95 +4,95 @@
   register: check_org
   changed_when: "'City={{ ansible_local.domain.org_city }}' not in check_org.stdout"
   ignore_errors: yes
-  sudo: yes
+  become: yes
 
 - name: Configurazione organizzazione
   shell: /sbin/e-smith/db configuration setprop OrganizationContact City "{{ ansible_local.domain.org_city }}" Company "{{ ansible_local.domain.org_company }}" CountryCode {{ ansible_local.domain.org_countrycode }} Department "{{ ansible_local.domain.org_department }}" PhoneNumber "{{ ansible_local.domain.org_phone }}" Street "{{ ansible_local.domain.org_street }}"
-  sudo: yes
+  become: yes
   when: check_org|changed
 
 - name: Configurazione nome server
   shell: /sbin/e-smith/db configuration set SystemName {{ ansible_local.domain.server }}
-  sudo: yes
+  become: yes
   register: chg_hostname
   when: "'{{ ansible_hostname }}' != '{{ ansible_local.domain.server }}'"
 
 - name: Configurazione nome dominio
   shell: /sbin/e-smith/db configuration set DomainName {{ ansible_local.domain.domainfull }}
-  sudo: yes
+  become: yes
   register: chg_domainname
   when: "'{{ ansible_domain }}' != '{{ ansible_local.domain.domainfull }}'"
 
 - name: Attivazione cambiamenti hostname
   shell: /sbin/e-smith/signal-event hostname-modify
-  sudo: yes
+  become: yes
   when: chg_hostname|changed or chg_domainname|changed
 
 - name: Verifica robustezza password
   shell: /sbin/e-smith/db configuration printprop passwordstrength Users
   register: chk_passstr
   changed_when: "'Users=none' not in chk_passstr.stdout"
-  sudo: yes
+  become: yes
   ignore_errors: true
 
 - name: Configurazione forza password
   shell: /sbin/e-smith/db configuration setprop passwordstrength PassExpires no Users none Admin strong MaxPassAge 180 MinPassAge 0 PassExpires no PassWarning 7
-  sudo: yes
+  become: yes
   when: chk_passstr|changed
 
 - name: Attivo configurazione policy password
   shell: /sbin/e-smith/signal-event password-policy-update
-  sudo: yes
+  become: yes
   when: chk_passstr|changed
 
 - name: Verifica configurazione DHCP
   shell: /sbin/e-smith/db dhcp getprop {{ intnic }} DhcpRangeStart
-  sudo: yes
+  become: yes
   ignore_errors: true
   register: chk_dhcp
 
 - name: Configurazione servizio DHCP
   shell: /sbin/e-smith/db dhcp set {{ intnic }} range DhcpRangeStart {{ ansible_local.domain.dhcprange_start }} DhcpRangeEnd {{ ansible_local.domain.dhcprange_end }} status enabled
-  sudo: yes
+  become: yes
   when: chk_dhcp|failed
 
 - name: Attivazione configurazione DHCP
   shell: /sbin/e-smith/signal-event nethserver-dnsmasq-save
-  sudo: yes
+  become: yes
   when: chk_dhcp|failed
 
 - name: Verifica configurazione DNS
   shell: /sbin/e-smith/db configuration printprop dns NameServers
-  sudo: yes
+  become: yes
   register: chk_dns
   changed_when: "'NameServers={{ ansible_local.domain.extdnsserver1 }},{{ ansible_local.domain.extdnsserver2 }}' not in chk_dns.stdout"
   ignore_errors: yes
 
 - name: Configurazione servizio DNS
   shell: /sbin/e-smith/db configuration setprop dns role resolver NameServers "{{ ansible_local.domain.extdnsserver1 }},{{ ansible_local.domain.extdnsserver2 }}"
-  sudo: yes
+  become: yes
   when: chk_dns|changed
 
 - name: Attivo configurazione DNS
   shell: /sbin/e-smith/signal-event nethserver-dnsmasq-save
   when: chk_dns|changed
-  sudo: yes
+  become: yes
 
 - name: Verifica configurazione NTP
   shell: /sbin/e-smith/db configuration printprop ntpd NTPServer
-  sudo: yes
+  become: yes
   register: chk_ntp
   changed_when: "'NTPServer=ntp1.inrim.it' not in chk_ntp.stdout"
   ignore_errors: true
 
 - name: Configuro NTP
   shell: /sbin/e-smith/db configuration setprop ntpd NTPServer ntp1.inrim.it status enabled
-  sudo: yes
+  become: yes
   when: chk_ntp|changed
 
 - name: Attivazione NTP
   shell: /sbin/e-smith/signal-event nethserver-ntp-update
-  sudo: yes
+  become: yes
   when: chk_ntp|changed
 
 - name: Utilizzo unix extensions nei template per ibay
@@ -100,23 +100,23 @@
     dest: /etc/e-smith/templates/etc/samba/smb.conf/10global
     regexp: '^unix extensions = no$'
     replace: 'unix extensions = yes'
-  sudo: yes
+  become: yes
 
 - name: Verifica configurazione SMB
   shell: /sbin/e-smith/db configuration printprop smb RoamingProfiles
-  sudo: yes
+  become: yes
   register: chk_smb
   changed_when: "'RoamingProfiles=yes' not in chk_smb.stdout"
   ignore_errors: true
 
 - name: Configurazione SMB
   shell: /sbin/e-smith/db configuration setprop smb RoamingProfiles yes ServerRole PDC Workgroup "{{ ansible_local.domain.domainshort }}" status enabled
-  sudo: yes
+  become: yes
   when: chk_smb|changed
 
 - name: Attivo configurazione SMB
   shell: /sbin/e-smith/signal-event nethserver-samba-save
-  sudo: yes
+  become: yes
   when: chk_smb|changed
 
 - name: Abilito il ricaricamento dei servizi smb su ibay-create
@@ -125,17 +125,17 @@
     - /etc/e-smith/events/ibay-delete/services2adjust
     - /etc/e-smith/events/ibay-create/services2adjust
     - /etc/e-smith/events/ibay-modify/services2adjust
-  sudo: yes
+  become: yes
 
 - name: Verifica creazione share condiviso
   shell: /sbin/e-smith/db accounts show shared
-  sudo: yes
+  become: yes
   ignore_errors: true
   register: chk_shared
 
 - name: Copying default templates for new template type
   shell: cp -r /etc/e-smith/templates/etc/samba/smb.conf/ibay-default /etc/e-smith/templates/etc/samba/smb.conf/ibay-shared
-  sudo: yes
+  become: yes
   when: force_ibay_shared|bool or chk_shared|failed
 
 - name: Configuring ibay-shared template structure (directory mask)
@@ -144,7 +144,7 @@
     line: 'directory mask = 0775'
     insertafter: '^create mask'
     state: present
-  sudo: yes
+  become: yes
   when: force_ibay_shared|bool or chk_shared|failed
 
 - name: Configuring force create mode
@@ -153,7 +153,7 @@
     line: 'force create mode = 0664'
     insertafter: '^directory mask'
     state: present
-  sudo: yes
+  become: yes
   when: force_ibay_shared|bool or chk_shared|failed
 
 - name: Configuring force directory mode
@@ -162,88 +162,88 @@
     line: 'force directory mode = 0775'
     insertafter: '^force create mode'
     state: present
-  sudo: yes
+  become: yes
   when: force_ibay_shared|bool or chk_shared|failed
 
 - name: Configurazione share Condiviso
   shell: /sbin/e-smith/db accounts set shared ibay AclRead domusers,domadmins AclWrite domusers,domadmins Description "Cartella condivisa" GroupAccess rw HttpStatus disabled OtherAccess r OwningGroup locals SmbAuditStatus enabled SmbGuestAccessType none SmbRecycleBinStatus enabled SmbRecycleBinVersionsStatus enabled SmbStatus enabled
-  sudo: yes
+  become: yes
   when: chk_shared|failed
 
 - name: Attivazione share condiviso
   shell: /sbin/e-smith/signal-event ibay-create shared
-  sudo: yes
+  become: yes
   when: chk_shared|failed
 
 - name: Changing ibay profile for shared
   shell: /sbin/e-smith/db accounts setprop shared SmbProfileType shared 
-  sudo: yes
+  become: yes
   when: force_ibay_shared|bool or chk_shared|failed
 
 - name: Forcing regeneration of smb.conf
   shell: /sbin/e-smith/signal-event nethserver-samba-update
-  sudo: yes
+  become: yes
   when: force_ibay_shared|bool or chk_shared|failed
 
 - name: Verifica configurazione squid
   shell: /sbin/e-smith/db configuration printprop squid GreenMode
-  sudo: yes
+  become: yes
   ignore_errors: yes
   register: chk_squid
   changed_when: "'GreenMode=transparent_ssl' not in chk_squid.stdout"
 
 - name: Configurazione squid
   shell: /sbin/e-smith/db configuration setprop squid BlueMode transparent_ssl GreenMode transparent_ssl PortBlock enabled status enabled DiskCache enabled DiskCacheSize 500
-  sudo: yes
+  become: yes
   when: chk_squid|changed
 
 - name: Attivazione configurazione squid
   shell: /sbin/e-smith/signal-event nethserver-squid-update
-  sudo: yes
+  become: yes
   when: chk_squid|changed
 
 - name: Verifica configurazione squidguard
   shell: /sbin/e-smith/db configuration printprop squidguard Lists
-  sudo: yes
+  become: yes
   ignore_errors: true
   register: chk_squidguard
   changed_when: "'Lists=shalla' not in chk_squidguard.stdout"
 
 - name: Configurazione squidguard
   shell: /sbin/e-smith/db configuration setprop squidguard Expressions enabled Lists shalla status enabled
-  sudo: yes
+  become: yes
   when: chk_squidguard|changed
 
 - name: Scarico liste di filtraggio
   shell: /sbin/e-smith/signal-event nethserver-squidguard-downloadlists
-  sudo: yes
+  become: yes
   when: chk_squidguard|changed
 
 - name: Attivazione squidguard
   shell: /sbin/e-smith/signal-event nethserver-squidguard-update
-  sudo: yes
+  become: yes
   when: chk_squidguard|changed
 
 - name: Verifica configurazione squidclamav
   shell: /sbin/e-smith/db configuration printprop squidclamav status
-  sudo: yes
+  become: yes
   ignore_errors: true
   register: chk_squidclamav
   changed_when: "'status=enabled' not in chk_squidclamav.stdout"
 
 - name: Configurazione squidclamav
   shell: /sbin/e-smith/db configuration setprop squidclamav status enabled
-  sudo: yes
+  become: yes
   when: chk_squidclamav|changed
 
 - name: Attivazione squidclamav
   shell: /sbin/e-smith/signal-event nethserver-squidclamav-update
-  sudo: yes
+  become: yes
   when: chk_squidclamav|changed
 
 - name: Verifica completamento configurazione per certificato
   shell: /sbin/e-smith/db configuration printprop pki CommonName
-  sudo: yes
+  become: yes
   ignore_errors: true
   register: chk_crt
   changed_when: "'CommonName={{ ansible_local.domain.serverfqdn }}' not in chk_crt.stdout"
@@ -251,12 +251,12 @@
 
 - name: Completo la configurazione per produzione certificato
   shell: /sbin/e-smith/db configuration setprop pki CertificateDuration 3650 CommonName {{ ansible_local.domain.serverfqdn }} CountryCode {{ ansible_local.domain.org_countrycode }} EmailAddress {{ ansible_local.domain.org_email }} Locality "{{ ansible_local.domain.org_city }}" Organization "{{ ansible_local.domain.org_company }}"
-  sudo: yes
+  become: yes
   tags: regen-ca
   when: chk_crt|changed or force_regen_ca|bool
 
 - name: Rigenero il certificato con le informazioni inserite
   shell: /sbin/e-smith/signal-event certificate-update
-  sudo: yes
+  become: yes
   when: chk_crt|changed or force_regen_ca|bool
   tags: regen-ca

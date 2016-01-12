@@ -13,14 +13,14 @@
 
 - include: nfs-mirror.yml
   when: ansible_local.domain.mirror_mode == 'nfs'
-  sudo: yes
+  become: yes
   tags:
     - mirror
     - nfs-mirror
 
 - include: remote-mirror.yml
   when: ansible_local.domain.mirror_mode == 'remote'
-  sudo: yes
+  become: yes
   tags:
     - mirror
     - remote-mirror
