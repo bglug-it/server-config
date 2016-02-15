@@ -1,2 +1,6 @@
 ---
 execmirrorpath: ""
+remote_mirror: archive.ubuntu.com
+remote_mirrorpath: /ubuntu
+remote_security_mirror: security.ubuntu.com
+remote_security_mirrorpath: /ubuntu

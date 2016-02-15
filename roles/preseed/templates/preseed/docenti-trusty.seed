@@ -25,8 +25,8 @@ d-i	mirror/protocol				string http
 d-i	mirror/http/hostname			string {{ ansible_local.domain.serverfqdn }}
 d-i	mirror/http/directory			string /ks/mirror/archive.ubuntu.com/ubuntu
 {% else %}
-d-i	mirror/http/hostname			string archive.ubuntu.com
-d-i	mirror/http/directory			string /ubuntu
+d-i	mirror/http/hostname			string {{ remote_mirror }}
+d-i	mirror/http/directory			string {{ remote_mirrorpath }}
 {% endif %}
 d-i	mirror/http/proxy 			string
 d-i	mirror/suite				string trusty
@@ -43,8 +43,8 @@ d-i	apt-setup/services-select 		multiselect security, updates
 d-i	apt-setup/security_host			string {{ ansible_local.domain.serverfqdn }}
 d-i	apt-setup/security_path			string /ks/mirror/security.ubuntu.com/ubuntu
 {% else %}
-d-i	apt-setup/security_host			string security.ubuntu.com
-d-i	apt-setup/security_path			string /ubuntu
+d-i	apt-setup/security_host			string {{ remote_security_mirror }}
+d-i	apt-setup/security_path			string {{ remote_security_mirrorpath }}
 {% endif %}
 
 # Setup and enable libreoffice PPA

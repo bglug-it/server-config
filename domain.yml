@@ -21,5 +21,6 @@ org_city: Caravaggio
 org_phone: "+39 0363 50598"
 org_street: "Via Zenale e Butinone, 20"
 mirror_mode: nfs
+remote_mirror: ubuntu.fastbull.org
 mirror_nfs_share: 192.168.255.1:/var/spool/apt-mirror/mirror
 mirrorpath: pdc.mastri.edu/ks/mirror/
