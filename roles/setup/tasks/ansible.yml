@@ -11,7 +11,7 @@
   tags: ansible
 
 - name: Installazione python-argparse
-  shell:
+  yum:
     name: "ftp://fr2.rpmfind.net/linux/centos/6.7/extras/i386/Packages/python-argparse-1.2.1-2.el6.centos.noarch.rpm"
     state: present
   become: yes
