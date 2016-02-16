@@ -10,11 +10,20 @@
   become: yes
   tags: ansible
 
+- name: Checking for python-argparse
+  shell: rpm -q python-argparse
+  become: yes
+  register: check_argparse
+  ignore_errors: yes
+  changed_when: "check_argparse.rc == 1"
+  tags: ansible
+
 - name: Installazione python-argparse
   yum:
     name: "ftp://fr2.rpmfind.net/linux/centos/6.7/extras/i386/Packages/python-argparse-1.2.1-2.el6.centos.noarch.rpm"
     state: present
   become: yes
+  when: check_argparse|changed
   tags: ansible
 
   #- name: Download della gestione client con ansible
