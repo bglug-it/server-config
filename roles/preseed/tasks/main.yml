@@ -1,10 +1,5 @@
 ---
 
-- name: Configuring executive mirror path
-  set_fact:
-    execmirrorpath: "{{ ansible_local.domain.mirrorpath }}"
-  when: ansible_local.domain.mirror_mode == 'nfs' or ansible_local.domain.mirror_mode == 'local'
-
 - include: preseed.yml
   tags:
     - preseed
