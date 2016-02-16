@@ -1,5 +1,9 @@
 ---
 
+- include: mirror-cfg.yml
+  tags:
+    - preseed
+
 - include: preseed.yml
   tags:
     - preseed

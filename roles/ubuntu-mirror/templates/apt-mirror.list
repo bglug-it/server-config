@@ -1,0 +1,88 @@
+############# config ##################
+#
+# set base_path    /var/spool/apt-mirror
+#
+# set path  $base_path/mirror
+# set skel_path    $base_path/skel
+# set var_path     $base_path/var
+# set cleanscript $var_path/clean.sh
+# set defaultarch  <running host architecture>
+# set postmirror_script $var_path/postmirror.sh
+# set run_postmirror 0
+set nthreads	20
+set _tilde	0
+#set limit_rate	200k
+#
+############# end config ##############
+
+#
+# 14.04 LTS - Trusty Tahr
+#
+
+deb-i386 http://{{ host }}{{ path }} trusty main restricted universe multiverse
+deb-i386 http://{{ host }}{{ path }} trusty-security main restricted universe multiverse
+deb-i386 http://{{ host }}{{ path }} trusty-updates main restricted universe multiverse
+deb-i386 http://{{ host }}{{ path }} trusty-proposed main restricted universe multiverse
+deb-i386 http://{{ host }}{{ path }} trusty-backports main restricted universe multiverse
+
+deb-amd64 http://{{ host }}{{ path }} trusty main restricted universe multiverse
+deb-amd64 http://{{ host }}{{ path }} trusty-security main restricted universe multiverse
+deb-amd64 http://{{ host }}{{ path }} trusty-updates main restricted universe multiverse
+deb-amd64 http://{{ host }}{{ path }} trusty-proposed main restricted universe multiverse
+deb-amd64 http://{{ host }}{{ path }} trusty-backports main restricted universe multiverse
+
+deb-src http://{{ host }}{{ path }} trusty main restricted universe multiverse
+deb-src http://{{ host }}{{ path }} trusty-security main restricted universe multiverse
+deb-src http://{{ host }}{{ path }} trusty-updates main restricted universe multiverse
+deb-src http://{{ host }}{{ path }} trusty-proposed main restricted universe multiverse
+deb-src http://{{ host }}{{ path }} trusty-backports main restricted universe multiverse
+
+deb-i386 http://{{ host }}{{ path }} trusty main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-i386 http://{{ host }}{{ path }} trusty-security main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-i386 http://{{ host }}{{ path }} trusty-updates main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-i386 http://{{ host }}{{ path }} trusty-proposed main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-i386 http://{{ host }}{{ path }} trusty-backports main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+
+deb-amd64 http://{{ host }}{{ path }} trusty main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-amd64 http://{{ host }}{{ path }} trusty-security main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-amd64 http://{{ host }}{{ path }} trusty-updates main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-amd64 http://{{ host }}{{ path }} trusty-proposed main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-amd64 http://{{ host }}{{ path }} trusty-backports main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+
+deb-i386 http://extras.ubuntu.com/ubuntu trusty main
+deb-amd64 http://extras.ubuntu.com/ubuntu trusty main
+deb-src http://extras.ubuntu.com/ubuntu trusty main
+
+deb-i386 http://archive.canonical.com/ trusty partner
+deb-i386 http://archive.canonical.com/ trusty-proposed partner
+
+deb-amd64 http://archive.canonical.com/ trusty partner
+deb-amd64 http://archive.canonical.com/ trusty-proposed partner
+
+deb-i386 http://{{ shost }}{{ spath }} trusty-security main restricted universe multiverse
+deb-i386 http://{{ shost }}{{ spath }} trusty-security main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-amd64 http://{{ shost }}{{ spath }} trusty-security main restricted universe multiverse
+deb-amd64 http://{{ shost }}{{ spath }} trusty-security main/debian-installer restricted/debian-installer universe/debian-installer multiverse/debian-installer
+deb-src http://{{ shost }}{{ spath }} trusty-security main restricted universe multiverse
+
+# Ansible
+deb-i386 http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main
+deb-amd64 http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main
+
+# LibreOffice PPA
+deb-i386 http://ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
+deb-amd64 http://ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
+deb-src http://ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
+
+# sys42
+deb-i386 http://bglug.sys42.eu/ubuntu trusty main
+deb-amd64 http://bglug.sys42.eu/ubuntu trusty main
+deb-src http://bglug.sys42.eu/ubuntu trusty main
+
+clean http://{{ host }}{{ path }}
+clean http://extras.ubuntu.com/ubuntu
+clean http://archive.canonical.com
+clean http://{{ shost }}{{ spath }}
+clean http://ppa.launchpad.net/ansible/ansible/ubuntu
+clean http://ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu
+clean http://bglug.sys42.eu/ubuntu

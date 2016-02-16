@@ -8,7 +8,7 @@
   become: yes
 
 - name: Installazione configurazione apt-mirror
-  copy:
+  template:
     src: apt-mirror.list
     dest: /etc/apt-mirror.list
   become: yes

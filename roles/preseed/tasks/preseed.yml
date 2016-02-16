@@ -1,18 +1,4 @@
 ---
-- name: Configuring executive mirror path
-  set_fact:
-    execmirrorpath: "{{ ansible_local.domain.mirrorpath }}"
-  when: ansible_local.domain.mirror_mode == 'nfs' or ansible_local.domain.mirror_mode == 'local'
-
-- name: Overriding remote_mirror with defaults from domain.yml
-  set_fact:
-    remote_mirror: "{{ ansible_local.domain.remote_mirror }}"
-  when: ansible_local.domain.remote_mirror is defined
-
-- name: Overriding remote_mirrorpath with defaults from domain.yml
-  set_fact:
-    remote_mirror: "{{ ansible_local.domain.remote_mirrorpath }}"
-  when: ansible_local.domain.remote_mirrorpath is defined
 
 - name: Verifica configurazione ibay preseed
   shell: /sbin/e-smith/db accounts show ks

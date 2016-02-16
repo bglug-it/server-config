@@ -21,13 +21,8 @@ d-i	hw-detect/load_firmware			boolean true
 # Setting up repositories from local mirror
 d-i	mirror/country				string manual
 d-i	mirror/protocol				string http
-{% if execmirrorpath != '' %}
-d-i	mirror/http/hostname			string {{ ansible_local.domain.serverfqdn }}
-d-i	mirror/http/directory			string /ks/mirror/archive.ubuntu.com/ubuntu
-{% else %}
-d-i	mirror/http/hostname			string {{ remote_mirror }}
-d-i	mirror/http/directory			string {{ remote_mirrorpath }}
-{% endif %}
+d-i	mirror/http/hostname			string {{ mirror_host }}
+d-i	mirror/http/directory			string {{ mirror_path }}
 d-i	mirror/http/proxy 			string
 d-i	mirror/suite				string trusty
 
@@ -39,21 +34,16 @@ d-i	apt-setup/backports			boolean true
 d-i	apt-setup/non-free			boolean true
 d-i	apt-setup/contrib			boolean true
 d-i	apt-setup/services-select 		multiselect security, updates
-{% if execmirrorpath != '' %}
-d-i	apt-setup/security_host			string {{ ansible_local.domain.serverfqdn }}
-d-i	apt-setup/security_path			string /ks/mirror/security.ubuntu.com/ubuntu
-{% else %}
-d-i	apt-setup/security_host			string {{ remote_security_mirror }}
-d-i	apt-setup/security_path			string {{ remote_security_mirrorpath }}
-{% endif %}
+d-i	apt-setup/security_host			string {{ mirror_security_host }}
+d-i	apt-setup/security_path			string {{ mirror_security_path }}
 
 # Setup and enable libreoffice PPA
-d-i	apt-setup/local0/repository		string	http://{{ execmirrorpath }}ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
+d-i	apt-setup/local0/repository		string	http://{{ execpath }}ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
 d-i 	apt-setup/local0/comment		string LibreOffice Official PPA
 d-i 	apt-setup/local0/key 			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x36E81C9267FD1383FCC4490983FBA1751378B444&op=get
 
 # Setup and enable ansible PPA
-d-i	apt-setup/local1/repository		string http://{{ execmirrorpath }}ppa.launchpad.net/ansible/ansible/ubuntu trusty main
+d-i	apt-setup/local1/repository		string http://{{ execpath }}ppa.launchpad.net/ansible/ansible/ubuntu trusty main
 d-i	apt-setup/local1/comment		string Ansible Official PPA
 d-i	apt-setup/local1/key			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367&op=get	
 

@@ -1,2 +1,2 @@
-deb http://{{ execmirrorpath }}ppa.launchpad.net/ansible/ansible/ubuntu trusty main
-# deb-src http://{{ execmirrorpath }}ppa.launchpad.net/ansible/ansible/ubuntu trusty main
+deb http://{{ execpath }}ppa.launchpad.net/ansible/ansible/ubuntu trusty main
+# deb-src http://{{ execpath }}ppa.launchpad.net/ansible/ansible/ubuntu trusty main

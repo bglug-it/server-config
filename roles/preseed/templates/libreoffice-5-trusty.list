@@ -1,2 +1,2 @@
-deb http://{{ execmirrorpath }}ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
-deb-src http://{{ execmirrorpath }}ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
+deb http://{{ execpath }}ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
+deb-src http://{{ execpath }}ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main

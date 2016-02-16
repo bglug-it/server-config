@@ -1,0 +1,19 @@
+---
+# Determining other variables to be used inside templates
+
+- name: Determining mirror_host
+  set_fact: host="{{ ansible_local.domain.mirror_host }}"
+  when: ansible_local.domain.mirror_host is defined
+
+- name: Determining mirror_path
+  set_fact: path="{{ ansible_local.domain.mirror_path }}"
+  when: ansible_local.domain.mirror_path is defined 
+
+- name: Determining mirror_security_host
+  set_fact: shost="{{ ansible_local.domain.mirror_security_host }}"
+  when: ansible_local.domain.mirror_security_host is defined
+
+- name: Determining mirror_security_path
+  set_fact: spath="{{ ansible_local.domain.mirror_security_path }}"
+  when: ansible_local.domain.mirror_security_path is defined
+
