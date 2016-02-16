@@ -44,10 +44,3 @@
   become: yes
   with_items: addin_pkgs
   tags: pkg
-
-# Fix per un problema con uno script di NethServer
-- name: Installo l'ultima versione di perl-Authen-SASL
-  yum:
-    name: "http://rpm.mag-sol.com/Centos/6/{{ ansible_architecture }}/perl-Authen-SASL-2.16-1.el6.noarch.rpm"
-    state: present
-  become: yes
