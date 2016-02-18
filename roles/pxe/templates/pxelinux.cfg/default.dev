@@ -1,0 +1,92 @@
+UI /utils/vesamenu.c32
+DEFAULT local
+TIMEOUT 30
+
+MENU TITLE BgLUG PXE Boot
+MENU BACKGROUND /utils/bglug.png
+
+LABEL local
+	MENU LABEL Avvia dal primo disco locale
+	KERNEL	/utils/chain.c32
+	APPEND	hd0
+
+MENU SEPARATOR
+
+LABEL client
+	MENU LABEL Installa nuova macchina CLIENT
+	LINUX	/ubuntu/14.04/amd64/linux
+	INITRD	/ubuntu/14.04/amd64/initrd.gz
+	APPEND	vga=normal auto=true hostname=kickseed url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/client-trusty.seed -- quiet
+	
+LABEL docenti
+	MENU LABEL Installa nuova macchina DOCENTI
+	LINUX	/ubuntu/14.04/amd64/linux
+	INITRD	/ubuntu/14.04/amd64/initrd.gz
+	APPEND	vga=normal auto=true hostname=kickseed url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/docenti-trusty.seed -- quiet
+
+MENU SEPARATOR
+MENU BEGIN
+MENU TITLE !!! Development !!!
+LABEL client
+	MENU LABEL Installa nuova macchina CLIENT - Spegni
+	LINUX	/ubuntu/14.04/amd64/linux
+	INITRD	/ubuntu/14.04/amd64/initrd.gz
+	APPEND	vga=normal auto=true hostname=kickseed url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/dev/client-trusty.seed -- quiet
+	
+LABEL docenti
+	MENU LABEL Installa nuova macchina DOCENTI - Spegni
+	LINUX	/ubuntu/14.04/amd64/linux
+	INITRD	/ubuntu/14.04/amd64/initrd.gz
+	APPEND	vga=normal auto=true hostname=kickseed url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/dev/docenti-trusty.seed -- quiet
+
+LABEL return-edu
+	MENU LABEL ^Torna al menu principale
+	MENU EXIT
+MENU END
+	
+MENU SEPARATOR
+
+MENU BEGIN
+MENU TITLE Edubuntu Classica
+
+LABEL edubuntu-64
+	MENU LABEL Installa Edubuntu 64 bit
+	LINUX	/ubuntu/14.04/amd64/linux
+	INITRD	/ubuntu/14.04/amd64/initrd.gz
+	APPEND	auto=true url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/edubuntu.seed quiet
+	
+LABEL edubuntu-32
+	MENU LABEL Installa Edubuntu 32 bit
+	LINUX	/ubuntu/14.04/i386/linux
+	INITRD	/ubuntu/14.04/i386/initrd.gz
+	APPEND	auto=true url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/edubuntu.seed quiet
+
+MENU SEPARATOR
+
+LABEL return-edu
+	MENU LABEL ^Torna al menu principale
+	MENU EXIT
+MENU END
+
+MENU SEPARATOR
+
+MENU BEGIN
+MENU TITLE Utilities
+
+LABEL hdt
+	MENU LABEL ^HDT - Hardware Diagnostic Tool
+	KERNEL /utils/memdisk
+	INITRD /utils/hdt.img
+	APPEND floppy
+
+LABEL memtest
+	MENU LABEL ^memtest86 - Test della RAM
+	KERNEL /utils/memtest86/vmlinuz
+
+MENU SEPARATOR
+
+LABEL return
+	MENU LABEL ^Torna al menu principale
+	MENU EXIT
+
+MENU END

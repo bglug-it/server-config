@@ -8,3 +8,4 @@ mirror_security_path: /ubuntu
 mirror_localpath: /ks/mirror
 execpath: ""
 execmirrorpath: ""
+development: false

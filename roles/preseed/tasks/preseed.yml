@@ -44,6 +44,15 @@
     - docenti-trusty.seed
   become: yes
 
+- name: Preseeding profiles - development
+  template:
+    src: 'preseed/dev/{{ item }}'
+    dest: '/var/lib/nethserver/ibay/ks/preseed/dev/{{ item }}'
+  with_items:
+    - client-trusty.seed
+    - docenti-trusty.seed
+  become: yes
+
 - name: Copia script post-installazione
   template:
     src: 'preseed/{{ item }}'

@@ -36,6 +36,14 @@
 - name: pxelinux.cfg/default
   template: src=pxelinux.cfg/default dest=/var/lib/tftpboot/pxelinux.cfg/default
   become: yes
+  when: development is not defined or development|bool == false
+
+- name: pxelinux.cfg/default - development
+  template:
+    src: pxelinux.cfg/default.dev
+    dest: /var/lib/tftpboot/pxelinux.cfg/default
+  become: yes
+  when: development is defined and development|bool
 
 - name: bglug.png
   copy: src=bglug.png dest=/var/lib/tftpboot/utils/bglug.png

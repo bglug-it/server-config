@@ -16,7 +16,7 @@ echo "$(date --rfc-3339=seconds) Loading and running init-ansible.sh"
 url=git://{{ ansible_local.domain.serverfqdn }}/client-pull-installation.git
 repo=/var/lib/{{ ansible_local.domain.domainfull }}/config
 logfile=/var/lib/ansible-pull.log
-branch=master
+branch={{ ansible_local.domain.client_gitbranch }}
 playbook=local.yml
 
 echo "$(date --rfc-3339=seconds) Getting vault password"
