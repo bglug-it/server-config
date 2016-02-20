@@ -190,7 +190,7 @@
   become: yes
   ignore_errors: yes
   register: chk_squid
-  changed_when: "'GreenMode=transparent' not in chk_squid.stdout"
+  changed_when: "'DiskCacheSize=2000' not in chk_squid.stdout"
 
 - name: Configurazione squid
   shell: /sbin/e-smith/db configuration setprop squid BlueMode transparent GreenMode transparent PortBlock disabled status enabled DiskCache enabled DiskCacheSize 2000
@@ -214,15 +214,45 @@
   become: yes
   when: chk_squidguard|changed
 
-- name: Scarico liste di filtraggio
-  shell: /sbin/e-smith/signal-event nethserver-squidguard-downloadlists
+- name: Activating squidguard configuration
+  shell: "/sbin/e-smith/signal-event nethserver-squidguard-{{ item }}"
+  with_items:
+    - save
+    - update
+    - downloadlists
   become: yes
   when: chk_squidguard|changed
 
-- name: Attivazione squidguard
-  shell: /sbin/e-smith/signal-event nethserver-squidguard-update
+- name: Verifying content filter activation
+  shell: /sbin/e-smith/db configuration printprop squidguard status
+  register: check_cf_enabled
+  changed_when: "'disabled' not in check_cf_enabled.stdout"
   become: yes
-  when: chk_squidguard|changed
+
+- name: Enabling squidguard for content filtering
+  shell: /sbin/e-smith/db configuration setprop squidguard status enabled
+  when: check_cf_enabled|changed
+  register: cf_enable
+  become: yes
+
+- name: Verifying content filtering
+  shell: /sbin/e-smith/db contentfilter getprop default Categories
+  ignore_errors: yes
+  register: check_cf
+  changed_when: check_cf.rc != 0
+  become: yes
+
+- name: Configuring content filtering
+  shell: /sbin/e-smith/db contentfilter setprop default Categories aggressive,alcohol,weapons,games-online,gamble,dating,webradio,webtv,sex,porn,spyware,violence,anonvpn,warez
+  become: yes
+  register: cf_cat
+  when: check_cf|changed
+
+- name: Activating content filtering as a whole
+  shell: /sbin/e-smith/signal-event nethserver-squidguard-update
+  when: cf_enable|changed or cf_cat|changed
+  become: yes
+
 
 - name: Verifica configurazione squidclamav
   shell: /sbin/e-smith/db configuration printprop squidclamav status
