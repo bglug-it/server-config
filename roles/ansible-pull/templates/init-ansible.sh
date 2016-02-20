@@ -5,12 +5,6 @@ echo "$(date --rfc-3339=seconds) Installing bin directory."
 /usr/bin/install -d -o root -g users /var/lib/{{ ansible_local.domain.domainfull }}/bin
 /bin/chown -R root:users /var/lib/{{ ansible_local.domain.domainfull }}
 
-# Prepopulating the config folder to allow correct first run of ansible-pull.
-echo "$(date --rfc-3339=seconds) Prepopulating config folder."
-if [[ ! -f /var/lib/{{ ansible_local.domain.domainfull }}/config/local.yml ]]; then
-  git clone -b {{ ansible_local.domain.client_gitbranch }} git://{{ ansible_local.domain.serverfqdn }}/client-pull-installation.git
-fi
-
 # Installo ansible-pull.sh
 echo "$(date --rfc-3339=seconds) Creating ansible-pull.sh."
 /usr/bin/wget -q http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/ansible-pull.sh -O /var/lib/{{ ansible_local.domain.domainfull }}/bin/ansible-pull.sh

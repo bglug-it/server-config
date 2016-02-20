@@ -23,5 +23,5 @@ echo "$(date --rfc-3339=seconds) Getting vault password"
 vaultpassfile=$(/usr/bin/curl -sSL4 http://{{ ansible_local.domain.serverfqdn }}/ks/ansible-pull/getvaultpass.py | /usr/bin/python)
 
 echo "$(date --rfc-3339=seconds) Running ansible-pull"
-/usr/bin/ansible-pull --accept-host-key -d "${repo}" -U "${url}" -C "${branch}" "${playbook}" --vault-password-file "${vaultpassfile}" $@
+/usr/bin/ansible-pull --accept-host-key -i localhost -d "${repo}" -U "${url}" -C "${branch}" "${playbook}" --vault-password-file "${vaultpassfile}" $@
 rm -f "${vaultpassfile}"
