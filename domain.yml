@@ -1,31 +1,26 @@
 ---
 # Configurazione dominio
-ntpserver: pdc.topolin.ia
+ntpserver: pdc.iccamozzi.edu
 server: pdc
-serverip: 172.16.254.1
+serverip: 192.168.2.1
 servernetmask: 255.255.255.0
-servernet: 172.16.254.0
-servergw: 172.16.254.1
-serverfqdn: pdc.topolin.ia
-domainshort: TOPOLIN
-domainfull: topolin.ia
-dhcprange_start: 172.16.254.10
-dhcprange_end: 172.16.254.50
+servernet: 192.168.2.0
+servergw: 192.168.2.1
+serverfqdn: pdc.iccamozzi.edu
+domainshort: ICCAMOZZI
+domainfull: iccamozzi.edu
+dhcprange_start: 192.168.2.10
+dhcprange_end: 192.168.2.50
 extdnsserver1: 208.67.222.222
 extdnsserver2: 208.67.220.220
 org_email: info@bglug.it
-org_company: Accademia di SuperPippo
-org_countrycode: IA
+org_company: Istituto Comprensivo 'Gabriele Camozzi'
+org_countrycode: IT
 org_department: "Laboratorio 1"
-org_city: Topolinia
-org_phone: "313 113 176-167"
-org_street: "Piazza la bomba e scappa"
-edu_package: secondary
-mirror_mode: remote
+org_city: Bergamo
+org_phone: "+39 035 234682"
+org_street: "Via Angelo Pinetti, 25"
+mirror_mode: local
 #mirror_nfs_share: 192.168.255.1:/var/spool/apt-mirror/mirror
-mirror_host: it.archive.ubuntu.com
-#mirror_path: /ubuntu
-#mirror_security_host: security.ubuntu.com
-#mirror_security_path: /ubuntu
-client_gitbranch: master
-#client_gitrepo: "https://github.com/bglug-it/client-pull-installation.git"
+#remote_mirror: ubuntu.fastbull.org
+client_gitbranch: iccamozzi
