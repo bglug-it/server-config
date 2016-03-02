@@ -12,22 +12,60 @@ LABEL local
 
 MENU SEPARATOR
 
-LABEL client
-	MENU LABEL Installa nuova macchina CLIENT
+MENU BEGIN
+MENU TITLE Installa nuova macchina CLIENT
+
+LABEL client-32bit
+	MENU LABEL ^32 bit
+	LINUX	/ubuntu/14.04/i386/linux
+	INITRD	/ubuntu/14.04/i386/initrd.gz
+	APPEND	vga=normal auto=true hostname=kickseed url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/client-trusty.seed -- quiet
+	
+LABEL client-64bit
+	MENU LABEL ^64 bit
 	LINUX	/ubuntu/14.04/amd64/linux
 	INITRD	/ubuntu/14.04/amd64/initrd.gz
 	APPEND	vga=normal auto=true hostname=kickseed url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/client-trusty.seed -- quiet
-	
-LABEL docenti
-	MENU LABEL Installa nuova macchina DOCENTI
+
+MENU SEPARATOR
+
+LABEL return-client
+	MENU LABEL ^Torna al menu principale
+	MENU EXIT
+MENU END
+
+MENU BEGIN
+MENU TITLE Installa nuova macchina DOCENTI
+
+LABEL docenti-32bit
+	MENU LABEL ^32 bit
+	LINUX	/ubuntu/14.04/i386/linux
+	INITRD	/ubuntu/14.04/i386/initrd.gz
+	APPEND	vga=normal auto=true hostname=kickseed url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/docenti-trusty.seed -- quiet
+
+LABEL docenti-64bit
+	MENU LABEL ^64 bit
 	LINUX	/ubuntu/14.04/amd64/linux
 	INITRD	/ubuntu/14.04/amd64/initrd.gz
 	APPEND	vga=normal auto=true hostname=kickseed url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/docenti-trusty.seed -- quiet
 	
 MENU SEPARATOR
 
+LABEL return-docenti
+	MENU LABEL ^Torna al menu principale
+	MENU EXIT
+MENU END
+
+MENU SEPARATOR
+
 MENU BEGIN
 MENU TITLE Edubuntu Classica
+
+LABEL edubuntu-32
+	MENU LABEL Installa Edubuntu 32 bit
+	LINUX	/ubuntu/14.04/i386/linux
+	INITRD	/ubuntu/14.04/i386/initrd.gz
+	APPEND	auto=true url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/edubuntu.seed quiet
 
 LABEL edubuntu-64
 	MENU LABEL Installa Edubuntu 64 bit
@@ -35,12 +73,6 @@ LABEL edubuntu-64
 	INITRD	/ubuntu/14.04/amd64/initrd.gz
 	APPEND	auto=true url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/edubuntu.seed quiet
 	
-LABEL edubuntu-32
-	MENU LABEL Installa Edubuntu 32 bit
-	LINUX	/ubuntu/14.04/i386/linux
-	INITRD	/ubuntu/14.04/i386/initrd.gz
-	APPEND	auto=true url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/edubuntu.seed quiet
-
 MENU SEPARATOR
 
 LABEL return-edu
