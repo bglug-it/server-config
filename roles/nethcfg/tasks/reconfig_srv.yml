@@ -202,6 +202,35 @@
   become: yes
   when: chk_squid|changed
 
+- name: Verifying content filter activation
+  shell: /sbin/e-smith/db configuration printprop squidguard status
+  register: check_cf_enabled
+  changed_when: check_cf_enabled.stdout.find("disabled") != -1
+  become: yes
+
+- name: Activating squidguard
+  shell: /sbin/e-smith/db configuration setprop squidguard status enabled
+  when: check_cf_enabled|changed
+  register: cf_enable
+  become: yes
+
+- name: Verifying content filtering
+  shell: /sbin/e-smith/db contentfilter printprop default Categories
+  register: check_cf
+  changed_when: check_cf.stdout.find("porn") != -1
+  become: yes
+
+- name: Configuring content filtering
+  shell: /sbin/e-smith/db contentfilter setprop default Categories aggressive,alcohol,weapons,games-online,gamble,dating,webradio,webtv,sex,porn,spyware,violence,anonvpn,warez
+  become: yes
+  register: cf_cat
+  when: check_cf|changed
+
+- name: Activating content filtering as a whole
+  shell: /sbin/e-smith/signal-event nethserver-squidguard-update
+  when: cf_enable|changed or cf_cat|changed
+  become: yes
+
 - name: Verifica configurazione squidguard
   shell: /sbin/e-smith/db configuration printprop squidguard Lists
   become: yes
