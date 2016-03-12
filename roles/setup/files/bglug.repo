@@ -1,0 +1,5 @@
+[bglug]
+name=NethServer BgLUG repo
+baseurl=http://repo.bglug.it/nethserver/
+enabled=1
+gpgcheck=0

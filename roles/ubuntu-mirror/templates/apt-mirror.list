@@ -74,10 +74,10 @@ deb-i386 http://ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
 deb-amd64 http://ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
 deb-src http://ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
 
-# sys42
-deb-i386 http://bglug.sys42.eu/ubuntu trusty main
-deb-amd64 http://bglug.sys42.eu/ubuntu trusty main
-deb-src http://bglug.sys42.eu/ubuntu trusty main
+# BgLUG
+deb-i386 http://repo.bglug.it/ubuntu trusty main
+deb-amd64 http://repo.bglug.it/ubuntu trusty main
+deb-src http://repo.bglug.it/ubuntu trusty main
 
 clean http://{{ host }}{{ path }}
 clean http://extras.ubuntu.com/ubuntu
@@ -85,4 +85,4 @@ clean http://archive.canonical.com
 clean http://{{ shost }}{{ spath }}
 clean http://ppa.launchpad.net/ansible/ansible/ubuntu
 clean http://ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu
-clean http://bglug.sys42.eu/ubuntu
+clean http://repo.bglug.it/ubuntu

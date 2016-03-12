@@ -1,5 +1,0 @@
-[sys42]
-name=NethServer sys42.eu repo
-baseurl=http://bglug.sys42.eu/nethserver/
-enabled=1
-gpgcheck=0

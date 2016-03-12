@@ -12,7 +12,7 @@
   tags: centos
 
 - include: pvtrepo.yml
-  tags: sys42.eu
+  tags: bglug
 
 - include: ansible.yml
   when: ansible_distribution == "CentOS"

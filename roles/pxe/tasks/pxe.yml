@@ -51,13 +51,13 @@
 
 - name: vesamenu.c32
   get_url:
-    url: http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-i386/current/images/netboot/ubuntu-installer/i386/boot-screens/vesamenu.c32
+    url: "http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-i386/current/images/netboot/ubuntu-installer/i386/boot-screens/vesamenu.c32"
     dest: /var/lib/tftpboot/utils/vesamenu.c32
   become: yes
 
 - name: chain.c32
   get_url:
-    url: "http://bglug.sys42.eu/chain.c32"
+    url: "http://repo.bglug.it/pxelinux/chain.c32"
     dest: /var/lib/tftpboot/utils/chain.c32
   become: yes
 
@@ -87,18 +87,18 @@
 
 - name: memdisk
   get_url:
-    url: http://sys42.eu/pxe-bootimg/memdisk
+    url: "http://repo.bglug.it/pxelinux/memdisk"
     dest: /var/lib/tftpboot/utils/memdisk
   become: yes
 
 - name: memtest86
   get_url:
-    url: http://sys42.eu/pxe-bootimg/memtest86/vmlinuz
+    url: "http://repo.bglug.it/pxelinux/memtest86/vmlinuz"
     dest: /var/lib/tftpboot/utils/memtest86/vmlinuz
   become: yes
 
 - name: hdt
   get_url:
-    url: http://sys42.eu/pxe-bootimg/hdt.img
+    url: "http://repo.bglug.it/pxelinux/hdt.img"
     dest: /var/lib/tftpboot/utils/hdt.img
   become: yes

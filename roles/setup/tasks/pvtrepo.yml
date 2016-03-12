@@ -1,8 +1,8 @@
 ---
-- name: Installazione istruzioni per repo sys42.eu
+- name: Installazione istruzioni per repo.bglug.it
   copy:
-    src: sys42.repo
-    dest: /etc/yum.repos.d/sys42.repo
+    src: bglug.repo
+    dest: /etc/yum.repos.d/bglug.repo
   become: yes
 
 - name: Ricalcolo repository disponibili
