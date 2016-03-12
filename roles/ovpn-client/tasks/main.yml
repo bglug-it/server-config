@@ -1,0 +1,25 @@
+---
+# Install and configure openvpn to be a client for vpn.
+
+- name: Installing openvpn
+  yum:
+    pkg: nethserver-openvpn
+    state: present
+  become: yes
+
+- name: Temporarily enabling roadwarrior server
+  shell: /sbin/e-smith/db configuration setprop openvpn ServerStatus enabled Network 192.168.101.1 Netmask 255.255.255.0
+  become: yes
+
+- name: Triggering activation
+  shell: /sbin/e-smith/signal-event nethserver-openvpn-save
+  become: yes
+
+- name: Deconfiguring it to install client
+  shell: /sbin/e-smith/db configuration setprop openvpn ServerStatus disabled
+  become: yes
+
+- name: Signaling disactivation
+  shell: /sbin/e-smith/signal-event nethserver-openvpn-save
+
+# Getting configuration from outside
