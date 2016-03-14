@@ -34,8 +34,11 @@
   when: chk_dns|changed
 
 - name: Activating DNS
-  shell: /sbin/e-smith/signal-event nethserver-dnsmasq-save
+  shell: "/sbin/e-smith/signal-event nethserver-dnsmasq-{{ item }}"
   when: chk_dns|changed
+  with_items:
+    - save
+    - update
 
 # Avahi
 
