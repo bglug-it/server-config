@@ -13,7 +13,7 @@
 # Squid
 
 - name: Checking squid configuration
-  shell: /sbin/e-smith/db configuration printprop squid GreenMode
+  shell: /sbin/e-smith/db configuration printprop squid DiskCacheSize
   ignore_errors: yes
   register: chk_squid
   changed_when: "'DiskCacheSize=2000' not in chk_squid.stdout"
@@ -47,11 +47,12 @@
 - name: Verifying squidguard configuration
   shell: /sbin/e-smith/db configuration printprop squidguard status
   register: check_squidguard
-  changed_when: check_cf_enabled.stdout.find("disabled") != -1
+  ignore_errors: true
+  changed_when: '"status=enabled" not in check_squidguard.stdout'
 
 - name: Configuring squidguard
   shell: /sbin/e-smith/db configuration setprop squidguard Expressions enabled Lists shalla status enabled
-  when: chk_squidguard|changed
+  when: check_squidguard|changed
 
 - name: Activating squidguard configuration
   shell: "/sbin/e-smith/signal-event nethserver-squidguard-{{ item }}"
@@ -59,14 +60,14 @@
     - save
     - update
     - downloadlists
-  when: chk_squidguard|changed
+  when: check_squidguard|changed
 
 # Content filtering settings
 
 - name: Verifying content filtering
   shell: /sbin/e-smith/db contentfilter printprop default Categories
   register: check_cf
-  changed_when: check_cf.stdout.find("porn") != -1
+  changed_when: '"sex,porn" not in check_cf.stdout'
 
 - name: Configuring content filtering
   shell: /sbin/e-smith/db contentfilter setprop default Categories aggressive,alcohol,weapons,games-online,gamble,dating,webradio,webtv,sex,porn,spyware,violence,anonvpn,warez
