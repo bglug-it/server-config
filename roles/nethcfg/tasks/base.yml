@@ -34,6 +34,11 @@
   when: "'{{ ansible_domain }}' != '{{ ansible_local.domain.domainfull }}'"
   tags: domainname
 
+- name: Presetting DNS servers
+  shell: /sbin/e-smith/db configuration setprop dns NameServers {{ ansible_local.domain.extdnsserver1 }},{{ ansible_local.domain.extdnsserver2 }}
+  when: chg_hostname|changed or chg_domainname|changed
+  tags: dns-preset
+
 - name: Activating hostname/domainname changes
   shell: /sbin/e-smith/signal-event hostname-modify
   when: chg_hostname|changed or chg_domainname|changed
