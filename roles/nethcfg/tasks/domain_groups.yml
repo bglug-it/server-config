@@ -1,49 +1,47 @@
 ---
-- name: Verifico la presenza del gruppo Domain Users
+# Domain groups
+
+# Domain Users
+
+- name: domusers - Checking for group
   shell: /sbin/e-smith/db accounts show domusers
   register: check_domusers
-  become: yes
   ignore_errors: true
 
-- name: Creazione gruppo Domain Users
+- name: domusers - Creating new group
   shell: /sbin/e-smith/db accounts set domusers group Description "Domain Users" Members admin Removable no
-  become: yes
   when: check_domusers|failed
 
-- name: Configurazione nuovo gruppo Domain Users
+- name: domusers - Activating group
   shell: /sbin/e-smith/signal-event group-create domusers
-  become: yes
   when: check_domusers|failed
 
-- name: Verifico la presenza del gruppo Domain Operators
+# Domain Operators
+
+- name: domopers - Checking for group
   shell: /sbin/e-smith/db accounts show domopers
   register: check_domopers
-  become: yes
   ignore_errors: true
 
-- name: Creazione gruppo Domain Operators
+- name: domopers - Creating new group
   shell: /sbin/e-smith/db accounts set domopers group Description "Domain Operators" Removable no
-  become: yes
   when: check_domopers|failed
 
-- name: Configurazione nuovo gruppo Domain Operators
+- name: domopers - Activating group
   shell: /sbin/e-smith/signal-event group-create domopers
-  become: yes
   when: check_domopers|failed
 
-- name: Verifico la presenza del gruppo Docenti
+# Docenti
+
+- name: docenti - Checking for group
   shell: /sbin/e-smith/db accounts show docenti
   register: check_docenti
-  become: yes
   ignore_errors: true
 
-- name: Creazione gruppo Docenti
+- name: docenti - Creating new group
   shell: /sbin/e-smith/db accounts set docenti group Description "Docenti" Removable no
-  become: yes
   when: check_docenti|failed
 
-- name: Configurazione nuovo gruppo Docenti
+- name: docenti - Activating group
   shell: /sbin/e-smith/signal-event group-create docenti
-  become: yes
   when: check_docenti|failed
-

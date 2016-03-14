@@ -1,0 +1,14 @@
+---
+# Installation and configuration of small services
+
+- name: Installing other small services
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - nethserver-cups
+    - nethserver-collectd
+    - nethserver-collectd-web
+    - nethserver-firewall-base
+    - nethserver-backup-config
+    - nethserver-backup-data

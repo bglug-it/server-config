@@ -40,7 +40,7 @@
   tags: upgrade
 
 - name: Installo pacchetti addizionali
-  yum: name={{ item }} state=present
+  yum: name='{{ item }}' state=present
   become: yes
-  with_items: addin_pkgs
+  with_items: '{{ addin_pkgs }}'
   tags: pkg

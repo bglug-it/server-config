@@ -1,6 +1,0 @@
----
-
-- name: Installazione pacchetti neth
-  yum: name="{{ item }}" state=present
-  become: yes
-  with_items: '{{ neth_pkgs }}'

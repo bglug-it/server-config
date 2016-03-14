@@ -1,0 +1,11 @@
+---
+# Reconfiguring network interfaces
+
+- name: Configuring external NIC
+  shell: /sbin/e-smith/db networks setprop {{ extnic }} role red bootproto dhcp 
+
+- name: Configuring internal NIC
+  shell: /sbin/e-smith/db networks setprop {{ intnic }} role green ipaddr {{ ansible_local.domain.serverip }} netmask {{ ansible_local.domain.servernetmask }}
+
+- name: Activating changes to NICs
+  shell: /sbin/e-smith/signal-event interface-update

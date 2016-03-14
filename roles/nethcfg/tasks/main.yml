@@ -1,19 +1,58 @@
 ---
-# Configurazione principale di NethServer.
+# Configuring NethServer as requested
 
-# Installo pacchetti addizionali
-- include: neth_pkgs.yml
+# Network interfaces
+- include: network.yml
+  when: development|bool
+  become: yes
   tags:
-    - nethpkg
+    - network
 
-- include: reconfig_nic.yml
+# Configuring base parameters
+- include: base.yml
+  become: yes
   tags:
-    - nethnic
+    - base
 
-- include: reconfig_srv.yml
+- include: ntp.yml
+  become: yes
   tags:
-    - nethcfg
+    - ntp
 
+# Directory and organization
+- include: directory.yml
+  become: yes
+  tags:
+    - directory
+
+# DHCP and DNS 
+- include: dhcpdns.yml
+  become: yes
+  tags:
+    - dhcpdns
+
+# Other small services
+- include: otherservices.yml
+  become: yes
+  tags:
+    - otherservices
+
+# Proxy and web filter
+- include: proxy.yml
+  become: yes
+  tags:
+    - proxy
+    - webfilter
+
+# SAMBA and ibays
+- include: samba.yml
+  become: yes
+  tags:
+    - samba
+    - ibay
+
+# Domain groups
 - include: domain_groups.yml
+  become: yes
   tags:
     - domaingroups

@@ -1,0 +1,80 @@
+---
+# Base configurations to be implemented anyways.
+
+# Trusted networks: LAN
+
+- name: Check for LAN to be added as Trusted Network
+  shell: /sbin/e-smith/db networks printprop {{ ansible_local.domain.servernet }} Description
+  register: check_trusted
+  changed_when: '"Description=Local LAN" not in check_trusted.stdout'
+  ignore_errors: yes
+  tags: trustednet
+
+- name: Configuring trusted networks
+  shell: /sbin/e-smith/db networks set {{ ansible_local.domain.servernet }} network Description "Local LAN" Mask {{ ansible_local.domain.servernetmask }}
+  when: check_trusted|changed
+  tags: trustednet
+
+- name: Activating trusted network
+  shell: /sbin/e-smith/signal-event trusted-networks-modify
+  when: check_trusted|changed
+  tags: trustednet
+
+# Hostname and domainname
+
+- name: Configuring hostname
+  shell: /sbin/e-smith/db configuration set SystemName {{ ansible_local.domain.server }}
+  register: chg_hostname
+  when: "'{{ ansible_hostname }}' != '{{ ansible_local.domain.server }}'"
+  tags: hostname
+
+- name: Configuring domain name
+  shell: /sbin/e-smith/db configuration set DomainName {{ ansible_local.domain.domainfull }}
+  register: chg_domainname
+  when: "'{{ ansible_domain }}' != '{{ ansible_local.domain.domainfull }}'"
+  tags: domainname
+
+- name: Activating hostname/domainname changes
+  shell: /sbin/e-smith/signal-event hostname-modify
+  when: chg_hostname|changed or chg_domainname|changed
+  tags:
+    - hostname
+    - domainname
+
+# Password policy
+
+- name: Check for password policy
+  shell: /sbin/e-smith/db configuration printprop passwordstrength Users
+  register: chk_passstr
+  changed_when: "'Users=none' not in chk_passstr.stdout"
+  ignore_errors: true
+  tags: password-policy
+
+- name: Configuring password policy
+  shell: /sbin/e-smith/db configuration setprop passwordstrength PassExpires no Users none Admin strong MaxPassAge 180 MinPassAge 0 PassExpires no PassWarning 7
+  when: chk_passstr|changed
+  tags: password-policy
+
+- name: Activating password policy
+  shell: /sbin/e-smith/signal-event password-policy-update
+  when: chk_passstr|changed
+  tags: password-policy
+
+# Base certificate
+
+- name: Checking CA configuration
+  shell: /sbin/e-smith/db configuration printprop pki CommonName
+  ignore_errors: true
+  register: chk_crt
+  changed_when: "'CommonName={{ ansible_local.domain.serverfqdn }}' not in chk_crt.stdout"
+  tags: regen-ca
+
+- name: Configuring CA
+  shell: /sbin/e-smith/db configuration setprop pki CertificateDuration 3650 CommonName {{ ansible_local.domain.serverfqdn }} CountryCode {{ ansible_local.domain.org_countrycode }} EmailAddress {{ ansible_local.domain.org_email }} Locality "{{ ansible_local.domain.org_city }}" Organization "{{ ansible_local.domain.org_company }}"
+  tags: regen-ca
+  when: chk_crt|changed or force_regen_ca|bool
+
+- name: Activating CA and regenerate
+  shell: /sbin/e-smith/signal-event certificate-update
+  when: chk_crt|changed or force_regen_ca|bool
+  tags: regen-ca

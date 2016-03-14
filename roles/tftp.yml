@@ -1,0 +1,21 @@
+---
+# TFTP
+
+- name: Installing TFTP
+  yum:
+    name: nethserver-tftp
+    state: present
+
+- name: Checking TFTP configuration
+  shell: /sbin/e-smith/db configuration getprop dnsmasq dhcp-boot
+  register: chk_tftp_enabled
+  changed_when: "'pxelinux.0' not in chk_tftp_enabled.stdout"
+  ignore_errors: yes
+
+- name: Configuring TFTP
+  shell: /sbin/e-smith/db configuration setprop dnsmasq tftp-status enabled dhcp-boot pxelinux.0
+  when: chk_tftp_enabled|changed
+
+- name: Activating tftp
+  shell: /sbin/e-smith/signal-event nethserver-dnsmasq-save
+  when: chk_tftp_enabled|changed

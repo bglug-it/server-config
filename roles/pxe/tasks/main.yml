@@ -1,3 +1,10 @@
 ---
+# PXE services
+- include: tftp.yml
+  become: yes
+  tags: tftp
+
+# PXE configuration
 - include: pxe.yml
+  become: yes
   tags: pxe

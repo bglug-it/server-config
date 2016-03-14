@@ -1,0 +1,24 @@
+---
+# Network time protocol
+
+- name: Installing NTP related packages.
+  yum:
+    name: nethserver-ntp
+    state: present
+
+- name: Checking for NTP Configuration
+  shell: /sbin/e-smith/db configuration printprop ntpd NTPServer
+  become: yes
+  register: chk_ntp
+  changed_when: "'NTPServer=ntp1.inrim.it' not in chk_ntp.stdout"
+  ignore_errors: true
+
+- name: Configuring NTP
+  shell: /sbin/e-smith/db configuration setprop ntpd NTPServer ntp1.inrim.it status enabled
+  become: yes
+  when: chk_ntp|changed
+
+- name: Activating NTP
+  shell: /sbin/e-smith/signal-event nethserver-ntp-update
+  become: yes
+  when: chk_ntp|changed

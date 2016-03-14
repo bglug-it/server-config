@@ -1,0 +1,78 @@
+---
+# Proxy and webfiltering configurations
+
+- name: Installing proxy-related packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - nethserver-squid
+    - nethserver-squidclamav
+    - nethserver-squidguard
+
+# Squid
+
+- name: Checking squid configuration
+  shell: /sbin/e-smith/db configuration printprop squid GreenMode
+  ignore_errors: yes
+  register: chk_squid
+  changed_when: "'DiskCacheSize=2000' not in chk_squid.stdout"
+
+- name: Configuring Squid
+  shell: /sbin/e-smith/db configuration setprop squid BlueMode transparent GreenMode transparent PortBlock disabled status enabled DiskCache enabled DiskCacheSize 2000
+  when: chk_squid|changed
+
+- name: Activating Squid configuration
+  shell: /sbin/e-smith/signal-event nethserver-squid-update
+  when: chk_squid|changed
+
+# Squid-clamav
+
+- name: Checking squidclamav configuration
+  shell: /sbin/e-smith/db configuration printprop squidclamav status
+  ignore_errors: true
+  register: chk_squidclamav
+  changed_when: "'status=enabled' not in chk_squidclamav.stdout"
+
+- name: Configuring squidclamav
+  shell: /sbin/e-smith/db configuration setprop squidclamav status enabled
+  when: chk_squidclamav|changed
+
+- name: Activating squidclamav
+  shell: /sbin/e-smith/signal-event nethserver-squidclamav-update
+  when: chk_squidclamav|changed
+
+# SquidGuard
+
+- name: Verifying squidguard configuration
+  shell: /sbin/e-smith/db configuration printprop squidguard status
+  register: check_squidguard
+  changed_when: check_cf_enabled.stdout.find("disabled") != -1
+
+- name: Configuring squidguard
+  shell: /sbin/e-smith/db configuration setprop squidguard Expressions enabled Lists shalla status enabled
+  when: chk_squidguard|changed
+
+- name: Activating squidguard configuration
+  shell: "/sbin/e-smith/signal-event nethserver-squidguard-{{ item }}"
+  with_items:
+    - save
+    - update
+    - downloadlists
+  when: chk_squidguard|changed
+
+# Content filtering settings
+
+- name: Verifying content filtering
+  shell: /sbin/e-smith/db contentfilter printprop default Categories
+  register: check_cf
+  changed_when: check_cf.stdout.find("porn") != -1
+
+- name: Configuring content filtering
+  shell: /sbin/e-smith/db contentfilter setprop default Categories aggressive,alcohol,weapons,games-online,gamble,dating,webradio,webtv,sex,porn,spyware,violence,anonvpn,warez
+  register: cf_cat
+  when: check_cf|changed
+
+- name: Activating content filtering as a whole
+  shell: /sbin/e-smith/signal-event nethserver-squidguard-update
+  when: check_cf|changed

@@ -1,0 +1,21 @@
+---
+# Organization configuration
+
+- name: Installing required packages
+  yum:
+    pkg: nethserver-directory
+    state: present
+
+- name: Check organization configuration
+  shell: /sbin/e-smith/db configuration printprop OrganizationContact City
+  register: check_org
+  changed_when: "'City={{ ansible_local.domain.org_city }}' not in check_org.stdout"
+  ignore_errors: yes
+
+- name: Configuring organization
+  shell: /sbin/e-smith/db configuration setprop OrganizationContact City "{{ ansible_local.domain.org_city }}" Company "{{ ansible_local.domain.org_company }}" CountryCode {{ ansible_local.domain.org_countrycode }} Department "{{ ansible_local.domain.org_department }}" PhoneNumber "{{ ansible_local.domain.org_phone }}" Street "{{ ansible_local.domain.org_street }}"
+  when: check_org|changed
+
+- name: Activating organization configuration
+  shell: /sbin/e-smith/signal-event organization-save
+  when: check_org|changed
