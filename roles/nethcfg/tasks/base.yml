@@ -20,6 +20,23 @@
   when: check_trusted|changed
   tags: trustednet
 
+# Preconfiguring DNS anyways
+
+- name: Checking DNS configuration
+  shell: /sbin/e-smith/db configuration printprop dns NameServers
+  register: chk_dns
+  changed_when: "'NameServers={{ ansible_local.domain.extdnsserver1 }},{{ ansible_local.domain.extdnsserver2 }}' not in chk_dns.stdout"
+  ignore_errors: yes
+
+- name: Configuring DNS resolution
+  shell: /sbin/e-smith/db configuration setprop dns NameServers {{ ansible_local.domain.extdnsserver1 }},{{ ansible_local.domain.extdnsserver2 }}
+  when: chk_dns|changed
+  tags: dns-preset
+
+- name: Activating correct DNS resolution
+  shell: "/sbin/e-smith/signal-event nethserver-base-update"
+  when: chk_dns|changed
+
 # Hostname and domainname
 
 - name: Configuring hostname
@@ -33,11 +50,6 @@
   register: chg_domainname
   when: "'{{ ansible_domain }}' != '{{ ansible_local.domain.domainfull }}'"
   tags: domainname
-
-- name: Presetting DNS servers
-  shell: /sbin/e-smith/db configuration setprop dns NameServers {{ ansible_local.domain.extdnsserver1 }},{{ ansible_local.domain.extdnsserver2 }}
-  when: chg_hostname|changed or chg_domainname|changed
-  tags: dns-preset
 
 - name: Activating hostname/domainname changes
   shell: /sbin/e-smith/signal-event hostname-modify
