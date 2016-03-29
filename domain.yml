@@ -20,7 +20,7 @@ org_department: "Laboratorio 1"
 org_city: Bergamo
 org_phone: "+39 035 234682"
 org_street: "Via Angelo Pinetti, 25"
-mirror_mode: local
-#mirror_nfs_share: 192.168.255.1:/var/spool/apt-mirror/mirror
+mirror_mode: nfs
+mirror_nfs_share: 192.168.1.102:/var/spool/apt-mirror/mirror
 #remote_mirror: ubuntu.fastbull.org
 client_gitbranch: iccamozzi
