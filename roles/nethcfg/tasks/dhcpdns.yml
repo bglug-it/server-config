@@ -37,7 +37,10 @@
   tags: force-resolvers
 
 - name: Activating correct DNS resolution
-  shell: "/sbin/e-smith/signal-event nethserver-base-update"
+  shell: "/sbin/e-smith/signal-event nethserver-{{ item }}-update"
+  with_items:
+    - base
+    - dnsmasq
   when: chk_dns|changed
   tags: force-resolvers
 
