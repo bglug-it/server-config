@@ -67,8 +67,7 @@
 - name: Verifying content filtering
   shell: /sbin/e-smith/db contentfilter printprop default Categories
   register: check_cf
-  ignore_errors: yes
-  changed_when: '"sex,porn" not in check_cf.stdout'
+  changed_when: "'sex' not in check_cf.stdout"
 
 - name: Configuring content filtering
   shell: /sbin/e-smith/db contentfilter setprop default Categories aggressive,alcohol,weapons,games-online,gamble,dating,webradio,webtv,sex,porn,spyware,violence,anonvpn,warez
