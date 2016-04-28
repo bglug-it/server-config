@@ -23,6 +23,23 @@
 
 # DNS
 # Already preconfigured before (roles/nethcfg/tasks/base.yml)
+# reforcing the resolver addresses to the ones configured
+- name: Checking DNS configuration
+  shell: /sbin/e-smith/db configuration printprop dns NameServers
+  register: chk_dns
+  changed_when: "'NameServers={{ ansible_local.domain.extdnsserver1 }},{{ ansible_local.domain.extdnsserver2 }}' not in chk_dns.stdout"
+  ignore_errors: yes
+  tags: force-resolvers
+
+- name: Configuring DNS resolution
+  shell: /sbin/e-smith/db configuration setprop dns NameServers {{ ansible_local.domain.extdnsserver1 }},{{ ansible_local.domain.extdnsserver2 }}
+  when: chk_dns|changed
+  tags: force-resolvers
+
+- name: Activating correct DNS resolution
+  shell: "/sbin/e-smith/signal-event nethserver-base-update"
+  when: chk_dns|changed
+  tags: force-resolvers
 
 # Avahi
 
