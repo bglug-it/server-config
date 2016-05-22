@@ -23,4 +23,5 @@ org_street: "Via Zenale e Butinone, 20"
 mirror_mode: nfs
 mirror_nfs_share: 192.168.255.1:/var/spool/apt-mirror/mirror
 #remote_mirror: ubuntu.fastbull.org
+client_gitrepo: "https://github.com/bglug-it/client-pull-installation.git"
 client_gitbranch: master
