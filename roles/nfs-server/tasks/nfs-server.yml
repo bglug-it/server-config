@@ -1,0 +1,54 @@
+---
+# Install and configure nfs server
+
+- name: Installing nfs-utils
+  yum: pkg=nfs-utils state=present
+  become: yes
+
+- name: Activating NFS at boot
+  shell: /sbin/chkconfig nfs on
+  become: yes
+
+- name: Configuring exports
+  template: src='preseed/exports' dest='/etc/exports'
+  become: yes
+
+- name: Copy LDIF access file
+  copy: src=files/access.ldif dest=/tmp/access.ldif
+  become: yes
+
+- name: Enable LDAP external access
+  shell: /usr/bin/ldapmodify -Y EXTERNAL -f /tmp/access.ldif
+  become: yes
+
+- name: Remove LDIF access file
+  shell: /bin/rm /tmp/access.ldif
+  become: yes
+
+## TODO: (maybe) add port 111? (rpcbind)
+- name: Configuring firewall service for NFS
+  shell: /sbin/e-smith/db configuration set nfs service TCPPort 2049 UDPPort 2049 status enabled access private
+  become: yes
+
+- name: Reloading firewall configuration
+  shell: /sbin/e-smith/signal-event firewall-adjust
+  become: yes
+
+- name: Reloading runlevel configuration
+  shell: /sbin/e-smith/signal-event runlevel-adjust
+  become: yes
+
+- name: Disable NFS4 id mapping at boot
+  copy: src=files/nfsd.conf dest=/etc/modules.d/nfsd.conf
+  become: yes
+
+- name: Disable NFS4 id mapping
+  shell: /bin/echo Y > /sys/module/nfsd/parameters/nfs4_disable_idmapping
+
+- name: Reloading NFS exports
+  shell: /usr/sbin/exportfs -ra
+  become: yes
+
+- name: Restarting NFS server
+  shell: /sbin/service nfs restart
+  become: yes

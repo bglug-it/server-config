@@ -7,3 +7,4 @@ dependencies:
   - { role: doraemon, tags: [ 'client-install' ] }
   - { role: npm, tags: [ 'client-install' ] }
   - { role: git-daemon, tags: [ 'client-install' ] }
+  - { role: nfs-server, tags: [ 'client-install' ] }

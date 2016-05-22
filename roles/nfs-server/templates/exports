@@ -1,0 +1,1 @@
+/var/lib/nethserver/home {{ ansible_local.domain.servernet }}/{{ ansible_local.domain.servernetmask }}(rw,no_root_squash,sync,no_subtree_check)
