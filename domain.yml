@@ -22,5 +22,9 @@ org_phone: "+39 0363 50598"
 org_street: "Via Zenale e Butinone, 20"
 mirror_mode: remote
 #mirror_nfs_share: 192.168.255.1:/var/spool/apt-mirror/mirror
-remote_mirror: it.archive.ubuntu.com
+mirror_host: it.archive.ubuntu.com
+#mirror_path: /ubuntu
+#mirror_security_host: security.ubuntu.com
+#mirror_security_path: /ubuntu
 client_gitbranch: master
+#client_gitrepo: "https://github.com/bglug-it/client-pull-installation.git"
