@@ -1,0 +1,9 @@
+---
+
+- name: Overriding default gitrepo if defined in domain.yml
+  set_fact: client_gitrepo="{{ ansible_local.domain.client_gitrepo }}"
+  when: "ansible_local.domain.client_gitrepo is defined"
+
+- name: Overriding default gitbranch if defined in domain.yml
+  set_fact: client_gitbranch="{{ ansible_local.domain.client_gitbranch }}"
+  when: "ansible_local.domain.client_gitbranch is defined"

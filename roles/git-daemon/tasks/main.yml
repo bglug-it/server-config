@@ -1,3 +1,7 @@
 ---
+
+- include: initvars.yml
+  tags: git-daemon
+
 - include: git-daemon.yml
   tags: git-daemon
