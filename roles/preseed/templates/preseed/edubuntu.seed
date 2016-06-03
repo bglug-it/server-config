@@ -106,7 +106,7 @@ d-i	pkgsel/include				string openssh-server libreoffice ansible vim screen git c
 # Update system
 d-i 	preseed/late_command string in-target apt-get -y upgrade; \
 	in-target apt-get -y dist-upgrade; \
-	in-target apt-get -y purge libnss-mdns unity-webapps-common zeitgeist-core zeitgeist-datahub; \
+	in-target apt-get -y purge unity-webapps-common zeitgeist-core zeitgeist-datahub; \
 	in-target apt-get -y autoremove; \
 	in-target sed -i'' -e 's/ubuntu/gnome-fallback/g' /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 
