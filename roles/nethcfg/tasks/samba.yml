@@ -10,6 +10,13 @@
     - nethserver-samba
     - nethserver-samba-audit
 
+# Mitigating bug for upgrade on Badlocks SAMBA bug
+- name: Mitigating bad upgrade for Badlocks
+  shell: yum -y downgrade samba* tdb-tools libtdb libtevent libtalloc pytalloc
+  tags:
+    - badlocks
+    - centos_bug
+
 # SAMBA
 
 - name: Checking SMB configuration

@@ -2,15 +2,15 @@
 # Configurazione dominio
 ntpserver: pdc.mastri.edu
 server: pdc
-serverip: 192.168.1.1
+serverip: 172.16.254.1
 servernetmask: 255.255.255.0
-servernet: 192.168.1.0
-servergw: 192.168.1.1
+servernet: 172.16.254.0
+servergw: 172.16.254.1
 serverfqdn: pdc.mastri.edu
 domainshort: MASTRI
 domainfull: mastri.edu
-dhcprange_start: 192.168.1.10
-dhcprange_end: 192.168.1.50
+dhcprange_start: 172.16.254.10
+dhcprange_end: 172.16.254.50
 extdnsserver1: 208.67.222.222
 extdnsserver2: 208.67.220.220
 org_email: info@bglug.it
@@ -20,7 +20,7 @@ org_department: "Laboratorio 1"
 org_city: Caravaggio
 org_phone: "+39 0363 50598"
 org_street: "Via Zenale e Butinone, 20"
-mirror_mode: nfs
-mirror_nfs_share: 192.168.255.1:/var/spool/apt-mirror/mirror
-#remote_mirror: ubuntu.fastbull.org
+mirror_mode: remote
+#mirror_nfs_share: 192.168.255.1:/var/spool/apt-mirror/mirror
+remote_mirror: it.archive.ubuntu.com
 client_gitbranch: master

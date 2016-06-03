@@ -23,7 +23,7 @@
   become: yes
 
 - name: Creo interfaccia interna in NethServer
-  shell: /sbin/e-smith/db networks set {{ intnic }} ethernet bootproto none device {{ intnic }} hwaddr {{ ansible_eth1.macaddress }} ipaddr 192.168.1.1 netmask 255.255.255.0 onboot yes role green
+  shell: /sbin/e-smith/db networks set {{ intnic }} ethernet bootproto none device {{ intnic }} hwaddr {{ ansible_eth1.macaddress }} ipaddr 172.16.254.1 netmask 255.255.255.0 onboot yes role green
   become: yes
 
 - name: Pulizia vecchia interfaccia interna
