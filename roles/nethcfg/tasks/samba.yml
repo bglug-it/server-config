@@ -17,6 +17,21 @@
     - badlocks
     - centos_bug
 
+# Locking SAMBA version to be sure to fix badblocks update
+- name: Installing versionlock yum-plugin
+  yum:
+    name: yum-plugin-versionlock
+    state: present
+
+- name: Checking if already locked
+  shell: yum versionlock list | grep -q samba && echo 'Locked' || true
+  register: chk_locked_samba
+  changed_when: "'Locked' not in chk_locked_samba.stdout"
+
+- name: Locking samba version
+  shell: yum versionlock add samba
+  when: chk_locked_samba|changed
+
 # SAMBA
 
 - name: Checking SMB configuration
