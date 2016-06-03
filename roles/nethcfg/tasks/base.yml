@@ -25,7 +25,7 @@
 - name: Checking DNS configuration
   shell: /sbin/e-smith/db configuration printprop dns NameServers
   register: chk_dns
-  changed_when: "'NameServers={{ ansible_local.domain.extdnsserver1 }},{{ ansible_local.domain.extdnsserver2 }}' not in chk_dns.stdout"
+  changed_when: "'NameServers={{ ansible_local.domain.extdnsserver1 }}' not in chk_dns.stdout"
   ignore_errors: yes
 
 - name: Configuring DNS resolution
