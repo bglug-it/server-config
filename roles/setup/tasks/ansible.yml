@@ -20,7 +20,7 @@
 
 - name: Installazione python-argparse
   yum:
-    name: "http://mirror.centos.org/centos/6/extras/x86_64/Packages/python-argparse-1.2.1-2.el6.centos.noarch.rpm"
+    name: python-argparse
     state: present
   become: yes
   when: check_argparse|changed

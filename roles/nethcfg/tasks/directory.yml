@@ -1,5 +1,5 @@
 ---
-# Organization configuration
+# Organization
 
 - name: Installing required packages
   yum:
@@ -11,6 +11,27 @@
   register: check_org
   changed_when: "'City={{ ansible_local.domain.org_city }}' not in check_org.stdout"
   ignore_errors: yes
+
+# Password policy
+
+- name: Check for password policy
+  shell: /sbin/e-smith/db configuration printprop passwordstrength Users
+  register: chk_passstr
+  changed_when: "'Users=none' not in chk_passstr.stdout"
+  ignore_errors: true
+  tags: password-policy
+
+- name: Configuring password policy
+  shell: /sbin/e-smith/db configuration setprop passwordstrength PassExpires no Users none Admin strong MaxPassAge 180 MinPassAge 0 PassExpires no PassWarning 7
+  when: chk_passstr|changed
+  tags: password-policy
+
+- name: Activating password policy
+  shell: /sbin/e-smith/signal-event password-policy-update
+  when: chk_passstr|changed
+  tags: password-policy
+
+# Organization configuration
 
 - name: Configuring organization
   shell: /sbin/e-smith/db configuration setprop OrganizationContact City "{{ ansible_local.domain.org_city }}" Company "{{ ansible_local.domain.org_company }}" CountryCode {{ ansible_local.domain.org_countrycode }} Department "{{ ansible_local.domain.org_department }}" PhoneNumber "{{ ansible_local.domain.org_phone }}" Street "{{ ansible_local.domain.org_street }}"

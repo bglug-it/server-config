@@ -8,16 +8,11 @@
     name: yum-plugin-versionlock
     state: present
 
-- name: Updating nethserver-release to last known version for 6.6
-  yum:
-    name: nethserver-release-6.6
-    state: present
-
 - name: Checking if already locked
   shell: yum versionlock list | grep -q nethserver-release && echo 'Locked' || true
   register: chk_locked_nethrelease
   changed_when: "'Locked' not in chk_locked_nethrelease.stdout"
 
-- name: Locking nethserver-release version to 6.6
+- name: Locking nethserver-release version
   shell: yum versionlock add nethserver-release
   when: chk_locked_nethrelease|changed

@@ -1,4 +1,5 @@
 ---
+
 # SAMBA and ibays
 
 - name: Installing SAMBA and ibays packages
@@ -9,28 +10,6 @@
     - nethserver-ibays
     - nethserver-samba
     - nethserver-samba-audit
-
-# Mitigating bug for upgrade on Badlocks SAMBA bug
-- name: Mitigating bad upgrade for Badlocks
-  shell: yum -y downgrade samba* tdb-tools libtdb libtevent libtalloc pytalloc
-  tags:
-    - badlocks
-    - centos_bug
-
-# Locking SAMBA version to be sure to fix badblocks update
-- name: Installing versionlock yum-plugin
-  yum:
-    name: yum-plugin-versionlock
-    state: present
-
-- name: Checking if already locked
-  shell: yum versionlock list | grep -q samba && echo 'Locked' || true
-  register: chk_locked_samba
-  changed_when: "'Locked' not in chk_locked_samba.stdout"
-
-- name: Locking samba version
-  shell: yum versionlock add samba
-  when: chk_locked_samba|changed
 
 # SAMBA
 
@@ -45,6 +24,13 @@
     dest: /etc/e-smith/templates/etc/samba/smb.conf/10global
     regexp: '^unix extensions = no$'
     replace: 'unix extensions = yes'
+
+- name: Adding server signing as mandatory
+  lineinfile:
+    dest: /etc/e-smith/templates/etc/samba/smb.conf/10global
+    line: "server signing = mandatory"
+    insertafter: "^workgroup = "
+    state: present
 
 - name: Configuring SMB
   shell: /sbin/e-smith/db configuration setprop smb RoamingProfiles yes ServerRole PDC Workgroup "{{ ansible_local.domain.domainshort }}" status enabled

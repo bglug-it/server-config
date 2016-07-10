@@ -10,5 +10,6 @@
     - nethserver-collectd
     - nethserver-collectd-web
     - nethserver-firewall-base
+    - nethserver-firewall-base-ui
     - nethserver-backup-config
     - nethserver-backup-data
