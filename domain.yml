@@ -20,6 +20,7 @@ org_department: "Laboratorio 1"
 org_city: Caravaggio
 org_phone: "+39 0363 50598"
 org_street: "Via Zenale e Butinone, 20"
+edu_package: secondary
 mirror_mode: remote
 #mirror_nfs_share: 192.168.255.1:/var/spool/apt-mirror/mirror
 mirror_host: it.archive.ubuntu.com

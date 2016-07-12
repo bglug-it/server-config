@@ -1,5 +1,10 @@
 ---
 
+- name: Configure the edu-package following settings in domain.yml
+  set_fact:
+    edu_package: "{{ ansible_local.domain.edu_package }}"
+  when: ansible_local.domain.edu_package is defined
+
 - name: Verifica configurazione ibay preseed
   shell: /sbin/e-smith/db accounts show ks
   register: chk_ks_created

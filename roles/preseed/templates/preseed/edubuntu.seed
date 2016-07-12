@@ -97,9 +97,9 @@ d-i	pkgsel/language-pack-patterns		string language-pack-gnome-$LL language-pack-
 
 # Adding libreoffice and ansible
 {% if ansible_bios_version == 'VirtualBox' %}
-d-i	pkgsel/include				string openssh-server libreoffice ansible vim screen git curl cifs-utils ubuntu-edu-secondary libnss-myhostname geogebra geogebra-gnome sysv-rc-conf virtualbox-guest-dkms
+d-i	pkgsel/include				string openssh-server libreoffice ansible vim screen git curl cifs-utils ubuntu-edu-{{ edu_package }} libnss-myhostname geogebra geogebra-gnome sysv-rc-conf virtualbox-guest-dkms
 {% else %}
-d-i	pkgsel/include				string openssh-server libreoffice ansible vim screen git curl cifs-utils ubuntu-edu-secondary libnss-myhostname geogebra geogebra-gnome sysv-rc-conf
+d-i	pkgsel/include				string openssh-server libreoffice ansible vim screen git curl cifs-utils ubuntu-edu-{{ edu_package }} libnss-myhostname geogebra geogebra-gnome sysv-rc-conf
 {% endif %}
 
 # Post installation tasks

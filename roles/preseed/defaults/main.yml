@@ -1,5 +1,6 @@
 ---
 # Defaults for installation
+edu_package: secondary
 mirror_mode: local
 mirror_host: archive.ubuntu.com
 mirror_path: /ubuntu
