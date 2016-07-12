@@ -11,6 +11,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "nethserver-6.8"
+  config.vm.box_url = "http://vagrant.sys42.eu/nethserver-6.8"
   config.vm.define "NethServer" do |nethserver|
   end
   config.vm.provider :virtualbox do |vb|
