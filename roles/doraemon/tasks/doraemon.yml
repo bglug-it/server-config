@@ -6,7 +6,7 @@
 
 - name: Installazione doraemon
   yum:
-    pkg: doraemon
+    pkg: "{{ doraemon_pkg }}"
     state: latest
   become: yes
 
