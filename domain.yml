@@ -1,25 +1,25 @@
 ---
 # Configurazione dominio
-ntpserver: pdc.mastri.edu
+ntpserver: pdc.topolin.ia
 server: pdc
 serverip: 172.16.254.1
 servernetmask: 255.255.255.0
 servernet: 172.16.254.0
 servergw: 172.16.254.1
-serverfqdn: pdc.mastri.edu
-domainshort: MASTRI
-domainfull: mastri.edu
+serverfqdn: pdc.topolin.ia
+domainshort: TOPOLIN
+domainfull: topolin.ia
 dhcprange_start: 172.16.254.10
 dhcprange_end: 172.16.254.50
 extdnsserver1: 208.67.222.222
 extdnsserver2: 208.67.220.220
 org_email: info@bglug.it
-org_company: Istituto Comprensivo 'Mastri Caravaggini'
-org_countrycode: IT
+org_company: Accademia di SuperPippo
+org_countrycode: IA
 org_department: "Laboratorio 1"
-org_city: Caravaggio
-org_phone: "+39 0363 50598"
-org_street: "Via Zenale e Butinone, 20"
+org_city: Topolinia
+org_phone: "313 113 176-167"
+org_street: "Piazza la bomba e scappa"
 edu_package: secondary
 mirror_mode: remote
 #mirror_nfs_share: 192.168.255.1:/var/spool/apt-mirror/mirror
