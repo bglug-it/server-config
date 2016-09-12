@@ -56,6 +56,28 @@ LABEL return-docenti
 	MENU EXIT
 MENU END
 
+MENU BEGIN
+MENU TITLE Installa nuova macchina AULA
+
+LABEL aula-32bit
+	MENU LABEL ^32 bit
+	LINUX	/ubuntu/14.04/i386/linux
+	INITRD	/ubuntu/14.04/i386/initrd.gz
+	APPEND	vga=normal auto=true hostname=kickseed url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/aula-trusty.seed -- quiet
+	
+LABEL aula-64bit
+	MENU LABEL ^64 bit
+	LINUX	/ubuntu/14.04/amd64/linux
+	INITRD	/ubuntu/14.04/amd64/initrd.gz
+	APPEND	vga=normal auto=true hostname=kickseed url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/aula-trusty.seed -- quiet
+
+MENU SEPARATOR
+
+LABEL return-aula
+	MENU LABEL ^Torna al menu principale
+	MENU EXIT
+MENU END
+
 MENU SEPARATOR
 
 MENU BEGIN

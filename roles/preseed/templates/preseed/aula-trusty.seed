@@ -1,0 +1,124 @@
+# No questions if possible
+debconf	debconf/priority			string critical
+
+# Localization - Italiano
+d-i	debian-installer/locale			string it_IT.UTF-8
+d-i	debian-installer/supported-locales 	multiselect it_IT it_IT@euro en_US en_US.UTF-8
+
+# Keyboard settings
+d-i	console-setup/ask_detect		boolean false
+d-i	keyboard-configuration/layoutcode 	string it
+
+# Network
+d-i	netcfg/choose_interface 		select auto
+
+# Adjust the default hostname.
+d-i 	netcfg/hostname				string kickseed
+
+# Enabling non-free firmware
+d-i	hw-detect/load_firmware			boolean true
+
+# Setting up repositories from local mirror
+d-i	mirror/country				string manual
+d-i	mirror/protocol				string http
+d-i	mirror/http/hostname			string {{ mirror_host }}
+d-i	mirror/http/directory			string {{ mirror_path }}
+d-i	mirror/http/proxy 			string
+d-i	mirror/suite				string trusty
+
+# Apt-setup additional repos
+d-i	apt-setup/services-select 		multiselect security, updates
+d-i	apt-setup/security_host			string {{ mirror_security_host }}
+d-i	apt-setup/security_path			string {{ mirror_security_path }}
+
+# Additional repos
+d-i 	apt-setup/multiverse			boolean true
+d-i	apt-setup/universe			boolean true
+d-i	apt-setup/restricted			boolean true
+d-i	apt-setup/partner			boolean true
+
+# Setup and enable libreoffice PPA
+d-i	apt-setup/local0/repository		string	http://{{ execpath }}ppa.launchpad.net/libreoffice/ppa/ubuntu trusty main
+d-i 	apt-setup/local0/comment		string LibreOffice Official PPA
+d-i 	apt-setup/local0/key 			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x36E81C9267FD1383FCC4490983FBA1751378B444&op=get
+
+# Setup and enable ansible PPA
+d-i	apt-setup/local1/repository		string http://{{ execpath }}ppa.launchpad.net/ansible/ansible/ubuntu trusty main
+d-i	apt-setup/local1/comment		string Ansible Official PPA
+d-i	apt-setup/local1/key			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367&op=get	
+
+# Time and date
+d-i	clock-setup/utc				boolean true
+d-i 	time/zone				string Europe/Rome
+d-i	clock-setup/ntp				boolean true
+d-i	clock-setup/ntp-server			string {{ ansible_local.domain.ntpserver }}
+
+# User creation
+d-i	passwd/user-fullname			string BgLUG User
+d-i	passwd/username				string bglug
+d-i	passwd/user-password-crypted		password $6$S8u22loyR$RJZUtmnqmadvas13BxjPkBjdcF1o6P0xGtweZ9MkUCKIbyzmzQFxvwPTwoX1AaPgRyNmvdevyUgs/AMRGH8O./
+
+# Partitioning
+d-i	partman-auto/init_automatically_partition	select biggest_free
+d-i	partman-auto/disk			string /dev/sda
+d-i	partman-auto/method			string regular
+d-i	partman-lvm/device_remove_lvm		boolean true
+d-i	partman-md/device_remove_md		boolean true
+d-i	partman-auto/choose_recipe		select atomic
+d-i	partman-partitioning/confirm_write_new_label boolean true
+d-i	partman/choose_partition		select finish
+d-i	partman/confirm				boolean true
+d-i	partman/confirm_nooverwrite		boolean true
+d-i	partman/mount_style			select uuid
+d-i	user-setup/encrypt-home			boolean false
+
+# Kernel installation
+d-i 	base-installer/kernel/image		string linux-generic
+d-i	base-installer/kernel/altmeta		string lts-xenial
+
+# Install the Edubuntu desktop.
+tasksel	tasksel/first				multiselect edubuntu-desktop-gnome
+
+# No asking for installation in language
+d-i	pkgsel/install-language-support		boolean true
+d-i	pkgsel/ignore-incomplete-language-support boolean true
+d-i	localechooser/translation/warn-severe	boolean true
+d-i	localechooser/translation/warn-light	boolean true
+
+# Policy to upgrade: none
+d-i	pkgsel/update-policy			select none
+
+# UPgrade after installation: no
+d-i	pkgsel/upgrade				select none
+
+# Language pack selection
+d-i 	pkgsel/language-packs			multiselect it, en
+
+# Disable popularity contest
+popularity-contest popularity-contest/participate	boolean false
+
+# Install both GNOME and KDE translation packages.
+d-i	pkgsel/language-pack-patterns		string language-pack-gnome-$LL language-pack-kde-$LL kde-i18n-$LL libreoffice-help-$LL libreoffice-l10n-$LL firefox-locale-$LL gimp-help-$LL thunderbird-locale-$LL
+
+# Adding libreoffice and ansible
+{% if ansible_bios_version == 'VirtualBox' %}
+d-i	pkgsel/include				string dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-{{ edu_package }} python3-uno libreoffice ansible libnss-myhostname sysv-rc-conf unattended-upgrades update-notifier-common aptitude virtualbox-guest-dkms
+{% else %}
+d-i	pkgsel/include				string dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-{{ edu_package }} python3-uno libreoffice ansible libnss-myhostname sysv-rc-conf unattended-upgrades update-notifier-common aptitude
+{% endif %}
+
+# Post installation tasks
+# Update system
+d-i 	preseed/late_command string in-target apt-get -y upgrade; \
+	in-target apt-get -y dist-upgrade; \
+	in-target apt-get -y purge unity-webapps-common zeitgeist-core zeitgeist-datahub epoptes epoptes-client; \
+	in-target apt-get -y autoremove; \
+	sed -i'' -e 's/ubuntu/gnome-fallback/g' /target/usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; \
+	in-target bash -c "/usr/bin/curl -sSL4 http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/postseed-aula.sh | /bin/bash >/root/postseed.log 2>&1";
+
+# Grub installation on MBR
+d-i	grub-installer/only_debian		boolean true
+d-i	grub-installer/bootdev			string /dev/sda
+
+# No reboot message
+d-i	finish-install/reboot_in_progress	note
