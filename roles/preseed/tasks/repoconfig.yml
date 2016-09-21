@@ -15,7 +15,7 @@
 - name: Preconfiguring base repositories file for clients
   template:
     src: repoconfig/sources.list
-    path: /var/lib/nethserver/ibay/ks/repoconfig/sources.list
+    dest: /var/lib/nethserver/ibay/ks/repoconfig/sources.list
     owner: root
     group: root
     mode: 0644
@@ -24,7 +24,7 @@
 - name: Preconfiguring other repositories for clients
   template:
     src: "repoconfig/{{ item }}"
-    path: "/var/lib/nethserver/ibay/ks/repoconfig/{{ item }}"
+    dest: "/var/lib/nethserver/ibay/ks/repoconfig/{{ item }}"
     owner: root
     group: root
     mode: 0644
