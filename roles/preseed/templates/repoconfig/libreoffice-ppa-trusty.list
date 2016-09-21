@@ -1,0 +1,2 @@
+deb http://{{ execpath }}ppa.launchpad.net/libreoffice/ppa/ubuntu trusty main
+#deb-src http://{{ execpath }}ppa.launchpad.net/libreoffice/ppa/ubuntu trusty main

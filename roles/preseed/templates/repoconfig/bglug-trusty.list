@@ -1,0 +1,3 @@
+# Repo BgLUG
+deb http://{{ execpath }}repo.bglug.it/ubuntu trusty main
+#deb-src http://{{ execpath }}repo.bglug.it/ubuntu trusty main

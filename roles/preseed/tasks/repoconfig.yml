@@ -1,0 +1,35 @@
+---
+# Configuring the base repositories files.
+# Composing here files to be used by clients will reduce time to load/construct
+# them within client-pull-installation playbook.
+
+- name: Creating base directory for storing repositories files
+  file:
+    path: /var/lib/nethserver/ibay/ks/repoconfig
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  become: yes
+
+- name: Preconfiguring base repositories file for clients
+  template:
+    src: repoconfig/sources.list
+    path: /var/lib/nethserver/ibay/ks/repoconfig/sources.list
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+
+- name: Preconfiguring other repositories for clients
+  template:
+    src: "repoconfig/{{ item }}"
+    path: "/var/lib/nethserver/ibay/ks/repoconfig/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - bglug-trusty.list
+    - ansible-ansible-trusty.list
+    - libreoffice-ppa-trusty.list
+  become: yes

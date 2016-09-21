@@ -8,6 +8,11 @@
   tags:
     - preseed
 
+- include: repoconfig.yml
+  tags:
+    - preseed
+    - repoconfig
+
 - include: firefoxcert.yml
   tags:
     - firefox
