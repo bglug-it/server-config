@@ -39,7 +39,7 @@ d-i	apt-setup/security_host			string {{ mirror_security_host }}
 d-i	apt-setup/security_path			string {{ mirror_security_path }}
 
 # Setup and enable libreoffice PPA
-d-i	apt-setup/local0/repository		string	http://{{ execpath }}ppa.launchpad.net/libreoffice/libreoffice-5-0/ubuntu trusty main
+d-i	apt-setup/local0/repository		string	http://{{ execpath }}ppa.launchpad.net/libreoffice/ppa/ubuntu trusty main
 d-i 	apt-setup/local0/comment		string LibreOffice Official PPA
 d-i 	apt-setup/local0/key 			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x36E81C9267FD1383FCC4490983FBA1751378B444&op=get
 
