@@ -104,3 +104,16 @@
   shell: /sbin/e-smith/signal-event nethserver-samba-update
   become: yes
   when: force_ibay_shared|bool or chk_shared|failed
+
+# Fixing issue #3 - Configure sudo access for admin on server for operator
+# access 
+# https://github.com/bglug-it/server-config/issues/3
+- name: Configuring sudo access for admin account
+  lineinfile:
+    dest: /etc/sudoers.d/admin
+    line: 'admin ALL=(ALL:ALL) NOPASSWD: ALL'
+    create: yes
+    owner: root
+    group: root
+    mode: 0440
+    validate: 'visudo -cf %s'

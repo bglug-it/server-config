@@ -11,7 +11,9 @@
   template:
     src: sudoers.d
     dest: /etc/sudoers.d/amgmt
-    mode: "u=r,g=r"
+    owner: root
+    group: root
+    mode: 0440
     validate: "/usr/sbin/visudo -cf %s"
 
 - name: Installazione chiave privata PC locale
