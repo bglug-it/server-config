@@ -2,4 +2,4 @@
 host_key_checking=false
 
 [server]
-172.16.254.1 ansible_ssh_user=amgmt
+172.16.123.151 ansible_ssh_user=amgmt
