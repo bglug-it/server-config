@@ -28,15 +28,14 @@ d-i	mirror/http/proxy 			string
 d-i	mirror/suite				string trusty
 
 # Apt-setup additional repos
-d-i	apt-setup/extras			boolean true
-d-i	apt-setup/restricted			boolean true
-d-i	apt-setup/universe			boolean true
-d-i	apt-setup/backports			boolean true
-d-i	apt-setup/non-free			boolean true
-d-i	apt-setup/contrib			boolean true
 d-i	apt-setup/services-select 		multiselect security, updates
 d-i	apt-setup/security_host			string {{ mirror_security_host }}
 d-i	apt-setup/security_path			string {{ mirror_security_path }}
+
+# Additional repos
+d-i	apt-setup/restricted			boolean true
+d-i	apt-setup/universe			boolean true
+d-i 	apt-setup/multiverse			boolean true
 
 # Setup and enable libreoffice PPA
 d-i	apt-setup/local0/repository		string	http://{{ execpath }}ppa.launchpad.net/libreoffice/ppa/ubuntu trusty main
@@ -70,6 +69,7 @@ d-i	user-setup/encrypt-home			boolean false
 
 # Kernel installation
 d-i 	base-installer/kernel/image		string linux-generic
+d-i	base-installer/kernel/altmeta		string lts-xenial
 
 # Install the Edubuntu desktop.
 tasksel	tasksel/first				multiselect edubuntu-desktop-gnome
@@ -83,7 +83,7 @@ d-i	localechooser/translation/warn-light	boolean true
 # Policy to upgrade: none
 d-i	pkgsel/update-policy			select none
 
-# UPgrade after installation: no
+# Upgrade after installation: no
 d-i	pkgsel/upgrade				select none
 
 # Language pack selection
