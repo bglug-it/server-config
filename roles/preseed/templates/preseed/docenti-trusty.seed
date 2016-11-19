@@ -16,15 +16,10 @@ d-i	netcfg/choose_interface 		select auto
 d-i 	netcfg/hostname				string kickseed
 
 # Enabling non-free firmware
-d-i	hw-detect/load_firmware			boolean true
-
-# Setting up repositories from local mirror
-d-i	mirror/country				string manual
-d-i	mirror/protocol				string http
-d-i	mirror/http/hostname			string {{ mirror_host }}
 d-i	mirror/http/directory			string {{ mirror_path }}
 d-i	mirror/http/proxy 			string
 d-i	mirror/suite				string trusty
+d-i	mirror/udeb/components			multiselect main, restricted, universe, multiverse
 
 # Apt-setup additional repos
 d-i	apt-setup/services-select 		multiselect security, updates
