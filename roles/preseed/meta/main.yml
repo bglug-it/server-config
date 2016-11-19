@@ -1,3 +1,4 @@
 ---
 dependencies:
   - { role: pxe }
+  - { role: ubuntu-mirror }
