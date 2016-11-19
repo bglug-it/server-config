@@ -16,4 +16,3 @@
 - name: Determining mirror_security_path
   set_fact: spath="{{ ansible_local.domain.mirror_security_path }}"
   when: ansible_local.domain.mirror_security_path is defined
-
