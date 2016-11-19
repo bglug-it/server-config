@@ -3,7 +3,6 @@
 
 # Network interfaces
 - include: network.yml
-  when: development|bool
   become: yes
   tags:
     - network
