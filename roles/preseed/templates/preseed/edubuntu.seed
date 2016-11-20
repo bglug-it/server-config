@@ -69,7 +69,8 @@ d-i	partman/mount_style			select uuid
 d-i	user-setup/encrypt-home			boolean false
 
 # Kernel installation
-d-i 	base-installer/kernel/image		string linux-generic-lts-utopic
+d-i 	base-installer/kernel/image		string linux-generic
+d-i	base-installer/kernel/altmeta		string lts-xenial
 
 # Install the Edubuntu desktop.
 tasksel	tasksel/first				multiselect edubuntu-desktop-gnome
