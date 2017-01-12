@@ -19,15 +19,35 @@
   changed_when: "'RoamingProfiles=yes' not in chk_smb.stdout"
   ignore_errors: true
 
+- name: "Create directory structure for templates-custom"
+  file:
+    path: "{{ item }}"
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+  with_items:
+    - /etc/e-smith/templates-custom/etc/samba/smb.conf
+    - /etc/e-smith/templates-custom/etc/samba/smb.conf
+
+- name: "Copying settings from default."
+  copy:
+    src: /etc/e-smith/templates/etc/samba/smb.conf/10global
+    dest: /etc/e-smith/templates-custom/etc/samba/smb.conf/10global
+    remote_src: true
+    owner: root
+    group: root
+    mode: 0644
+
 - name: "Enabling unix extensions on SAMBA"
   replace:
-    dest: /etc/e-smith/templates/etc/samba/smb.conf/10global
+    dest: /etc/e-smith/templates-custom/etc/samba/smb.conf/10global
     regexp: '^unix extensions = no$'
     replace: 'unix extensions = yes'
 
 - name: Adding server signing as mandatory
   lineinfile:
-    dest: /etc/e-smith/templates/etc/samba/smb.conf/10global
+    dest: /etc/e-smith/templates-custom/etc/samba/smb.conf/10global
     line: "server signing = mandatory"
     insertafter: "^workgroup = "
     state: present
@@ -59,12 +79,12 @@
   register: chk_shared
 
 - name: Copying default templates for shared template type
-  shell: cp -r /etc/e-smith/templates/etc/samba/smb.conf/ibay-default /etc/e-smith/templates/etc/samba/smb.conf/ibay-shared
+  shell: cp -r /etc/e-smith/templates/etc/samba/smb.conf/ibay-default /etc/e-smith/templates-custom/etc/samba/smb.conf/ibay-shared
   when: force_ibay_shared|bool or chk_shared|failed
 
 - name: Configuring ibay-shared template structure (directory mask)
   lineinfile:
-    dest: /etc/e-smith/templates/etc/samba/smb.conf/ibay-shared/20profile_default
+    dest: /etc/e-smith/templates-custom/etc/samba/smb.conf/ibay-shared/20profile_default
     line: 'directory mask = 0775'
     insertafter: '^create mask'
     state: present
@@ -72,7 +92,7 @@
 
 - name: Configuring force create mode
   lineinfile:
-    dest: /etc/e-smith/templates/etc/samba/smb.conf/ibay-shared/20profile_default
+    dest: /etc/e-smith/templates-custom/etc/samba/smb.conf/ibay-shared/20profile_default
     line: 'force create mode = 0664'
     insertafter: '^directory mask'
     state: present
@@ -80,7 +100,7 @@
 
 - name: Configuring force directory mode
   lineinfile:
-    dest: /etc/e-smith/templates/etc/samba/smb.conf/ibay-shared/20profile_default
+    dest: /etc/e-smith/templates-custom/etc/samba/smb.conf/ibay-shared/20profile_default
     line: 'force directory mode = 0775'
     insertafter: '^force create mode'
     state: present
