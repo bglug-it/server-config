@@ -13,22 +13,20 @@
 
 # SAMBA
 
-- name: Checking SMB configuration
-  shell: /sbin/e-smith/db configuration printprop smb RoamingProfiles
-  register: chk_smb
-  changed_when: "'RoamingProfiles=yes' not in chk_smb.stdout"
+- name: "Verifying modifications on templates-custom."
+  shell: grep -q 'server signing = mandatory' /etc/e-smith/templates-custom/etc/templates-custom/etc/samba/smb.conf/10global
+  register: check_tempcust
+  changed_when: check_tempcust.rc != 0
   ignore_errors: true
 
 - name: "Create directory structure for templates-custom"
   file:
-    path: "{{ item }}"
+    path: "/etc/e-smith/templates-custom/etc/samba/smb.conf"
     owner: root
     group: root
     mode: 0755
     state: directory
-  with_items:
-    - /etc/e-smith/templates-custom/etc/samba/smb.conf
-    - /etc/e-smith/templates-custom/etc/samba/smb.conf
+  when: check_tempcust|changed
 
 - name: "Copying settings from default."
   copy:
@@ -38,12 +36,14 @@
     owner: root
     group: root
     mode: 0644
+  when: check_tempcust|changed
 
 - name: "Enabling unix extensions on SAMBA"
   replace:
     dest: /etc/e-smith/templates-custom/etc/samba/smb.conf/10global
     regexp: '^unix extensions = no$'
     replace: 'unix extensions = yes'
+  when: check_tempcust|changed
 
 - name: Adding server signing as mandatory
   lineinfile:
@@ -51,6 +51,13 @@
     line: "server signing = mandatory"
     insertafter: "^workgroup = "
     state: present
+  when: check_tempcust|changed
+
+- name: Checking SMB configuration
+  shell: /sbin/e-smith/db configuration printprop smb RoamingProfiles
+  register: chk_smb
+  changed_when: "'RoamingProfiles=yes' not in chk_smb.stdout"
+  ignore_errors: true
 
 - name: Configuring SMB
   shell: /sbin/e-smith/db configuration setprop smb RoamingProfiles yes ServerRole PDC Workgroup "{{ ansible_local.domain.domainshort }}" status enabled
@@ -120,10 +127,15 @@
   become: yes
   when: force_ibay_shared|bool or chk_shared|failed
 
+- name: Saving new version of smb.conf
+  shell: /sbin/e-smith/signal-event nethserver-samba-save
+  become: yes
+  when: check_tempcust|changed
+
 - name: Forcing regeneration of smb.conf
   shell: /sbin/e-smith/signal-event nethserver-samba-update
   become: yes
-  when: force_ibay_shared|bool or chk_shared|failed
+  when: force_ibay_shared|bool or chk_shared|failed or check_tempcust|changed
 
 # Fixing issue #3 - Configure sudo access for admin on server for operator
 # access 
