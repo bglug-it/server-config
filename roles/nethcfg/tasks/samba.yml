@@ -14,7 +14,7 @@
 # SAMBA
 
 - name: "Verifying modifications on templates-custom."
-  shell: grep -q 'server signing = mandatory' /etc/e-smith/templates-custom/etc/templates-custom/etc/samba/smb.conf/10global
+  shell: grep -q 'server signing = mandatory' /etc/e-smith/templates-custom/etc/samba/smb.conf/10global
   register: check_tempcust
   changed_when: check_tempcust.rc != 0
   ignore_errors: true
