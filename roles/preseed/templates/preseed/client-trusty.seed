@@ -25,7 +25,6 @@ d-i	mirror/http/hostname			string {{ mirror_host }}
 d-i	mirror/http/directory			string {{ mirror_path }}
 d-i	mirror/http/proxy 			string
 d-i	mirror/suite				string trusty
-d-i 	mirror/udeb/components			multiselect main, restricted, universe, multiverse
 
 # Apt-setup additional repos
 d-i	apt-setup/services-select 		multiselect security, updates
@@ -103,16 +102,16 @@ d-i	pkgsel/language-pack-patterns		string language-pack-gnome-$LL language-pack-
 
 # Adding libreoffice and ansible
 {% if ansible_bios_version == 'VirtualBox' %}
-d-i	pkgsel/include				string epoptes-client dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-{{ edu_package }} python3-uno libreoffice ansible libnss-myhostname sysv-rc-conf unattended-upgrades update-notifier-common aptitude virtualbox-guest-dkms
+d-i	pkgsel/include				string epoptes-client dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-{{ edu_package }} python3-uno libreoffice ansible libnss-myhostname sysv-rc-conf unattended-upgrades update-notifier-common aptitude geogebra geogebra-gnome gnome-search-tool ocrfeeder openshot freeplane gtk-recordmydesktop vokoscreen virtualbox-guest-dkms
 {% else %}
-d-i	pkgsel/include				string epoptes-client dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-{{ edu_package }} python3-uno libreoffice ansible libnss-myhostname sysv-rc-conf unattended-upgrades update-notifier-common aptitude
+d-i	pkgsel/include				string epoptes-client dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-{{ edu_package }} python3-uno libreoffice ansible libnss-myhostname sysv-rc-conf unattended-upgrades update-notifier-common aptitude geogebra geogebra-gnome gnome-search-tool ocrfeeder openshot freeplane gtk-recordmydesktop vokoscreen
 {% endif %}
 
 # Post installation tasks
 # Update system
 d-i 	preseed/late_command string in-target apt-get -y upgrade; \
 	in-target apt-get -y dist-upgrade; \
-	in-target apt-get -y purge unity-webapps-common zeitgeist-core zeitgeist-datahub epoptes; \
+	in-target apt-get -y purge unity-webapps-common zeitgeist-core zeitgeist-datahub webbrowser-app epoptes; \
 	in-target apt-get -y autoremove; \
 	sed -i'' -e 's/ubuntu/gnome-fallback/g' /target/usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; \
 	in-target /bin/bash -c "/usr/bin/curl -sSL4 http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/postseed-client.sh | /bin/bash >/root/postseed.log 2>&1";

@@ -32,7 +32,7 @@ d-i	apt-setup/security_host			string {{ mirror_security_host }}
 d-i	apt-setup/security_path			string {{ mirror_security_path }}
 
 # Additional repos
-d-i 	apt-setup/multiverse			boolean true
+d-i	apt-setup/multiverse			boolean true
 d-i	apt-setup/universe			boolean true
 d-i	apt-setup/restricted			boolean true
 d-i	apt-setup/partner			boolean true
@@ -88,7 +88,7 @@ d-i	localechooser/translation/warn-light	boolean true
 # Policy to upgrade: none
 d-i	pkgsel/update-policy			select none
 
-# UPgrade after installation: no
+# Upgrade after installation: no
 d-i	pkgsel/upgrade				select none
 
 # Language pack selection
@@ -102,16 +102,16 @@ d-i	pkgsel/language-pack-patterns		string language-pack-gnome-$LL language-pack-
 
 # Adding libreoffice and ansible
 {% if ansible_bios_version == 'VirtualBox' %}
-d-i	pkgsel/include				string dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-{{ edu_package }} python3-uno libreoffice ansible libnss-myhostname sysv-rc-conf unattended-upgrades update-notifier-common aptitude virtualbox-guest-dkms
+d-i	pkgsel/include				string dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-{{ edu_package }} python3-uno libreoffice ansible libnss-myhostname sysv-rc-conf unattended-upgrades update-notifier-common aptitude geogebra geogebra-gnome gnome-search-tool ocrfeeder openshot freeplane gtk-recordmydesktop vokoscreen virtualbox-guest-dkms
 {% else %}
-d-i	pkgsel/include				string dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-{{ edu_package }} python3-uno libreoffice ansible libnss-myhostname sysv-rc-conf unattended-upgrades update-notifier-common aptitude
+d-i	pkgsel/include				string dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-{{ edu_package }} python3-uno libreoffice ansible libnss-myhostname sysv-rc-conf unattended-upgrades update-notifier-common aptitude geogebra geogebra-gnome gnome-search-tool ocrfeeder openshot freeplane gtk-recordmydesktop vokoscreen
 {% endif %}
 
 # Post installation tasks
 # Update system
 d-i 	preseed/late_command string in-target apt-get -y upgrade; \
 	in-target apt-get -y dist-upgrade; \
-	in-target apt-get -y purge unity-webapps-common zeitgeist-core zeitgeist-datahub epoptes epoptes-client; \
+	in-target apt-get -y purge unity-webapps-common zeitgeist-core zeitgeist-datahub webbrowser-app epoptes epoptes-client; \
 	in-target apt-get -y autoremove; \
 	sed -i'' -e 's/ubuntu/gnome-fallback/g' /target/usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; \
 	in-target bash -c "/usr/bin/curl -sSL4 http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/postseed-aula.sh | /bin/bash >/root/postseed.log 2>&1";
