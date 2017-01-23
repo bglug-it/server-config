@@ -1,31 +1,31 @@
 ---
 # Configurazione dominio
-ntpserver: pdc.topolin.ia
+ntpserver: pdc.liceo.svbg
 server: pdc
-serverip: 172.16.254.1
+serverip: 192.168.3.1
 servernetmask: 255.255.255.0
-servernet: 172.16.254.0
-servergw: 172.16.254.1
-serverfqdn: pdc.topolin.ia
-domainshort: TOPOLIN
-domainfull: topolin.ia
-dhcprange_start: 172.16.254.10
-dhcprange_end: 172.16.254.50
+servernet: 192.168.3.0
+servergw: 192.168.3.1
+serverfqdn: pdc.liceo.svbg
+domainshort: LICEO
+domainfull: liceo.svbg
+dhcprange_start: 192.168.3.10
+dhcprange_end: 192.168.3.100
 extdnsserver1: 208.67.222.222
 extdnsserver2: 208.67.220.220
 org_email: info@bglug.it
-org_company: Accademia di SuperPippo
-org_countrycode: IA
-org_department: "Laboratorio 1"
-org_city: Topolinia
-org_phone: "313 113 176-167"
-org_street: "Piazza la bomba e scappa"
-edu_package: secondary
-mirror_mode: remote
+org_company: Liceo - Seminario Vescovile Giovanni XXIII
+org_countrycode: IT
+org_department: "Laboratorio Informatica"
+org_city: Bergamo
+org_phone: "+39 035 28 61 11"
+org_street: "Via Arena, 11"
+edu_package: tertiary
+mirror_mode: local
 #mirror_nfs_share: 192.168.255.1:/var/spool/apt-mirror/mirror
-mirror_host: it.archive.ubuntu.com
+mirror_host: archive.ubuntu.com
 #mirror_path: /ubuntu
 #mirror_security_host: security.ubuntu.com
 #mirror_security_path: /ubuntu
-client_gitbranch: master
+client_gitbranch: liceo.svbg
 #client_gitrepo: "https://github.com/bglug-it/client-pull-installation.git"
