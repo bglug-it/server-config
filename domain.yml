@@ -21,8 +21,8 @@ org_city: Bergamo
 org_phone: "+39 035 28 61 11"
 org_street: "Via Arena, 11"
 edu_package: tertiary
-mirror_mode: nfs
-mirror_nfs_share: 192.168.3.250:/repo
+mirror_mode: local
+#mirror_nfs_share: 192.168.255.1:/var/spool/apt-mirror/mirror
 mirror_host: archive.ubuntu.com
 #mirror_path: /ubuntu
 #mirror_security_host: security.ubuntu.com
