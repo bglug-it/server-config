@@ -67,6 +67,11 @@ deb-i386 http://ppa.launchpad.net/libreoffice/ppa/ubuntu trusty main
 deb-amd64 http://ppa.launchpad.net/libreoffice/ppa/ubuntu trusty main
 deb-src http://ppa.launchpad.net/libreoffice/ppa/ubuntu trusty main
 
+# Epoptes stable
+deb-i386 http://ppa.launchpad.net/epoptes/ppa/ubuntu trusty main
+deb-amd64 http://ppa.launchpad.net/epoptes/ppa/ubuntu trusty main
+deb-src http://ppa.launchpad.net/epoptes/ppa/ubuntu trusty main
+
 # Geogebra Official repository
 deb-i386 http://www.geogebra.net/linux stable main
 deb-amd64 http://www.geogebra.net/linux stable main
@@ -83,5 +88,6 @@ clean http://archive.canonical.com
 clean http://{{ shost }}{{ spath }}
 clean http://ppa.launchpad.net/ansible/ansible/ubuntu
 clean http://ppa.launchpad.net/libreoffice/ppa/ubuntu
+clean http://ppa.launchpad.net/epoptes/ppa/ubuntu
 clean http://www.geogebra.net/linux
 clean http://repo.bglug.it/ubuntu

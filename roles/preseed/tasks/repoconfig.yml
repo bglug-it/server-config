@@ -32,5 +32,6 @@
     - bglug-trusty.list
     - ansible-ansible-trusty.list
     - libreoffice-ppa-trusty.list
+    - epoptes-ppa-trusty.list
     - geogebra-stable.list
   become: yes
