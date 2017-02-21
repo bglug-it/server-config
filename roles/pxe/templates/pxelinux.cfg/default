@@ -64,7 +64,7 @@ LABEL aula-32bit
 	LINUX	/ubuntu/14.04/i386/linux
 	INITRD	/ubuntu/14.04/i386/initrd.gz
 	APPEND	vga=normal auto=true hostname=kickseed url=http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/aula-trusty.seed -- quiet
-	
+
 LABEL aula-64bit
 	MENU LABEL ^64 bit
 	LINUX	/ubuntu/14.04/amd64/linux

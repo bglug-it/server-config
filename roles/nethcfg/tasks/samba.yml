@@ -138,7 +138,7 @@
   when: force_ibay_shared|bool or chk_shared|failed or check_tempcust|changed
 
 # Fixing issue #3 - Configure sudo access for admin on server for operator
-# access 
+# access
 # https://github.com/bglug-it/server-config/issues/3
 - name: Configuring sudo access for admin account
   lineinfile:

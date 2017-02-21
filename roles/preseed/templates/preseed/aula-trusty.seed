@@ -45,7 +45,7 @@ d-i 	apt-setup/local0/key 			string http://keyserver.ubuntu.com:11371/pks/lookup
 # Setup and enable ansible PPA
 d-i	apt-setup/local1/repository		string http://{{ execpath }}ppa.launchpad.net/ansible/ansible/ubuntu trusty main
 d-i	apt-setup/local1/comment		string Ansible Official PPA
-d-i	apt-setup/local1/key			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367&op=get	
+d-i	apt-setup/local1/key			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367&op=get
 
 # Setup and enable epoptes PPA
 d-i	apt-setup/local2/repository		string	http://{{ execpath }}ppa.launchpad.net/epoptes/ppa/ubuntu trusty main
