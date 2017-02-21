@@ -47,6 +47,7 @@
     - edubuntu.seed
     - client-trusty.seed
     - docenti-trusty.seed
+    - aula-trusty.seed
   become: yes
 
 - block:
@@ -72,6 +73,7 @@
   with_items:
     - postseed-client.sh
     - postseed-docenti.sh
+    - postseed-aula.sh
     - pulseaudio-perms.sh
     - checksum.fact
   become: yes

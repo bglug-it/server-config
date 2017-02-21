@@ -27,15 +27,15 @@ d-i	mirror/http/proxy 			string
 d-i	mirror/suite				string trusty
 
 # Apt-setup additional repos
-d-i	apt-setup/extras			boolean false
-d-i	apt-setup/restricted			boolean true
-d-i	apt-setup/universe			boolean true
-d-i	apt-setup/backports			boolean true
-d-i	apt-setup/non-free			boolean true
-d-i	apt-setup/contrib			boolean true
 d-i	apt-setup/services-select 		multiselect security, updates
 d-i	apt-setup/security_host			string {{ mirror_security_host }}
 d-i	apt-setup/security_path			string {{ mirror_security_path }}
+
+# Additional repos
+d-i	apt-setup/multiverse			boolean true
+d-i	apt-setup/universe			boolean true
+d-i	apt-setup/restricted			boolean true
+d-i	apt-setup/partner			boolean true
 
 # Setup and enable libreoffice PPA
 d-i	apt-setup/local0/repository		string	http://{{ execpath }}ppa.launchpad.net/libreoffice/ppa/ubuntu trusty main
@@ -46,6 +46,16 @@ d-i 	apt-setup/local0/key 			string http://keyserver.ubuntu.com:11371/pks/lookup
 d-i	apt-setup/local1/repository		string http://{{ execpath }}ppa.launchpad.net/ansible/ansible/ubuntu trusty main
 d-i	apt-setup/local1/comment		string Ansible Official PPA
 d-i	apt-setup/local1/key			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367&op=get	
+
+# Setup and enable epoptes PPA
+d-i	apt-setup/local2/repository		string	http://{{ execpath }}ppa.launchpad.net/epoptes/ppa/ubuntu trusty main
+d-i 	apt-setup/local2/comment		string Epoptes stable repository
+d-i 	apt-setup/local2/key 			string http://keyserver.ubuntu.com:11371/pks/lookup?search=0x2D9B9274D3DF9D7CD7281A3E49F26CB30350B375&op=get
+
+# Setup and enable geogebra repository
+d-i	apt-setup/local3/repository		string http://{{ execpath }}/www.geogebra.net/linux stable main
+d-i	apt-setup/local3/comment		string Geogebra Official repository
+d-i	apt-setup/local3/key			string http://www.geogebra.net/linux/office@geogebra.org.gpg.key.new
 
 # Time and date
 d-i	clock-setup/utc				boolean true
@@ -74,6 +84,7 @@ d-i	user-setup/encrypt-home			boolean false
 
 # Kernel installation
 d-i 	base-installer/kernel/image		string linux-generic
+d-i	base-installer/kernel/altmeta		string lts-xenial
 
 # Install the Edubuntu desktop.
 tasksel	tasksel/first				multiselect edubuntu-desktop-gnome
@@ -87,7 +98,7 @@ d-i	localechooser/translation/warn-light	boolean true
 # Policy to upgrade: none
 d-i	pkgsel/update-policy			select none
 
-# UPgrade after installation: no
+# Upgrade after installation: no
 d-i	pkgsel/upgrade				select none
 
 # Language pack selection
@@ -101,16 +112,16 @@ d-i	pkgsel/language-pack-patterns		string language-pack-gnome-$LL language-pack-
 
 # Adding libreoffice and ansible
 {% if ansible_bios_version == 'VirtualBox' %}
-d-i	pkgsel/include				string epoptes dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-{{ edu_package }} python3-uno libreoffice ansible libnss-myhostname sysv-rc-conf unattended-upgrades update-notifier-common aptitude virtualbox-guest-dkms
+d-i	pkgsel/include				string epoptes dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-{{ edu_package }} python3-uno libreoffice ansible libnss-myhostname sysv-rc-conf unattended-upgrades update-notifier-common aptitude geogebra geogebra-gnome gnome-search-tool ocrfeeder openshot freeplane gtk-recordmydesktop vokoscreen virtualbox-guest-dkms
 {% else %}
-d-i	pkgsel/include				string epoptes dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-{{ edu_package }} python3-uno libreoffice ansible libnss-myhostname sysv-rc-conf unattended-upgrades update-notifier-common aptitude
+d-i	pkgsel/include				string epoptes dialog vim screen cifs-utils curl git openssh-server software-properties-common sshpass ubuntu-edu-{{ edu_package }} python3-uno libreoffice ansible libnss-myhostname sysv-rc-conf unattended-upgrades update-notifier-common aptitude geogebra geogebra-gnome gnome-search-tool ocrfeeder openshot freeplane gtk-recordmydesktop vokoscreen
 {% endif %}
 
 # Post installation tasks
 # Update system
 d-i 	preseed/late_command string in-target apt-get -y upgrade; \
 	in-target apt-get -y dist-upgrade; \
-	in-target apt-get -y purge unity-webapps-common zeitgeist-core zeitgeist-datahub epoptes-client; \
+	in-target apt-get -y purge unity-webapps-common zeitgeist-core zeitgeist-datahub webbrowser-app epoptes-client; \
 	in-target apt-get -y autoremove; \
 	sed -i'' -e 's/ubuntu/gnome-fallback/g' /target/usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf; \
 	in-target bash -c "/usr/bin/curl -sSL4 http://{{ ansible_local.domain.serverfqdn }}/ks/preseed/postseed-docenti.sh | /bin/bash >/root/postseed.log 2>&1";

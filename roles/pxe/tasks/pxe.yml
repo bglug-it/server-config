@@ -13,7 +13,7 @@
 
 - name: pxelinux.0
   get_url:
-    url: "http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-i386/current/images/netboot/pxelinux.0"
+    url: "http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-amd64/current/images/utopic-netboot/pxelinux.0"
     dest: /var/lib/tftpboot/pxelinux.0
 
 - name: pxelinux.cfg/default
@@ -35,7 +35,7 @@
 
 - name: vesamenu.c32
   get_url:
-    url: "http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-i386/current/images/netboot/ubuntu-installer/i386/boot-screens/vesamenu.c32"
+    url: "http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-i386/current/images/netboot/ubuntu-installer/i386/boot-screens/vesamenu.c32"
     dest: /var/lib/tftpboot/utils/vesamenu.c32
 
 - name: chain.c32
@@ -45,22 +45,22 @@
 
 - name: linux i386 
   get_url:
-    url: "http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-i386/current/images/netboot/ubuntu-installer/i386/linux"
+    url: "http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-i386/current/images/netboot/ubuntu-installer/i386/linux"
     dest: /var/lib/tftpboot/ubuntu/14.04/i386/linux
 
 - name: initrd.gz i386
   get_url:
-    url: "http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-i386/current/images/netboot/ubuntu-installer/i386/initrd.gz"
+    url: "http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-i386/current/images/netboot/ubuntu-installer/i386/initrd.gz"
     dest: /var/lib/tftpboot/ubuntu/14.04/i386/initrd.gz
 
 - name: linux amd64
   get_url:
-    url: "http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/linux"
+    url: "http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/linux"
     dest: /var/lib/tftpboot/ubuntu/14.04/amd64/linux
 
 - name: initrd.gz amd64
   get_url:
-    url: "http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/initrd.gz"
+    url: "http://archive.ubuntu.com/ubuntu/dists/trusty-updates/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/initrd.gz"
     dest: /var/lib/tftpboot/ubuntu/14.04/amd64/initrd.gz
 
 - name: memdisk
