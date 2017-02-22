@@ -5,7 +5,7 @@
     comment: "Ansible Management User"
     group: wheel
     state: present
-    password: $6$mVKMBMbAxeql$eqSe8tu2qKjtwmpiFy07b6nv2g4F80N.U9EzOmQTrNZwKZ61n6NLrSEQHQo1FOlQghOiB8as6Z35oTUUKN8y2.
+    password: $6$rounds=100000$XvHuMoXtpCksx379$nhlfUn38.oBB7JrDrtwfUisw8T0Bg5InzFq1fw31mcEmGZ2AYFkFK2zC2g04lSfw.kpdSgqH3Dl5q9r1fY6.k.
 
 - name: Concessione diritti all'utente di gestione Ansible
   template:
