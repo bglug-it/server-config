@@ -13,6 +13,6 @@
   register: chk_locked_nethrelease
   changed_when: "'Locked' not in chk_locked_nethrelease.stdout"
 
-- name: Locking nethserver-release version to 6.7
+- name: Locking nethserver-release version
   shell: yum versionlock add nethserver-release
   when: chk_locked_nethrelease|changed
