@@ -2,4 +2,4 @@
 # Vagrant provisioning playbook
 - hosts: vagrant
   roles:
-    - rename-nic 
+    - rename-nic
