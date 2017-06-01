@@ -1,0 +1,35 @@
+---
+# Cambio nome interfacce
+
+- name: Removing old interface names
+  file:
+    path: /etc/udev/rules.d/70-persistent-net.rules
+    state: absent
+  become: yes
+
+- name: Forcing recreation of {{ extnic }}
+  shell: "INTERFACE=eth0 MATCHADDR={{ ansible_eth0.macaddress }} INTERFACE_NAME={{ extnic }} /lib/udev/write_net_rules"
+  become: yes
+
+- name: Forcing recreation of {{ intnic }}
+  shell: "INTERFACE=eth1 MATCHADDR={{ ansible_eth1.macaddress }} INTERFACE_NAME={{ intnic }} /lib/udev/write_net_rules"
+  become: yes
+
+- name: Pulizia vecchie interfacce
+  shell: "/sbin/e-smith/db networks delete {{ item }}"
+  become: yes
+  with_items:
+    - eth0
+    - eth1
+
+- name: Creo interfaccia esterna in NethServer
+  shell: /sbin/e-smith/db networks set {{ extnic }} ethernet bootproto dhcp device {{ extnic }} hwaddr {{ ansible_eth0.macaddress }} onboot yes peerdns yes role red
+  become: yes
+
+- name: Creo interfaccia interna in NethServer
+  shell: /sbin/e-smith/db networks set {{ intnic }} ethernet bootproto none device {{ intnic }} hwaddr {{ ansible_eth1.macaddress }} ipaddr 172.16.254.1 netmask 255.255.255.0 onboot yes role green
+  become: yes
+
+- name: Trigger interfaces configuration
+  shell: "ifdown eth0; ifdown eth1; udevadm control --reload-rules && udevadm trigger; /sbin/e-smith/signal-event interface-update"
+  become: yes
