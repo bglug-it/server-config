@@ -55,7 +55,7 @@ d-i 	apt-setup/local2/key 			string http://keyserver.ubuntu.com:11371/pks/lookup
 # Setup and enable geogebra repository
 d-i	apt-setup/local3/repository		string http://{{ execpath }}/www.geogebra.net/linux stable main
 d-i	apt-setup/local3/comment		string Geogebra Official repository
-d-i	apt-setup/local3/key			string http://www.geogebra.net/linux/office@geogebra.org.gpg.key.new
+d-i	apt-setup/local3/key			string http://{{ ansible_local.domain.serverfqdn }}/ks/repoconfig/office_geogebra.gpg.key
 
 # Time and date
 d-i	clock-setup/utc				boolean true

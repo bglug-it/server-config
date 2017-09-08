@@ -28,9 +28,9 @@
 - name: Adding mountpoint to fstab
   lineinfile:
     dest: /etc/fstab
-    line: "{{ ansible_local.domain.mirror_nfs_share }} /var/spool/apt-mirror/mirror nfs4 defaults 0 0"
+    line: "{{ ansible_local.domain.mirror_nfs_share }} /var/spool/apt-mirror nfs defaults 0 0"
   when: chk_mount_nfs|changed
 
 - name: Mounting share
-  shell: mount /var/spool/apt-mirror/mirror
+  shell: mount /var/spool/apt-mirror
   when: chk_mount_nfs|changed

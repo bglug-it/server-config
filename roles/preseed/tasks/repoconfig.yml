@@ -35,3 +35,9 @@
     - epoptes-ppa-trusty.list
     - geogebra-stable.list
   become: yes
+
+- name: Scarico firma per geogebra
+  get_url:
+    url: "https://www.geogebra.net/linux/office@geogebra.org.gpg.key"
+    dest: "/var/lib/nethserver/ibay/ks/repoconfig/office_geogebra.gpg.key"
+  become: yes
