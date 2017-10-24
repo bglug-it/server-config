@@ -36,8 +36,9 @@
     - geogebra-stable.list
   become: yes
 
-- name: Scarico firma per geogebra
+- name: Pre-downloading geogebra GPG signature because of HTTPS
   get_url:
     url: "https://www.geogebra.net/linux/office@geogebra.org.gpg.key"
     dest: "/var/lib/nethserver/ibay/ks/repoconfig/office_geogebra.gpg.key"
+    validate_certs: no
   become: yes

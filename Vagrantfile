@@ -10,8 +10,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "nethserver-6.8"
-  config.vm.box_url = "http://vagrant.sys42.eu/nethserver-6.8"
+  config.vm.box = "syntaxerrormmm/nethserver-6.9"
+  config.vm.box_url = "https://vagrant.libreschool.org/nethserver-6.9"
   config.vm.define "NethServer" do |nethserver|
   end
   config.vm.provider :virtualbox do |vb|
@@ -127,7 +127,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #
   #   chef.validation_client_name = "ORGNAME-validator"
   config.vm.provision "ansible" do |ansible|
-    ansible.inventory_path = "vagrant/hosts"
-    ansible.playbook = "vagrant/vagrant.yml"
+    ansible.inventory_path = "provision_hosts"
+    ansible.playbook = "provision.yml"
   end
 end
