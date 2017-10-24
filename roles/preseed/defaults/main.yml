@@ -8,5 +8,6 @@ mirror_security_host: security.ubuntu.com
 mirror_security_path: /ubuntu
 mirror_localpath: /ks/mirror
 execpath: ""
+execsecurepath: ""
 execmirrorpath: ""
 development: false
