@@ -13,7 +13,7 @@
 
 # SAMBA
 
-- name: "Verifying modifications on templates-custom."
+- name: Verifying modifications on templates-custom.
   shell: grep -q 'server signing = mandatory' /etc/e-smith/templates-custom/etc/samba/smb.conf/10global
   register: check_tempcust
   changed_when: check_tempcust.rc != 0
@@ -21,7 +21,7 @@
 
 - name: "Create directory structure for templates-custom"
   file:
-    path: "/etc/e-smith/templates-custom/etc/samba/smb.conf"
+    path: /etc/e-smith/templates-custom/etc/samba/smb.conf
     owner: root
     group: root
     mode: 0755

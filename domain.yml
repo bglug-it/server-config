@@ -1,31 +1,31 @@
 ---
 # Configurazione dominio
-ntpserver: pdc.topolin.ia
+ntpserver: pdc.salerno3.ilariaalpi.edu
 server: pdc
-serverip: 172.16.254.1
+serverip: 192.168.5.1
 servernetmask: 255.255.255.0
-servernet: 172.16.254.0
-servergw: 172.16.254.1
-serverfqdn: pdc.topolin.ia
-domainshort: TOPOLIN
-domainfull: topolin.ia
-dhcprange_start: 172.16.254.10
-dhcprange_end: 172.16.254.50
+servernet: 192.168.5.0
+servergw: 192.168.5.1
+serverfqdn: pdc.salerno3.ilariaalpi.edu
+domainshort: SALERNO3
+domainfull: salerno3.ilariaalpi.edu
+dhcprange_start: 192.168.5.10
+dhcprange_end: 192.168.5.60
 extdnsserver1: 208.67.222.222
 extdnsserver2: 208.67.220.220
-org_email: info@bglug.it
-org_company: Accademia di SuperPippo
-org_countrycode: IA
-org_department: "Laboratorio 1"
-org_city: Topolinia
-org_phone: "313 113 176-167"
-org_street: "Piazza la bomba e scappa"
+org_email: miic8dz008@istruzione.it
+org_company: Istituto Comprensivo Ilaria Alpi
+org_countrycode: IT
+org_department: "Laboratorio 1 - via Salerno, 3"
+org_city: Milano
+org_phone: 02 88444696
+org_street: Via Salerno, 3
 edu_package: secondary
-mirror_mode: remote
+mirror_mode: local
 #mirror_nfs_share: 192.168.255.1:/var/spool/apt-mirror/mirror
 mirror_host: it.archive.ubuntu.com
 #mirror_path: /ubuntu
 #mirror_security_host: security.ubuntu.com
 #mirror_security_path: /ubuntu
-client_gitbranch: master
+client_gitbranch: ilariaalpi
 #client_gitrepo: "https://github.com/bglug-it/client-pull-installation.git"
