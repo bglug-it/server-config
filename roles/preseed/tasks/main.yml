@@ -3,6 +3,7 @@
 - include: mirror-cfg.yml
   tags:
     - preseed
+    - repoconfig
 
 - include: preseed.yml
   tags:
