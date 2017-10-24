@@ -6,19 +6,27 @@
   when: "ansible_local.domain.mirror_mode is defined"
 
 - name: Determining mirror_host
-  set_fact: mirror_host="{{ ansible_local.domain.mirror_host }}"
+  set_fact:
+    mirror_host: "{{ ansible_local.domain.mirror_host }}"
+    orig_mirror_host: "{{ ansible_local.domain.mirror_host }}"
   when: ansible_local.domain.mirror_host is defined
 
 - name: Determining mirror_path
-  set_fact: mirror_path="{{ ansible_local.domain.mirror_path }}"
+  set_fact:
+    mirror_path: "{{ ansible_local.domain.mirror_path }}"
+    orig_mirror_path: "{{ ansible_local.domain.mirror_path }}"
   when: ansible_local.domain.mirror_path is defined 
 
 - name: Determining mirror_security_host
-  set_fact: mirror_security_host="{{ ansible_local.domain.mirror_security_host }}"
+  set_fact:
+    mirror_security_host: "{{ ansible_local.domain.mirror_security_host }}"
+    orig_mirror_security_host: "{{ ansible_local.domain.mirror_security_host }}"
   when: ansible_local.domain.mirror_security_host is defined
 
 - name: Determining mirror_security_path
-  set_fact: mirror_security_path="{{ ansible_local.domain.mirror_security_path }}"
+  set_fact:
+    mirror_security_path: "{{ ansible_local.domain.mirror_security_path }}"
+    orig_mirror_security_path: "{{ ansible_local.domain.mirror_security_path }}"
   when: ansible_local.domain.mirror_security_path is defined
 
 - name: Determining mirror_localpath
@@ -28,16 +36,13 @@
 # The remote option is already configured as it is.
 
 # Configuring correctly local mirror
-- name: Determining variables for local and nfs mode
+- name: Altering paths
   set_fact:
-    orig_mirror_path: ”{{ mirror_path }}"
-    orig_mirror_host: "{{ mirror_host }}"
-    orig_mirror_security_path: "{{ mirror_security_path }}"
-    orig_mirror_security_host: "{{ mirror_security_host }}"
-    execmirrorpath: ”{{ mirror_host }}{{ mirror_path }}"
+    execmirrorpath: "{{ mirror_host }}{{ mirror_path }}"
+    execsecurepath: "{{ mirror_security_host }}{{ mirror_security_path }}"
     execpath: "{{ ansible_local.domain.serverfqdn }}{{ mirror_localpath }}/"
     mirror_path: "{{ mirror_localpath }}/{{ mirror_host }}{{ mirror_path }}"
     mirror_host: "{{ ansible_local.domain.serverfqdn }}"
-    mirror_security_path: "{{ mirror_localpath }}/{{ mirror_security_host }}{{mirror_security_path }}"
+    mirror_security_path: "{{ mirror_localpath }}/{{ mirror_security_host }}{{ mirror_security_path }}"
     mirror_security_host: "{{ ansible_local.domain.serverfqdn }}"
   when: mirror_mode != 'remote'

@@ -1,18 +1,18 @@
 # Base repositories for Ubuntu 14.04 - Trusty Tahr
-deb http://{{ execpath }}{{ host }}{{ path }} trusty main restricted universe multiverse
-deb http://{{ execpath }}{{ host }}{{ path }} trusty-security main restricted universe multiverse
-deb http://{{ execpath }}{{ host }}{{ path }} trusty-updates main restricted universe multiverse
-deb http://{{ execpath }}{{ host }}{{ path }} trusty-backports main restricted universe multiverse
+deb http://{{ mirror_host }}{{ mirror_path }} trusty main restricted universe multiverse
+deb http://{{ mirror_host }}{{ mirror_path }} trusty-security main restricted universe multiverse
+deb http://{{ mirror_host }}{{ mirror_path }} trusty-updates main restricted universe multiverse
+deb http://{{ mirror_host }}{{ mirror_path }} trusty-backports main restricted universe multiverse
 
 # Sources
-#deb-src http://{{ execpath }}{{ host }}{{ path }} trusty main restricted universe multiverse
-#deb-src http://{{ execpath }}{{ host }}{{ path }} trusty-security main restricted universe multiverse
-#deb-src http://{{ execpath }}{{ host }}{{ path }} trusty-updates main restricted universe multiverse
-#deb-src http://{{ execpath }}{{ host }}{{ path }} trusty-backports main restricted universe multiverse
+#deb-src http://{{ mirror_host }}{{ mirror_path }} trusty main restricted universe multiverse
+#deb-src http://{{ mirror_host }}{{ mirror_path }} trusty-security main restricted universe multiverse
+#deb-src http://{{ mirror_host }}{{ mirror_path }} trusty-updates main restricted universe multiverse
+#deb-src http://{{ mirror_host }}{{ mirror_path }} trusty-backports main restricted universe multiverse
 
 # Security
-deb http://{{ execpath }}{{ shost }}{{ spath }} trusty-security main restricted universe multiverse
-#deb-src http://{{ execpath }}{{ shost }}{{ spath }} trusty-security main restricted universe multiverse
+deb http://{{ mirror_security_host }}{{ mirror_security_path }} trusty-security main restricted universe multiverse
+#deb-src http://{{ mirror_security_host }}{{ mirror_security_path }} trusty-security main restricted universe multiverse
 
 # Extras
 deb http://{{ execpath }}extras.ubuntu.com/ubuntu trusty main
