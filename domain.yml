@@ -31,3 +31,4 @@ client_gitbranch: liceo.svbg
 #client_gitrepo: "https://github.com/bglug-it/client-pull-installation.git"
 apply_fixes:
   - samba-downgrade_20161124.sh.gpg
+  - pulseaudio-forced-fix_20170921.sh.gpg
