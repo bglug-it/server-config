@@ -25,6 +25,7 @@ d-i	mirror/http/hostname			string {{ mirror_host }}
 d-i	mirror/http/directory			string {{ mirror_path }}
 d-i	mirror/http/proxy 			string
 d-i	mirror/suite				string trusty
+d-i 	mirror/udeb/components			multiselect main, restricted, universe, multiverse
 
 # Apt-setup additional repos
 d-i	apt-setup/services-select 		multiselect security, updates
