@@ -23,7 +23,7 @@ org_street: Via sancolombano 8
 edu_package: secondary
 mirror_mode: remote
 #mirror_nfs_share: 172.16.14.1:/var/spool/apt-mirror/mirror
-mirror_host: it.archive.ubuntu.com
+#mirror_host: it.archive.ubuntu.com
 #mirror_path: /ubuntu
 #mirror_security_host: security.ubuntu.com
 #mirror_security_path: /ubuntu
